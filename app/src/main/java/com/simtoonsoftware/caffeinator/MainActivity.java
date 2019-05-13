@@ -13,13 +13,20 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    float var;
+
+    EditText input_CaffeineIntakeValue;// = findViewById(R.id.input_CaffeineIntakeValue);
+    TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textView = (TextView) findViewById(R.id.textView);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
-        EditText input_CaffeineIntakeValue = findViewById(R.id.input_CaffeineIntakeValue);
+       input_CaffeineIntakeValue = (EditText) findViewById(R.id.input_CaffeineIntakeValue);
+
 
         input_CaffeineIntakeValue.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -27,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
                 boolean handled = false;
                 if (i == EditorInfo.IME_ACTION_GO) {
-                    getApplicationContext().getResources().getInteger(R.integer.caffeineIntakeValue) = textView.getText().toString();
                     Toast.makeText(MainActivity.this, "Current caffeine level: "
                             + getApplicationContext().getResources().getInteger(R.integer.caffeineIntakeValue), Toast.LENGTH_SHORT).show();
                 }
@@ -38,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
         public void onClick(View v) {
-            startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
-            System.out.println("Switched to the 'AddCaffeineIntakeActivity' Activity"); //debug text, shows only in logcat
+           // startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
+                var = Float.parseFloat(input_CaffeineIntakeValue.getText() + "");
+                textView.setText("Coffeine level: " + var);
+            System.out.println("Switched to the 'AddCaffeineIntakeActivity' Activity" + var); //debug text, shows only in logcat
         }});
     }
 }
