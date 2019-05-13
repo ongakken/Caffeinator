@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
            // startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
                 caffeineIntakeValue = caffeineIntakeValue + Float.parseFloat(input_CaffeineIntakeValue.getText() + "");
                 text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
-            System.out.println("Switched to the 'AddCaffeineIntakeActivity' Activity" + caffeineIntakeValue); //debug text, shows only in logcat
+            //System.out.println("Switched to the 'AddCaffeineIntakeActivity' Activity" + caffeineIntakeValue); //debug text, shows only in logcat
         }});
     }
 }
