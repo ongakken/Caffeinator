@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
             startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
-            System.out.println("Well, it works ..."); //debug text, shows only in logcat
+            System.out.println("Switched to the 'AddCaffeineIntakeActivity' Activity"); //debug text, shows only in logcat
         }
     });
     }
