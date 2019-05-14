@@ -1,5 +1,6 @@
 package com.simtoonsoftware.caffeinator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,8 +14,9 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
     float caffeineIntakeValue;
 
     TextView text_caffeineIntakeValue;
-    Button btn_addCaffeineIntake;
     EditText input_CaffeineIntakeValue;
+    Button btn_addCaffeineIntake;
+    Button btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +24,10 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_caffeine_intake);
 
     //definitions
+        input_CaffeineIntakeValue = findViewById(R.id.input_CaffeineIntakeValue);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
-        input_CaffeineIntakeValue = findViewById(R.id.input_CaffeineIntakeValue);
+        btn_back = findViewById(R.id.btn_back);
 
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +39,13 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
 
             }
             });
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddCaffeineIntakeActivity.this, MainActivity.class));
+                text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
+            }
+        });
     }
   }
 
