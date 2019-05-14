@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 public class AddCaffeineIntakeActivity extends AppCompatActivity {
 
+    //declarations
     float caffeineIntakeValue;
 
     TextView text_caffeineIntakeValue;
@@ -20,7 +21,7 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    //declarations and definitions
+    //definitions
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         input_CaffeineIntakeValue = findViewById(R.id.input_CaffeineIntakeValue);
@@ -28,12 +29,12 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View v) {
-                // startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
+                //startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
                 caffeineIntakeValue = caffeineIntakeValue + Float.parseFloat(input_CaffeineIntakeValue.getText() + "");
                 text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
+
             }
 
             });
