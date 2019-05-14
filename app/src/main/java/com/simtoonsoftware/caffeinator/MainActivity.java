@@ -22,6 +22,4 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
             //System.out.println("Switched to the 'AddCaffeineIntakeActivity' Activity" + caffeineIntakeValue); //debug text, shows only in logcat
-        }});
-    }
-}
+    }}
