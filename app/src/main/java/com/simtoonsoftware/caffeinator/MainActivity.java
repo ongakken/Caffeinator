@@ -11,13 +11,18 @@ public class MainActivity extends AppCompatActivity {
 
     //definitions and declarations
     float caffeineIntakeValue;
-    text_caffeineIntakeValue = (TextView) findViewById(R.id.text_caffeineIntakeValue);
+
 
     EditText input_CaffeineIntakeValue;
     TextView text_caffeineIntakeValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        text_caffeineIntakeValue = (TextView) findViewById(R.id.text_caffeineIntakeValue);
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
