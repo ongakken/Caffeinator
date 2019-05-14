@@ -19,7 +19,7 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_caffeine_intake);
 
     //definitions
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
@@ -31,12 +31,10 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
-                caffeineIntakeValue = caffeineIntakeValue + Float.parseFloat(input_CaffeineIntakeValue.getText() + "");
+                caffeineIntakeValue += Float.parseFloat(input_CaffeineIntakeValue.getText() + "");
                 text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
 
             }
-
             });
     }
   }

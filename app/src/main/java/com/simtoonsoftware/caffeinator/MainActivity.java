@@ -20,11 +20,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn_addCaffeineIntake;
-
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
-        btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
+        Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
