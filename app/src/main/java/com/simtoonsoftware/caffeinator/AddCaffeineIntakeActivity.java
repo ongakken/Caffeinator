@@ -24,11 +24,11 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_caffeine_intake);
 
     //definitions
+        caffeineIntakeValue = Float.parseFloat(getResources().getString(R.string.caffeineIntakeValue));
         input_CaffeineIntakeValue = findViewById(R.id.input_CaffeineIntakeValue);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         btn_back = findViewById(R.id.btn_back);
-
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
 

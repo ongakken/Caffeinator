@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     //definitions and declarations
-    float caffeineIntakeValue = 0;
+    float caffeineIntakeValue;
     TextView text_caffeineIntakeValue;
 
     //icon - cup of coffee HEX #FFA500
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        caffeineIntakeValue = Float.parseFloat(getResources().getString(R.string.caffeineIntakeValue));
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
