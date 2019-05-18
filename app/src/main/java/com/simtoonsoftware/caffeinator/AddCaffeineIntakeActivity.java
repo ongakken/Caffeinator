@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class AddCaffeineIntakeActivity extends MainActivity {
 
     //declarations
     float caffeineIntakeValue;
 
-    //TextView text_caffeineIntakeValue;
+    TextView text_caffeineIntakeValue;
     EditText input_CaffeineIntakeValue;
     Button btn_addCaffeineIntake;
     Button btn_back;
