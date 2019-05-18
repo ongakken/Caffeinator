@@ -2,18 +2,16 @@ package com.simtoonsoftware.caffeinator;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-public class AddCaffeineIntakeActivity extends AppCompatActivity {
+public class AddCaffeineIntakeActivity extends MainActivity {
 
     //declarations
     float caffeineIntakeValue;
 
-    TextView text_caffeineIntakeValue;
+    //TextView text_caffeineIntakeValue;
     EditText input_CaffeineIntakeValue;
     Button btn_addCaffeineIntake;
     Button btn_back;
