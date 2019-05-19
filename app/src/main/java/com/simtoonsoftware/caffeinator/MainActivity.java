@@ -16,13 +16,13 @@ import com.google.android.gms.ads.MobileAds;
 public class MainActivity extends AppCompatActivity {
 
     //definitions and declarations
-    float caffeineIntakeValue;
+    static public float caffeineIntakeValue;
+
     TextView text_caffeineIntakeValue;
+    AddCaffeineIntakeActivity addCaffeineIntakeActivityRef = new AddCaffeineIntakeActivity();
 
     private InterstitialAd RandomAd;
     private AdView RandomBannerAd;
-
-    AddCaffeineIntakeActivity AddCaffeineIntakeActivityRef = new AddCaffeineIntakeActivity();
 
     //icon - cup of coffee HEX #FFA500
 
@@ -31,15 +31,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        caffeineIntakeValue = addCaffeineIntakeActivityRef.caffeineIntakeValue;
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
-        caffeineIntakeValue = AddCaffeineIntakeActivityRef.caffeineIntakeValue;
-        text_caffeineIntakeValue.setText("" + caffeineIntakeValue + "mg");
+        //text_caffeineIntakeValue.setText(addCaffeineIntakeActivityRef.caffeineIntakeValue + "mg");
+        text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
 
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502");
 
         RandomAd = new InterstitialAd(this);
-        RandomAd.setAdUnitId("ca-app-pub-3940256099942544/6300978111"); //testing
-        //RandomAd.setAdUnitId("ca-app-pub-9086446979210331/2057677460"); //real deal
+        RandomAd.setAdUnitId("ca-app-pub-9086446979210331/2057677460"); //real deal
         RandomAd.loadAd(new AdRequest.Builder().build());
         RandomBannerAd = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
