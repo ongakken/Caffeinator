@@ -22,8 +22,6 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
     Button btn_addCaffeineIntake;
     Button btn_back;
 
-    //MainActivity mainActivityRef = new MainActivity();
-
     private AdView RandomBannerAd;
 
     @Override
