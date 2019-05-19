@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Caffeinator</string>
-    <item type="string" format="float" name="caffeineIntakeValue">0.0</item>
+    <item type="string" format="float" name="caffeineIntakeValue">0</item>
 </resources>
