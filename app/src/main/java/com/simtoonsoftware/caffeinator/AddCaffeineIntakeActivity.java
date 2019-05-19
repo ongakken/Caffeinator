@@ -47,7 +47,7 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 caffeineIntakeValue += Float.parseFloat(input_CaffeineIntakeValue.getText() + "");
-                text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
+                text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
             }
             });
         btn_back.setOnClickListener(new View.OnClickListener() {

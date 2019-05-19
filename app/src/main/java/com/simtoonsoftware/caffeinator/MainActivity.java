@@ -33,13 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
         caffeineIntakeValue = addCaffeineIntakeActivityRef.caffeineIntakeValue;
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
-        //text_caffeineIntakeValue.setText(addCaffeineIntakeActivityRef.caffeineIntakeValue + "mg");
         text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
 
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502");
 
         RandomAd = new InterstitialAd(this);
-        RandomAd.setAdUnitId("ca-app-pub-9086446979210331/2057677460"); //real deal
+        RandomAd.setAdUnitId("ca-app-pub-9086446979210331/2057677460");
         RandomAd.loadAd(new AdRequest.Builder().build());
         RandomBannerAd = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
