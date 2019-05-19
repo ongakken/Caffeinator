@@ -1,3 +1,3 @@
 # Caffeinator
 
-An app useful for heavy coffee drinkers.
+An app useful to regular coffee drinkers.
