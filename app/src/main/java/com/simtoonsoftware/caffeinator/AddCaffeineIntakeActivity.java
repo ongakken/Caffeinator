@@ -28,20 +28,20 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_caffeine_intake);
+        //Ad Section
+        MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502");
 
-    //definitions
+        RandomBannerAd = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RandomBannerAd.loadAd(adRequest);
+
+        // Resources
         input_CaffeineIntakeValue = findViewById(R.id.input_CaffeineIntakeValue);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         btn_back = findViewById(R.id.btn_back);
 
         text_caffeineIntakeValue.setText("" + caffeineIntakeValue);
-
-        MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502");
-
-        RandomBannerAd = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        RandomBannerAd.loadAd(adRequest);
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override

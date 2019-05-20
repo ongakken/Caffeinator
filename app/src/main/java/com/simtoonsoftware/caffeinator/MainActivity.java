@@ -40,20 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
-        getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
-        maxCaffeineIntake = 400;
-
-        caffeineIntakeValue = addCaffeineIntakeActivityRef.caffeineIntakeValue;
-        text_caffeineIntakeLeft = findViewById(R.id.text_caffeineIntakeLeft);
-        text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
-        text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
-        currentCaffeineLevel = (int)caffeineIntakeValue;
-        prg_maxCaffeine.setMax(maxCaffeineIntake);
-        prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
-        caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
-        text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
-
+        //Ad Section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502");
 
         RandomAd = new InterstitialAd(this);
@@ -62,6 +49,22 @@ public class MainActivity extends AppCompatActivity {
         RandomBannerAd = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         RandomBannerAd.loadAd(adRequest);
+
+        // Resources
+        prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
+        text_caffeineIntakeLeft = findViewById(R.id.text_caffeineIntakeLeft);
+        text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
+
+        maxCaffeineIntake = 400;
+        prg_maxCaffeine.setMax(maxCaffeineIntake);
+        prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
+        getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
+
+        caffeineIntakeValue = addCaffeineIntakeActivityRef.caffeineIntakeValue;
+        text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
+        currentCaffeineLevel = (int)caffeineIntakeValue;
+        caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
+        text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
 
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
@@ -75,4 +78,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }}
+    }
+}
