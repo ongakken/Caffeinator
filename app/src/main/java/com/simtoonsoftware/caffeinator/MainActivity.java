@@ -1,6 +1,7 @@
 package com.simtoonsoftware.caffeinator;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +15,9 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     //definitions and declarations
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     int maxCaffeineIntake;
     int prg_maxCaffeine_maxValue;
     int getPrg_maxCaffeine_currentValue;
+
+    Timer autosave = new Timer();
 
     TextView text_caffeineIntakeValue;
     TextView text_caffeineIntakeLeft;
@@ -39,6 +45,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Auto Saving/Loading Section
+
+        //LOAD
+        SharedPreferences loadGame = getSharedPreferences("LOAD", MODE_PRIVATE); // Creates a loadGame shared preference under the string LOAD
+        currentCaffeineLevel = loadGame.getInt("currentCaffeineLevel", 0); // Loads currentCaffeineLevel from a saved preference, if no preference is found then it is set to 0
+
+        //SAVE
+        SharedPreferences saveGame = getSharedPreferences("SAVE", MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
+        final SharedPreferences.Editor save = saveGame.edit();
+
+        autosave.schedule(new TimerTask() { // Autosave timer that runs every 5 seconds with a 5 second initial delay, meaning the first save will occur 5 seconds after the timer(app) is run
+            @Override
+            public void run() {
+                save.putInt("currentCaffeineLevel", currentCaffeineLevel); // Tells the shared preferences under which string(key)and what int to save
+                save.apply(); //Applies all of the above and puts it into the cache
+            }
+        }, 5000, 5000);
+
 
         //Ad Section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502");
@@ -79,4 +104,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
