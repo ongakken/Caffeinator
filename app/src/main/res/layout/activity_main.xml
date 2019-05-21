@@ -67,6 +67,7 @@
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toBottomOf="@+id/btn_addCaffeineIntake"
         ads:layout_constraintVertical_bias="1.0"></com.google.android.gms.ads.AdView>
+    <!--ads:adUnitId="ca-app-pub-3940256099942544/6300978111 TEST AD ID"-->
 
     <ProgressBar
         android:id="@+id/prgBar_maxCaffeine"

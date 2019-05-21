@@ -1,7 +1,9 @@
 package com.simtoonsoftware.caffeinator;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +16,10 @@ import com.google.android.gms.ads.MobileAds;
 
 public class AddCaffeineIntakeActivity extends AppCompatActivity {
 
-    //declarations
-    static public float caffeineIntakeValue;
+    // Declarations and Definitions
+    float caffeineIntakeValue;
 
+    // UI
     TextView text_caffeineIntakeValue;
     EditText input_CaffeineIntakeValue;
     Button btn_addCaffeineIntake;
@@ -28,12 +31,18 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_caffeine_intake);
-        //Ad Section
-        MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502");
-
+        // Ad Section
+        MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
+        //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
         RandomBannerAd = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         RandomBannerAd.loadAd(adRequest);
+
+        // Shared Preferences - passing data between classes
+        SharedPreferences dataTunnel = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences.Editor passData = dataTunnel.edit();
+        passData.putFloat("caffeineIntakeValue", caffeineIntakeValue );
+        //passData.apply(); // We use this to save all the put data // it is commented because we're doing this somewhere else
 
         // Resources
         input_CaffeineIntakeValue = findViewById(R.id.input_CaffeineIntakeValue);
@@ -49,13 +58,14 @@ public class AddCaffeineIntakeActivity extends AppCompatActivity {
                 caffeineIntakeValue += Float.parseFloat(input_CaffeineIntakeValue.getText() + "");
                 text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
             }
-            });
+        });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AddCaffeineIntakeActivity.this, MainActivity.class));
+                passData.apply();
             }
         });
     }
-  }
+}
 
