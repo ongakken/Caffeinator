@@ -1,9 +1,9 @@
 package com.simtoonsoftware.caffeinator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -47,18 +47,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Auto Saving/Loading Section
-/*
+
         //LOAD
-        SharedPreferences loadGame = getSharedPreferences("LOAD", MODE_PRIVATE); // Creates a loadGame shared preference under the string LOAD
+        SharedPreferences loadGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a loadGame shared preference under the string LOAD
         caffeineIntakeValue = loadGame.getFloat("caffeineIntakeValue", 0); // Loads currentCaffeineLevel from a saved preference, if no preference is found then it is set to 0
+        System.out.println(caffeineIntakeValue);
 
         //SAVE
-        SharedPreferences saveGame = getSharedPreferences("SAVE", MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
+        SharedPreferences saveGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
         final SharedPreferences.Editor save = saveGame.edit();
-*/
+
         // Shared Preferences - passing data between classes
-        SharedPreferences dataTunnel = PreferenceManager.getDefaultSharedPreferences(this);
-        caffeineIntakeValue = dataTunnel.getFloat("caffeineIntakeValue", 0);
+        //SharedPreferences dataTunnel = PreferenceManager.getDefaultSharedPreferences(this);
+        //caffeineIntakeValue = dataTunnel.getFloat("caffeineIntakeValue", 0);
 
         //Ad Section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
@@ -81,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
         prg_maxCaffeine.setMax(maxCaffeineIntake);
         prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
         getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
+
+        caffeineIntakeValue = AddCaffeineIntakeActivity.getCaffeineIntakeValue();
+        save.putFloat("caffeineIntakeValue", 0);
+        save.commit();
+        System.out.println(caffeineIntakeValue);
 
         text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
         currentCaffeineLevel = (int)caffeineIntakeValue;
