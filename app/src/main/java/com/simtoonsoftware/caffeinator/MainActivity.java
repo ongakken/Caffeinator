@@ -20,15 +20,10 @@ import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
 
-    //SAVE
-    SharedPreferences saveGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
-    final SharedPreferences.Editor save = saveGame.edit();
-
     //Method overrides (except onCreate())
     @Override
     protected void onPause() {
         super.onPause();
-        save.putFloat("caffeineIntakeValue", 0);
     }
 
     //Floats
@@ -64,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences loadGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a loadGame shared preference under the string LOAD
         caffeineIntakeValue = loadGame.getFloat("caffeineIntakeValue", 0); // Loads currentCaffeineLevel from a saved preference, if no preference is found then it is set to 0
         System.out.println(caffeineIntakeValue);
+
+        //SAVE
+        SharedPreferences saveGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
+        final SharedPreferences.Editor save = saveGame.edit();
 
         // Shared Preferences - passing data between classes
         //SharedPreferences dataTunnel = PreferenceManager.getDefaultSharedPreferences(this);
