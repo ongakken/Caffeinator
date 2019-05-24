@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212121"
-    tools:context=".MainActivity">
+    android:background="#3f3f3f"
+    tools:context=".Activities.MainActivity">
 
     <TextView
         android:id="@+id/text_caffeineIntake"
@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="Caffeine intake: "
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="#FFA500"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="0mg"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="#FFA500"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,9 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintVertical_bias="0.26"
+        android:progressTint="#FFA500"
+        />
 
     <TextView
         android:id="@+id/textView2"
@@ -96,7 +98,7 @@
         android:layout_marginEnd="8dp"
         android:text="How much more caffeine can I take in today?"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="#FFA500"
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +115,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="You can safely take in "
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="#FFA500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/text_caffeineIntakeLeft"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +131,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="0mg"
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="#FFA500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
         app:layout_constraintHorizontal_bias="0.943"
@@ -146,7 +148,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text=" of caffeine."
-        android:textColor="@android:color/holo_blue_bright"
+        android:textColor="#FFA500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
