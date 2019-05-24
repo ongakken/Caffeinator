@@ -1,13 +1,12 @@
 package com.simtoonsoftware.caffeinator;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     //Integers
     int currentCaffeineLevel;
     int maxCaffeineIntake;
-    int prg_maxCaffeine_maxValue;
     int getPrg_maxCaffeine_currentValue;
 
     //Timers
@@ -53,20 +51,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Saving and Loading Section
-
-        //LOAD
-        PreferenceClass preference;
-        preference = new PreferenceClass();
-        preference.getFloat();
-        //SAVE
-/*        SharedPreferences saveGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
-          final SharedPreferences.Editor save = saveGame.edit();
-
-        // Shared Preferences - passing data between classes
-        //SharedPreferences dataTunnel = PreferenceManager.getDefaultSharedPreferences(this);
-        //caffeineIntakeValue = dataTunnel.getFloat("caffeineIntakeValue", 0);
-*/
         //Ad section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
         //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
@@ -82,25 +66,24 @@ public class MainActivity extends AppCompatActivity {
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
         text_caffeineIntakeLeft = findViewById(R.id.text_caffeineIntakeLeft);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
+        Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         maxCaffeineIntake = 400;
         prg_maxCaffeine.setMax(maxCaffeineIntake);
         prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
         getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
-        caffeineIntakeValue = AddCaffeineIntakeActivity.getCaffeineIntakeValue();
 
-        preference.setFloat(caffeineIntakeValue);
-        System.out.println(caffeineIntakeValue);
-
+        //UI
         text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
         currentCaffeineLevel = (int)caffeineIntakeValue;
         caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
         text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
 
-        Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               startActivity(new Intent(MainActivity.this, AddCaffeineIntakeActivity.class));
+                Intent addCaffeineIntakeActivity = new Intent(MainActivity.this, AddCaffeineIntakeActivity.class);
+                addCaffeineIntakeActivity.putExtra("caffeineIntakeValue", caffeineIntakeValue);
+                startActivity(addCaffeineIntakeActivity);
                 if (RandomInterstitialAd.isLoaded()) {
                     RandomInterstitialAd.show();
                 } else {
