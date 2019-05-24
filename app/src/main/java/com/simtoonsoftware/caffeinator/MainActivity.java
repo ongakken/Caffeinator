@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addCaffeineIntakeActivity = new Intent(MainActivity.this, AddCaffeineIntakeActivity.class);
+                Intent addCaffeineIntakeActivity = new Intent(MainActivity.this, AddCaffeine.class);
                 addCaffeineIntakeActivity.putExtra("caffeineIntakeValue", caffeineIntakeValue);
                 startActivity(addCaffeineIntakeActivity);
                 if (RandomInterstitialAd.isLoaded()) {
