@@ -1,6 +1,7 @@
 package com.simtoonsoftware.caffeinator.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,22 +17,19 @@ import com.google.android.gms.ads.MobileAds;
 import com.simtoonsoftware.caffeinator.R;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Method overrides (except onCreate())
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     // Variables
-    float caffeineIntakeValue = 250;
+    float caffeineIntakeValue;
     float caffeineIntakeLeft;
 
     int currentCaffeineLevel;
     int maxCaffeineIntake;
     int getPrg_maxCaffeine_currentValue;
+
+    public static final String SAVE = "Clicker%Game%2%Save";
 
     // Timers
     Timer autosave = new Timer();
@@ -52,18 +50,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Ad section
+        // Auto Save/Load section
+        final SharedPreferences saveInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
+        final SharedPreferences.Editor save = saveInstance.edit();
+        final SharedPreferences loadInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
+
+        caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
+
+
+        // Ad section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
-        //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
+            //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
         RandomInterstitialAd = new InterstitialAd(this);
         RandomInterstitialAd.setAdUnitId("ca-app-pub-9086446979210331/2057677460"); // Real AD ID
-        //RandomInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // Testing AD ID
+            //RandomInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // Testing AD ID
         RandomInterstitialAd.loadAd(new AdRequest.Builder().build());
         RandomBannerAd = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         RandomBannerAd.loadAd(adRequest);
 
-        //Data resources
+        // Data resources
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
         text_caffeineIntakeLeft = findViewById(R.id.text_caffeineIntakeLeft);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
         getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
 
-        //UI
+        // UI
         text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
         currentCaffeineLevel = (int)caffeineIntakeValue;
         caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
@@ -92,6 +98,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        autosave.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+                save.apply();
+            }
+        }, 2500, 2500);
     }
     // This method is called when the second activity finishes
     @Override
