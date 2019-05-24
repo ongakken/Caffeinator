@@ -40,6 +40,12 @@ public class AddCaffeine extends AppCompatActivity {
                 caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
                 caffeineValue += caffeineValueDefault;
                 textView.setText(Float.toString(caffeineValue));
+
+                // Pass back the data and safely finish the activity
+                Intent intent = new Intent();
+                intent.putExtra("caffeineIntakeValue", caffeineValue);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
