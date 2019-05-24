@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Floats
-    float caffeineIntakeValue;
+    float caffeineIntakeValue = 0;
     float caffeineIntakeLeft;
 
     //Integers
@@ -56,18 +56,17 @@ public class MainActivity extends AppCompatActivity {
         //Saving and Loading Section
 
         //LOAD
-        SharedPreferences loadGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a loadGame shared preference under the string LOAD
-        caffeineIntakeValue = loadGame.getFloat("caffeineIntakeValue", 0); // Loads currentCaffeineLevel from a saved preference, if no preference is found then it is set to 0
-        System.out.println(caffeineIntakeValue);
-
+        PreferenceClass preference;
+        preference = new PreferenceClass();
+        preference.getFloat();
         //SAVE
-        SharedPreferences saveGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
-        final SharedPreferences.Editor save = saveGame.edit();
+/*        SharedPreferences saveGame = getSharedPreferences("SAVE", Context.MODE_PRIVATE); // Creates a saveGame shared preference under the string SAVE
+          final SharedPreferences.Editor save = saveGame.edit();
 
         // Shared Preferences - passing data between classes
         //SharedPreferences dataTunnel = PreferenceManager.getDefaultSharedPreferences(this);
         //caffeineIntakeValue = dataTunnel.getFloat("caffeineIntakeValue", 0);
-
+*/
         //Ad section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
         //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
@@ -89,8 +88,7 @@ public class MainActivity extends AppCompatActivity {
         getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
         caffeineIntakeValue = AddCaffeineIntakeActivity.getCaffeineIntakeValue();
 
-        save.putFloat("caffeineIntakeValue", 0);
-        save.commit();
+        preference.setFloat(caffeineIntakeValue);
         System.out.println(caffeineIntakeValue);
 
         text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
@@ -111,5 +109,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
