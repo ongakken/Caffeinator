@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3f3f3f"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <TextView
         android:id="@+id/text_caffeineIntake"

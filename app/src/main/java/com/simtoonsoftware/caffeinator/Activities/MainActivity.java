@@ -1,4 +1,4 @@
-package com.simtoonsoftware.caffeinator;
+package com.simtoonsoftware.caffeinator.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,6 +13,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.simtoonsoftware.caffeinator.R;
 
 import java.util.Timer;
 
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Floats
-    float caffeineIntakeValue = 0;
+    float caffeineIntakeValue = 250;
     float caffeineIntakeLeft;
 
     //Integers
