@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     int maxCaffeineIntake;
     int getPrg_maxCaffeine_currentValue;
 
-    public static final String SAVE = "Clicker%Game%2%Save";
+    public static final String SAVE = "Caffeinator%Save%File";
 
     // Timers
     Timer autosave = new Timer();
