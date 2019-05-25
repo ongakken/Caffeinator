@@ -21,6 +21,9 @@ public class AddCaffeine extends AppCompatActivity {
     float caffeineValueFinal;
     float caffeineValue;
 
+    String caffeineValueText;
+    String invalidCharacter = ".";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,8 @@ public class AddCaffeine extends AppCompatActivity {
         addCaffeine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(caffeineAmount.length() == 0) {
+                caffeineValueText = caffeineAmount.getText().toString();
+                if(caffeineAmount.length() == 0 || caffeineValueText.equals(invalidCharacter)) {
                     invalidValue.setText("Please enter valid value.");
                 } else {
                     caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
