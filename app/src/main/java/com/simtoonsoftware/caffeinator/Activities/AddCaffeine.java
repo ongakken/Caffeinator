@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.simtoonsoftware.caffeinator.R;
+
+import org.w3c.dom.Text;
 
 public class AddCaffeine extends AppCompatActivity {
 
@@ -27,7 +30,8 @@ public class AddCaffeine extends AppCompatActivity {
         // Resources
         final EditText caffeineAmount = findViewById(R.id.caffeineAmount);
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
-        final TextView textView = findViewById(R.id.textView);
+        final TextView textView = findViewById(R.id.addCaffeineText);
+        final TextView invalidValue = findViewById(R.id.invalidValue);
 
         // Get data from MainActivity and put them in the TextView
         Intent getData = getIntent();
@@ -37,15 +41,19 @@ public class AddCaffeine extends AppCompatActivity {
         addCaffeine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
-                caffeineValue += caffeineValueDefault;
-                textView.setText(Float.toString(caffeineValue));
+                if(caffeineAmount.length() == 0) {
+                    invalidValue.setText("Please enter valid value.");
+                } else {
+                    caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
+                    caffeineValue += caffeineValueDefault;
+                    textView.setText(Float.toString(caffeineValue));
 
-                // Pass back the data and safely finish the activity
-                Intent intent = new Intent();
-                intent.putExtra("caffeineIntakeValue", caffeineValue);
-                setResult(RESULT_OK, intent);
-                finish();
+                    // Pass back the data and safely finish the activity
+                    Intent intent = new Intent();
+                    intent.putExtra("caffeineIntakeValue", caffeineValue);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
         });
     }

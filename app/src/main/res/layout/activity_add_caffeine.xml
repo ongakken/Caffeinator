@@ -24,9 +24,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/addCaffeineText"
         android:layout_width="172dp"
-        android:layout_height="14dp"
+        android:layout_height="25dp"
         android:layout_marginStart="108dp"
         android:layout_marginBottom="16dp"
         android:text="Add Caffeine"
@@ -45,6 +45,18 @@
         android:text="Add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/caffeineAmount" />
+
+    <TextView
+        android:id="@+id/invalidValue"
+        android:layout_width="177dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="56dp"
+
+        android:text=""
+        android:textColor="#FFA500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCaffeineButton" />
 
 
 </android.support.constraint.ConstraintLayout>
