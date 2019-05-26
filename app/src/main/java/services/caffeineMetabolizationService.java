@@ -91,15 +91,14 @@ public class caffeineMetabolizationService extends Service {
                 }
                 //Do some work
                 if(caffeineIntakeValue > 0) {
-                        caffeineMetabolizedValue += caffeineIntakeValue;
-                        caffeineIntakeValue = 0;
-                        caffeineMetabolizedValue -= 0.1;
-                        sendData();
-                        Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + caffeineMetabolizedValue + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+                    caffeineIntakeValue -= 0.1;
+                    sendData();
+                    Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + caffeineIntakeValue + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+                } else if(caffeineIntakeValue == 0) {
+                    receiveData();
                 }
                 Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
                 oldTime = System.currentTimeMillis();
-                receiveData();
                 saveData();
                 Log.i("in timer", "DATA SAVED!  ");
             }
@@ -135,7 +134,7 @@ public class caffeineMetabolizationService extends Service {
         SharedPreferences prefsDataSend = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
         SharedPreferences.Editor dataSend = prefsDataSend.edit();
 
-        dataSend.putFloat("caffeineMetabolizedValue", caffeineMetabolizedValue);
+        dataSend.putFloat("caffeineMetabolizedValue", caffeineIntakeValue);
     }
 
     private void receiveData() {

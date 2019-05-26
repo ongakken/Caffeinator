@@ -126,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                exchangeData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineMetabolizedValue);
-                                computeData();Log.i("computeData", "Calculations complete! "+ caffeineMetabolizedValue);
+                                exchangeData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
+                                computeData();Log.i("computeData", "Calculations complete! "+ caffeineIntakeValue);
                                 updateUI();Log.i("updateUI", "UI Updated ");
                             }
                         });
@@ -180,12 +180,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor send = sendData.edit();
         SharedPreferences receiveData = getSharedPreferences(SAVE, MODE_PRIVATE);
 
-        caffeineMetabolizedValue = receiveData.getFloat("caffeineMetabolizedValue", 0);
+        caffeineIntakeValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineIntakeValue);
         send.putFloat("caffeineIntakeValue", caffeineIntakeValue);
     }
     private void computeData() {
-        caffeineIntakeValue -= caffeineMetabolizedValue;
-        caffeineMetabolizedValue = 0;
+
     }
 
     public void startServices() {
