@@ -1,5 +1,7 @@
 package com.simtoonsoftware.caffeinator.Activities;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,7 +21,8 @@ import com.simtoonsoftware.caffeinator.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import services.caffeineMatabolizationService;
+import broadcasters.SensorRestarterBroadcastReceiver;
+import services.caffeineMetabolizationService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
     int currentCaffeineLevel;
     int maxCaffeineIntake;
     int getPrg_maxCaffeine_currentValue;
+
+    Intent startCaffeineMetabolizationService;
+    private caffeineMetabolizationService mCaffeineMetabolizationService;
+    Context ctx;
+    public Context getCtx() {
+        return ctx;
+    }
 
     // Timers
     Timer autosave = new Timer();
@@ -50,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Variables
+        ctx = this;
         setContentView(R.layout.activity_main);
 
         // Data resources
@@ -90,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Services
         startServices();
+
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,8 +149,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void startServices() {
-        Intent startCaffeineMetabolizationService = new Intent(this, caffeineMatabolizationService.class);
-        startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
-        startService(startCaffeineMetabolizationService);
+        // startCaffeineMetabolizationService = new Intent(this, caffeineMetabolizationService.class);
+        //startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
+        //startService(startCaffeineMetabolizationService);
+
+        mCaffeineMetabolizationService = new caffeineMetabolizationService(getCtx());
+        startCaffeineMetabolizationService = new Intent(getCtx(), caffeineMetabolizationService.class);
+
+        if (!isMyServiceRunning(caffeineMetabolizationService.class)) {
+            startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
+            startService(startCaffeineMetabolizationService);
+        }
+
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(startCaffeineMetabolizationService);
+        Log.i("MAINACT", "onDestroy!");
+        super.onDestroy();
     }
 }

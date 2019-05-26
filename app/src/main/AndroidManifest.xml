@@ -12,10 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <service
-            android:name="services.caffeineMatabolizationService"
+        <receiver
+            android:name="broadcasters.SensorRestarterBroadcastReceiver"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"></receiver>
+
+        <service
+            android:name="services.caffeineMetabolizationService"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity android:name=".Activities.AddCaffeine" />
         <activity android:name=".Activities.MainActivity">
