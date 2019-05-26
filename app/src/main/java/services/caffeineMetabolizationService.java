@@ -18,6 +18,9 @@ public class caffeineMetabolizationService extends Service {
 
     // Variables
     int count = 0;
+    long oldTime;
+    long newTime;
+    long differenceTime;
     public int counter;
     private Timer metabolizationTimer = new Timer();
     Context ctx = this;
@@ -36,7 +39,10 @@ public class caffeineMetabolizationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         // Saving/Loading
+        newTime = System.currentTimeMillis();
         loadData();
+        differenceTime = (newTime - oldTime) / 1000;
+        Log.i("DEBUG", "time difference: " + differenceTime + " oldTime: " + oldTime + " newTime " + newTime);
         startTimer();
         return START_STICKY;
     }
@@ -52,7 +58,6 @@ public class caffeineMetabolizationService extends Service {
 
     private Timer timer;
     private TimerTask timerTask;
-    long oldTime=0;
     public void startTimer() {
         //set a new Timer
         timer = new Timer();
@@ -69,8 +74,16 @@ public class caffeineMetabolizationService extends Service {
     public void initializeTimerTask() {
         timerTask = new TimerTask() {
             public void run() {
-                Log.i("in timer", "in timer ++++  "+ (counter += 1));
+                //Check for time differences
+                if(differenceTime >= 1) {
+                    for (; differenceTime >= 1; differenceTime--) {
+                        //Do the same work as below, or in other words do the missing work
+                        Log.i("in timer", "in timer ++++  " + (counter += 1));
+                    }
+                }
                 //Do some work
+                Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
+                oldTime = System.currentTimeMillis();
                 saveData();
                 Log.i("in timer", "DATA SAVED!  ");
             }
@@ -91,12 +104,14 @@ public class caffeineMetabolizationService extends Service {
     public void loadData() {
         SharedPreferences prefsDataLoad = getSharedPreferences(SAVE, MODE_PRIVATE);
         counter = prefsDataLoad.getInt("counter", 0);
+        oldTime = prefsDataLoad.getLong("oldTime", newTime);
     }
 
     public void saveData() {
         SharedPreferences prefsDataSave = getSharedPreferences(SAVE, MODE_PRIVATE);
         SharedPreferences.Editor dataSave = prefsDataSave.edit();
         dataSave.putInt("counter", counter);
+        dataSave.putLong("oldTime", oldTime);
         dataSave.apply();
     }
 
