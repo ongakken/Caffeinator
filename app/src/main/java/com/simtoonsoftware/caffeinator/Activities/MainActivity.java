@@ -28,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     // Variables
     float caffeineIntakeValue;
+    float caffeineMetabolizedValue;
     float caffeineIntakeLeft;
 
     int currentCaffeineLevel;
-    int maxCaffeineIntake;
+    int maxCaffeineIntake = 400;
     int getPrg_maxCaffeine_currentValue;
 
     Intent startCaffeineMetabolizationService;
@@ -89,20 +90,10 @@ public class MainActivity extends AppCompatActivity {
         RandomInterstitialAd.loadAd(new AdRequest.Builder().build());
         RandomBannerAd.loadAd(new AdRequest.Builder().build());
 
-        maxCaffeineIntake = 400;
-        prg_maxCaffeine.setMax(maxCaffeineIntake);
-        prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
-        getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
-
-        // UI
-        text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
-        currentCaffeineLevel = (int)caffeineIntakeValue;
-        caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
-        text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
+        //UI
 
         // Services
         startServices();
-
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +116,29 @@ public class MainActivity extends AppCompatActivity {
                 save.apply();
             }
         }, 2500, 2500);
+
+        Thread syncthread = new Thread(){
+            @Override
+            public void run(){
+                while(!isInterrupted()){
+                    try {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                exchangeData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineMetabolizedValue);
+                                computeData();Log.i("computeData", "Calculations complete! "+ caffeineMetabolizedValue);
+                                updateUI();Log.i("updateUI", "UI Updated ");
+                            }
+                        });
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };syncthread.start();
+
     }
     // This method is called when the second activity finishes
     @Override
@@ -148,20 +162,42 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    public void startServices() {
-        // startCaffeineMetabolizationService = new Intent(this, caffeineMetabolizationService.class);
-        //startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
-        //startService(startCaffeineMetabolizationService);
 
+    private void updateUI() {
+        // UI
+        text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
+        currentCaffeineLevel = (int)caffeineIntakeValue;
+        caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
+        text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
+
+        prg_maxCaffeine.setMax(maxCaffeineIntake);
+        prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
+        getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
+    }
+
+    private void exchangeData() {
+        SharedPreferences sendData = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences.Editor send = sendData.edit();
+        SharedPreferences receiveData = getSharedPreferences(SAVE, MODE_PRIVATE);
+
+        caffeineMetabolizedValue = receiveData.getFloat("caffeineMetabolizedValue", 0);
+        send.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+    }
+    private void computeData() {
+        caffeineIntakeValue -= caffeineMetabolizedValue;
+        caffeineMetabolizedValue = 0;
+    }
+
+    public void startServices() {
         mCaffeineMetabolizationService = new caffeineMetabolizationService(getCtx());
         startCaffeineMetabolizationService = new Intent(getCtx(), caffeineMetabolizationService.class);
-
         if (!isMyServiceRunning(caffeineMetabolizationService.class)) {
             startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
             startService(startCaffeineMetabolizationService);
         }
 
     }
+
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -12,19 +13,25 @@ import java.util.TimerTask;
 
 import broadcasters.SensorRestarterBroadcastReceiver;
 
-import static android.support.constraint.Constraints.TAG;
-
 public class caffeineMetabolizationService extends Service {
 
     // Variables
-    int count = 0;
+    public static final String SAVE = "Caffeinator%Service%Save%File";
+    public static final String SEND_TO_ACTIVITY = "Caffeinator%Save%File";
+
     long oldTime;
     long newTime;
     long differenceTime;
+
+    float caffeineIntakeValue;
+    float caffeineMetabolizedValue;
+
     public int counter;
+
+    private Handler computeHandler = new Handler();
+
     private Timer metabolizationTimer = new Timer();
     Context ctx = this;
-    public static final String SAVE = "Caffeinator%Service%Save%File";
 
     public caffeineMetabolizationService(Context applicationContext) {
         super();
@@ -78,12 +85,21 @@ public class caffeineMetabolizationService extends Service {
                 if(differenceTime >= 1) {
                     for (; differenceTime >= 1; differenceTime--) {
                         //Do the same work as below, or in other words do the missing work
+
                         Log.i("in timer", "in timer ++++  " + (counter += 1));
                     }
                 }
                 //Do some work
+                if(caffeineIntakeValue > 0) {
+                        caffeineMetabolizedValue += caffeineIntakeValue;
+                        caffeineIntakeValue = 0;
+                        caffeineMetabolizedValue -= 0.1;
+                        sendData();
+                        Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + caffeineMetabolizedValue + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+                }
                 Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
                 oldTime = System.currentTimeMillis();
+                receiveData();
                 saveData();
                 Log.i("in timer", "DATA SAVED!  ");
             }
@@ -101,18 +117,30 @@ public class caffeineMetabolizationService extends Service {
         }
     }
 
-    public void loadData() {
+    private void loadData() {
         SharedPreferences prefsDataLoad = getSharedPreferences(SAVE, MODE_PRIVATE);
         counter = prefsDataLoad.getInt("counter", 0);
         oldTime = prefsDataLoad.getLong("oldTime", newTime);
     }
 
-    public void saveData() {
+    private void saveData() {
         SharedPreferences prefsDataSave = getSharedPreferences(SAVE, MODE_PRIVATE);
         SharedPreferences.Editor dataSave = prefsDataSave.edit();
         dataSave.putInt("counter", counter);
         dataSave.putLong("oldTime", oldTime);
         dataSave.apply();
+    }
+
+    private void sendData() {
+        SharedPreferences prefsDataSend = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
+        SharedPreferences.Editor dataSend = prefsDataSend.edit();
+
+        dataSend.putFloat("caffeineMetabolizedValue", caffeineMetabolizedValue);
+    }
+
+    private void receiveData() {
+        SharedPreferences prefsDataReceive = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
+        caffeineIntakeValue = prefsDataReceive.getFloat("caffeineIntakeValue", caffeineIntakeValue);
     }
 
     @Override
