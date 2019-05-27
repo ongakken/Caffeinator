@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Variables
     float caffeineIntakeValue;
-    float caffeineMetabolizedValue;
+    float caffeineAddValue;
     float caffeineIntakeLeft;
 
     int currentCaffeineLevel;
@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
         RandomBannerAd = findViewById(R.id.adView);
 
         // Auto Save/Load section
-        final SharedPreferences saveInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
-        final SharedPreferences.Editor save = saveInstance.edit();
         final SharedPreferences loadInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
 
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
@@ -109,14 +107,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        autosave.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
-                save.apply();
-            }
-        }, 2500, 2500);
-
         Thread syncthread = new Thread(){
             @Override
             public void run(){
@@ -126,9 +116,10 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                exchangeData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
                                 computeData();Log.i("computeData", "Calculations complete! ");
+                                exchangeData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
                                 updateUI();Log.i("updateUI", "UI Updated! ");
+                                saveData();Log.i("saveData", "Saving... ");
                             }
                         });
 
@@ -144,23 +135,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        // check that it is the SecondActivity with an OK result
+        // check that it is the addCaffeineActivity with an OK result
         if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-
-                // Get data from Intent
-                caffeineIntakeValue = data.getFloatExtra("caffeineIntakeValue", caffeineIntakeValue);
-
-                // Update the text view
-                text_caffeineIntakeValue.setText(Float.toString(caffeineIntakeValue));
-
-                // Update the progress bar
-                caffeineIntakeLeft = 0;
-                caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
-                text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
+                // Get data from Intent and send them
+                caffeineAddValue = data.getFloatExtra("caffeineAddValue", caffeineAddValue);
+                Log.i("AddCaffeine ", "Caffeine received! " + caffeineAddValue + "-----------------------------------------");
+                exchangeData();
             }
         }
+    }
+
+    private void saveData() {
+        SharedPreferences saveInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences.Editor save = saveInstance.edit();
+        save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+        save.apply();
     }
 
     private void updateUI() {
@@ -182,7 +172,10 @@ public class MainActivity extends AppCompatActivity {
 
         caffeineIntakeValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineIntakeValue);
         send.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+        send.putFloat("caffeineAddValue", caffeineAddValue);
         send.apply();
+
+        caffeineAddValue = 0; //This value has been sent and we don't need it anymore
     }
     private void computeData() {
 
@@ -192,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
         mCaffeineMetabolizationService = new caffeineMetabolizationService(getCtx());
         startCaffeineMetabolizationService = new Intent(getCtx(), caffeineMetabolizationService.class);
         if (!isMyServiceRunning(caffeineMetabolizationService.class)) {
-            //startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
             startService(startCaffeineMetabolizationService);
         }
 

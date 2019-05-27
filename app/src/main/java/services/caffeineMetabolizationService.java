@@ -24,7 +24,8 @@ public class caffeineMetabolizationService extends Service {
     long differenceTime;
 
     float caffeineIntakeValue;
-    float caffeineMetabolizedValue;
+    float caffeineAddValue;
+
 
     public int counter;
 
@@ -85,24 +86,14 @@ public class caffeineMetabolizationService extends Service {
                 if(differenceTime >= 1) {
                     for (; differenceTime >= 1; differenceTime--) {
                         //Do the same work as below, or in other words do the missing work
-                        if(caffeineIntakeValue > 0) {
-                            caffeineIntakeValue -= 0.1;
-                            sendData();
-                            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
-                        } else if(caffeineIntakeValue == 0) {
-                            receiveData();
-                        }
-                        Log.i("in timer", "in timer ++++  " + (counter += 1));
+                        checkDataUpdate();
+                        computeMetabolization();
+                        Log.i("Watchdog: ", "Can't keep up!" + (counter += 1));
                     }
                 }
                 //Do some work
-                if(caffeineIntakeValue > 0) {
-                    caffeineIntakeValue -= 0.1;
-                    sendData();
-                    Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
-                } else if(caffeineIntakeValue == 0) {
-                    receiveData();
-                }
+                checkDataUpdate();
+                computeMetabolization();
                 Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
                 oldTime = System.currentTimeMillis();
                 saveData();
@@ -119,6 +110,17 @@ public class caffeineMetabolizationService extends Service {
         if (timer != null) {
             timer.cancel();
             timer = null;
+        }
+    }
+
+    private void computeMetabolization() {
+        if(caffeineIntakeValue > 0) {
+            caffeineIntakeValue -= 0.1;
+            caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
+            sendData();
+            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+        } else if(caffeineIntakeValue == 0) {
+            receiveData();
         }
     }
 
@@ -141,12 +143,23 @@ public class caffeineMetabolizationService extends Service {
         SharedPreferences.Editor dataSend = prefsDataSend.edit();
 
         dataSend.putFloat("caffeineMetabolizedValue", caffeineIntakeValue);
+        dataSend.putFloat("caffeineAddValue", caffeineAddValue);
         dataSend.apply();
     }
 
     private void receiveData() {
         SharedPreferences prefsDataReceive = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
         caffeineIntakeValue = prefsDataReceive.getFloat("caffeineIntakeValue", caffeineIntakeValue);
+    }
+
+    private void checkDataUpdate() {
+        SharedPreferences prefsDataUpdate = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
+        caffeineAddValue = prefsDataUpdate.getFloat("caffeineAddValue", caffeineAddValue);
+
+        if (caffeineAddValue > 0) {
+            caffeineIntakeValue += caffeineAddValue;
+            caffeineAddValue = 0;
+        }
     }
 
     @Override

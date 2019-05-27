@@ -54,7 +54,7 @@ public class AddCaffeine extends AppCompatActivity {
 
                     // Pass back the data and safely finish the activity
                     Intent intent = new Intent();
-                    intent.putExtra("caffeineIntakeValue", caffeineValue);
+                    intent.putExtra("caffeineAddValue", caffeineValue);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
