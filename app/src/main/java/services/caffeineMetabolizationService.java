@@ -85,7 +85,13 @@ public class caffeineMetabolizationService extends Service {
                 if(differenceTime >= 1) {
                     for (; differenceTime >= 1; differenceTime--) {
                         //Do the same work as below, or in other words do the missing work
-
+                        if(caffeineIntakeValue > 0) {
+                            caffeineIntakeValue -= 0.1;
+                            sendData();
+                            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+                        } else if(caffeineIntakeValue == 0) {
+                            receiveData();
+                        }
                         Log.i("in timer", "in timer ++++  " + (counter += 1));
                     }
                 }
@@ -93,7 +99,7 @@ public class caffeineMetabolizationService extends Service {
                 if(caffeineIntakeValue > 0) {
                     caffeineIntakeValue -= 0.1;
                     sendData();
-                    Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + caffeineIntakeValue + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+                    Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
                 } else if(caffeineIntakeValue == 0) {
                     receiveData();
                 }
@@ -135,6 +141,7 @@ public class caffeineMetabolizationService extends Service {
         SharedPreferences.Editor dataSend = prefsDataSend.edit();
 
         dataSend.putFloat("caffeineMetabolizedValue", caffeineIntakeValue);
+        dataSend.apply();
     }
 
     private void receiveData() {

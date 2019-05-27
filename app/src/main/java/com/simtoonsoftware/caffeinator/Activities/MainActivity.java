@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 exchangeData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
-                                computeData();Log.i("computeData", "Calculations complete! "+ caffeineIntakeValue);
-                                updateUI();Log.i("updateUI", "UI Updated ");
+                                computeData();Log.i("computeData", "Calculations complete! ");
+                                updateUI();Log.i("updateUI", "UI Updated! ");
                             }
                         });
 
@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
         caffeineIntakeValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineIntakeValue);
         send.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+        send.apply();
     }
     private void computeData() {
 
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         mCaffeineMetabolizationService = new caffeineMetabolizationService(getCtx());
         startCaffeineMetabolizationService = new Intent(getCtx(), caffeineMetabolizationService.class);
         if (!isMyServiceRunning(caffeineMetabolizationService.class)) {
-            startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
+            //startCaffeineMetabolizationService.putExtra("caffeineMetabolizeValue", caffeineIntakeValue);
             startService(startCaffeineMetabolizationService);
         }
 
