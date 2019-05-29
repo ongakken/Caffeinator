@@ -49,8 +49,8 @@ public class AddCaffeine extends AppCompatActivity {
                     invalidValue.setText("Please enter valid value.");
                 } else {
                     caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
-                    caffeineValue += caffeineValueDefault;
-                    textView.setText(Float.toString(caffeineValue));
+                    caffeineValueDefault += caffeineValue;
+                    textView.setText(Float.toString(caffeineValueDefault));
 
                     // Pass back the data and safely finish the activity
                     Intent intent = new Intent();
