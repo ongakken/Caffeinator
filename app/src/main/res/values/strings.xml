@@ -1,3 +1,7 @@
+<!--
+  ~ Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
+  -->
+
 <resources>
     <string name="app_name">Caffeinator</string>
     <item name="caffeineIntakeValue" format="float" type="string">0</item>
