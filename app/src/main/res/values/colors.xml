@@ -3,4 +3,27 @@
     <color name="colorPrimary">#626B6A</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--Themes, TODO future feature-->
+        <!--Dark theme-->
+        <color name="textColor_dark">#FFA500</color>
+        <color name="background_dark">#3F3F3F</color>
+
+        <!--Cappuccino theme-->
+        <color name="textColor_cappuccino">#DB9B51</color>
+        <color  name="background_cappuccino">#FFF8AA</color>
+
+        <!--Dark coffee theme-->
+        <color name="textColor_darkCoffee">#B47137</color>
+        <color name="background_darkCoffee">#2D1A14</color>
+
+        <!--Latte theme-->
+        <color name="textColor_latte">#d3c5ba</color>
+        <color name="background_latte">#B99972</color>
+
+        <!--Red bull theme-->
+        <color name="textColor_redBull">#C62F1D</color>
+        <color name="background_redBull">#1B3476</color>
+
+
 </resources>
