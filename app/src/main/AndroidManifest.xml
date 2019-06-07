@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.simtoonsoftware.caffeinator">
 
@@ -16,14 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activities.AddCaffeine"></activity>
-        <activity android:name=".Activities.MainActivity">
+        <activity
+            android:name=".Activities.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.AddCaffeine" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
