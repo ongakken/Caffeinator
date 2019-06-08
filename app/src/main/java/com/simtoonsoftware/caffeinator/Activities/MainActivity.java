@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 // Repeat this every 250ms
                 updateHandler.postDelayed(this, 250);
             }
-        }, 1500);
+        }, 25);
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
