@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         // Variables
         ctx = this;
         updateHandler = new Handler();
-        Runnable r;
 
         // Data resources
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
