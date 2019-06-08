@@ -138,6 +138,7 @@ public class caffeineMetabolizationService extends Service {
 
     private void loadData() {
         SharedPreferences prefsDataLoad = getSharedPreferences(SAVE, MODE_PRIVATE);
+        caffeineIntakeValue = prefsDataLoad.getFloat("caffeineIntakeValue", caffeineIntakeValue);
         counter = prefsDataLoad.getInt("counter", 0);
         oldTime = prefsDataLoad.getLong("oldTime", newTime);
     }
@@ -145,6 +146,7 @@ public class caffeineMetabolizationService extends Service {
     private void saveData() {
         SharedPreferences prefsDataSave = getSharedPreferences(SAVE, MODE_PRIVATE);
         SharedPreferences.Editor dataSave = prefsDataSave.edit();
+        dataSave.putFloat("caffeineIntakeValue", caffeineIntakeValue);
         dataSave.putInt("counter", counter);
         dataSave.putLong("oldTime", oldTime);
         dataSave.apply();
