@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     int maxCaffeineIntake = 400;
     int getPrg_maxCaffeine_currentValue;
 
+    private Handler updateHandler;
+
     Intent startCaffeineMetabolizationService;
     private caffeineMetabolizationService mCaffeineMetabolizationService;
     Context ctx;
@@ -61,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         // Variables
         ctx = this;
-        setContentView(R.layout.activity_main);
+        updateHandler = new Handler();
+        Runnable r;
 
         // Data resources
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
@@ -88,10 +93,23 @@ public class MainActivity extends AppCompatActivity {
         RandomInterstitialAd.loadAd(new AdRequest.Builder().build());
         RandomBannerAd.loadAd(new AdRequest.Builder().build());
 
-        //UI
-
         // Services
         startServices();
+
+        // UI
+
+        updateHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something here on the main thread
+                computeData();Log.i("computeData", "Calculations complete! ");
+                receiveData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
+                updateUI();Log.i("updateUI", "UI Updated! ");
+                saveData();Log.i("saveData", "Saving... ");
+                // Repeat this every 250ms
+                updateHandler.postDelayed(this, 250);
+            }
+        }, 1500);
 
         btn_addCaffeineIntake.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,30 +125,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Thread syncthread = new Thread(){
-            @Override
-            public void run(){
-                while(!isInterrupted()){
-                    try {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                computeData();Log.i("computeData", "Calculations complete! ");
-                                receiveData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
-                                updateUI();Log.i("updateUI", "UI Updated! ");
-                                saveData();Log.i("saveData", "Saving... ");
-                            }
-                        });
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };syncthread.start();
-
     }
+
     // This method is called when the second activity finishes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -142,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 caffeineAddValue = data.getFloatExtra("caffeineAddValue", caffeineAddValue);
                 Log.i("AddCaffeine ", "Caffeine received! " + caffeineAddValue + "-----------------------------------------");
                 sendData();
+                receiveData();
             }
         }
     }

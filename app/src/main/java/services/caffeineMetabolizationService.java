@@ -122,7 +122,7 @@ public class caffeineMetabolizationService extends Service {
             // Do something here on the main thread
             receiveData();
             sendData();
-            // Repeat this the same runnable code block again another 2 seconds
+            // Repeat this every 250ms
             updateHandler.postDelayed(executeUpdater, 250);
         }
     };
