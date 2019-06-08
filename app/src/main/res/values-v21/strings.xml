@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
+  -->
+
+<resources>
+    <string name="nameText">Name:</string>
+    <string name="addCaffeineText">Add Caffeine</string>
+    <string name="addCaffeineButtonText">Add</string>
+    <string name="caffeineAmountHint">Decimal Input</string>
+    <string name="name_of_caffeine_intake">Name of caffeine intake</string>
+    <string name="addCaffeineForm">Form:</string>
+    <string name="menu_about">About</string>
+</resources>

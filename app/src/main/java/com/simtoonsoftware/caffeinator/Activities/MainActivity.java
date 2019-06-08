@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -132,10 +133,7 @@ public class MainActivity extends AppCompatActivity
                         save.apply();
                     }
                 }, 2500, 2500);
-            }
-
-
-
+    }
 
     @Override
     public void onBackPressed() {
@@ -175,14 +173,24 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //TODO navBar handling
         if (id == R.id.nav_home) {
-            // Handle the camera action
+//            Intent mainActivityIntent = new Intent(MainActivity.this, MainActivity.class);
+            // Open main activity
         } else if (id == R.id.nav_stats) {
-
+            // Open stats activity
         } else if (id == R.id.nav_graphs) {
-
+            // Open graphs activity
+            Intent graphsActivityIntent = new Intent(MainActivity.this, GraphActivity.class);
+            startActivity(graphsActivityIntent);
         } else if (id == R.id.nav_settings) {
-
+            // Open settings activity
+            Intent settingsActivityIntent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settingsActivityIntent);
+        } else if(id == R.id.nav_about) {
+            // Open about activity
+            Intent aboutActivityIntent = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(aboutActivityIntent);
         }
 
 
@@ -208,7 +216,7 @@ public class MainActivity extends AppCompatActivity
                 // Update the progress bar
                 caffeineIntakeLeft = 0;
                 caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
-                text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
+                text_caffeineIntakeLeft.setText("Caffeine inatake: " + caffeineIntakeLeft + "mg");
             }
         }
     }

@@ -14,53 +14,88 @@
 
     <EditText
         android:id="@+id/caffeineAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="137dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Decimal Input"
+        android:hint="@string/caffeineAmountHint"
         android:inputType="numberDecimal"
         android:textColor="#FFA500"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintStart_toEndOf="@+id/addCaffeineText"
+        app:layout_constraintTop_toBottomOf="@+id/caffeineName" />
 
     <TextView
         android:id="@+id/addCaffeineText"
-        android:layout_width="172dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginBottom="16dp"
-        android:text="Add Caffeine"
-        android:textColor="#FFA500"
-        app:layout_constraintBottom_toTopOf="@+id/caffeineAmount"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="84dp"
+        android:text="@string/addCaffeineText"
+        android:textAlignment="center"
+        android:textColor="@color/textColor_dark"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-
-        />
+        app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
     <Button
         android:id="@+id/addCaffeineButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="52dp"
-        android:text="Add"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/addCaffeineButtonText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.158"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caffeineAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/addCaffeineText" />
 
     <TextView
         android:id="@+id/invalidValue"
         android:layout_width="177dp"
         android:layout_height="36dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="56dp"
-
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="40dp"
         android:text=""
-        android:textColor="#FFA500"
+        android:textColor="@color/textColor_dark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addCaffeineButton" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/nameText"
+        android:textColor="@color/textColor_dark"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/caffeineName"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/caffeineName"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/name_of_caffeine_intake"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--TODO future feature-->
+    <!--<TextView-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:text="@string/addCaffeineFormText"-->
+        <!--android:textColor="@color/textColor_dark"-->
+        <!--android:textSize="20sp"-->
+        <!--tools:layout_editor_absoluteX="40dp"-->
+        <!--tools:layout_editor_absoluteY="136dp" />-->
 
 
 </android.support.constraint.ConstraintLayout>
