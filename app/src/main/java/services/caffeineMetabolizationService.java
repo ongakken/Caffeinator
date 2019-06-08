@@ -26,6 +26,10 @@ public class caffeineMetabolizationService extends Service {
     float caffeineIntakeValue;
     float caffeineAddValue;
 
+    Thread updateThread;
+    Thread computeDifference;
+
+    Handler updateHandler = new Handler();
 
     public int counter;
 
@@ -52,6 +56,7 @@ public class caffeineMetabolizationService extends Service {
         differenceTime = (newTime - oldTime) / 1000;
         Log.i("DEBUG", "time difference: " + differenceTime + " oldTime: " + oldTime + " newTime " + newTime);
         startTimer();
+        updateHandler.post(executeUpdater);
         return START_STICKY;
     }
     @Override
@@ -76,35 +81,33 @@ public class caffeineMetabolizationService extends Service {
         timer.schedule(timerTask, 1000, 1000);
     }
 
-    /**
-     * it sets the timer to print the counter every x seconds
-     */
     public void initializeTimerTask() {
         timerTask = new TimerTask() {
             public void run() {
                 //Check for time differences
                 if(differenceTime >= 1) {
-                    for (; differenceTime >= 1; differenceTime--) {
-                        //Do the same work as below, or in other words do the missing work
-                        checkDataUpdate();
-                        computeMetabolization();
-                        Log.i("Watchdog: ", "Can't keep up!" + (counter += 1));
-                    }
+                    computeDifference = new Thread(new Runnable() {
+                        public void run() {
+                            for (; differenceTime >= 1; differenceTime--) {
+                                //Do the same work as below, or in other words do the missing work
+                                computeMetabolization();
+                                Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
+                            }
+                        }
+                    });computeDifference.start();
                 }
                 //Do some work
-                checkDataUpdate();
                 computeMetabolization();
                 Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
                 oldTime = System.currentTimeMillis();
                 saveData();
                 Log.i("in timer", "DATA SAVED!  ");
+                Log.i("Service", " Caffeine Count: " + caffeineIntakeValue);
             }
         };
     }
 
-    /**
-     * not needed
-     */
+
     public void stoptimertask() {
         //stop the timer, if it's not already null
         if (timer != null) {
@@ -113,14 +116,23 @@ public class caffeineMetabolizationService extends Service {
         }
     }
 
+    private Runnable executeUpdater = new Runnable() {
+        @Override
+        public void run() {
+            // Do something here on the main thread
+            receiveData();
+            sendData();
+            // Repeat this the same runnable code block again another 2 seconds
+            updateHandler.postDelayed(executeUpdater, 250);
+        }
+    };
+
     private void computeMetabolization() {
         if(caffeineIntakeValue > 0) {
             caffeineIntakeValue -= 0.1;
             caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
             sendData();
             Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
-        } else if(caffeineIntakeValue == 0) {
-            receiveData();
         }
     }
 
@@ -143,22 +155,18 @@ public class caffeineMetabolizationService extends Service {
         SharedPreferences.Editor dataSend = prefsDataSend.edit();
 
         dataSend.putFloat("caffeineMetabolizedValue", caffeineIntakeValue);
-        dataSend.putFloat("caffeineAddValue", caffeineAddValue);
         dataSend.apply();
     }
 
     private void receiveData() {
-        SharedPreferences prefsDataReceive = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
-        caffeineIntakeValue = prefsDataReceive.getFloat("caffeineIntakeValue", caffeineIntakeValue);
-    }
-
-    private void checkDataUpdate() {
         SharedPreferences prefsDataUpdate = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
         caffeineAddValue = prefsDataUpdate.getFloat("caffeineAddValue", caffeineAddValue);
-
+        SharedPreferences.Editor dataDelete = prefsDataUpdate.edit();
         if (caffeineAddValue > 0) {
             caffeineIntakeValue += caffeineAddValue;
             caffeineAddValue = 0;
+            dataDelete.remove("caffeineAddValue");
+            dataDelete.apply();
         }
     }
 

@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 computeData();Log.i("computeData", "Calculations complete! ");
-                                exchangeData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
+                                receiveData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
                                 updateUI();Log.i("updateUI", "UI Updated! ");
                                 saveData();Log.i("saveData", "Saving... ");
                             }
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 // Get data from Intent and send them
                 caffeineAddValue = data.getFloatExtra("caffeineAddValue", caffeineAddValue);
                 Log.i("AddCaffeine ", "Caffeine received! " + caffeineAddValue + "-----------------------------------------");
-                exchangeData();
+                sendData();
             }
         }
     }
@@ -158,23 +158,25 @@ public class MainActivity extends AppCompatActivity {
         text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
         currentCaffeineLevel = (int)caffeineIntakeValue;
         caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
-        text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
-
+        caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
+        text_caffeineIntakeLeft.setText(caffeineIntakeLeft  + "mg");
         prg_maxCaffeine.setMax(maxCaffeineIntake);
         prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
         getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
     }
 
-    private void exchangeData() {
-        SharedPreferences sendData = getSharedPreferences(SAVE, MODE_PRIVATE);
-        SharedPreferences.Editor send = sendData.edit();
+    private void receiveData() {
         SharedPreferences receiveData = getSharedPreferences(SAVE, MODE_PRIVATE);
 
         caffeineIntakeValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineIntakeValue);
-        send.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+    }
+
+    private void sendData() {
+        SharedPreferences sendData = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences.Editor send = sendData.edit();
+
         send.putFloat("caffeineAddValue", caffeineAddValue);
         send.apply();
-
         caffeineAddValue = 0; //This value has been sent and we don't need it anymore
     }
     private void computeData() {
