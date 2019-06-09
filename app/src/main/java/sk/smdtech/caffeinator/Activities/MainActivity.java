@@ -1,4 +1,4 @@
-package com.simtoonsoftware.caffeinator.Activities;
+package sk.smdtech.caffeinator.Activities;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -20,9 +20,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.simtoonsoftware.caffeinator.R;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
-import broadcasters.SensorRestarterBroadcastReceiver;
 import services.caffeineMetabolizationService;
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.simtoonsoftware.caffeinator;
+package sk.smdtech.caffeinator;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

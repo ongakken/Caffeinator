@@ -22,8 +22,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Activities.AddCaffeine" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name="sk.smdtech.caffeinator.Activities.AddCaffeine" />
+        <activity android:name="sk.smdtech.caffeinator.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

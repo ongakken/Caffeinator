@@ -1,26 +1,21 @@
-package com.simtoonsoftware.caffeinator.Activities;
+package sk.smdtech.caffeinator.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.simtoonsoftware.caffeinator.R;
-
-import org.w3c.dom.Text;
 
 public class AddCaffeine extends AppCompatActivity {
 
     // Variables
     float caffeineValueDefault;
-    float caffeineValueFinal;
     float caffeineValue;
 
     private Handler updateHandler;
@@ -66,6 +61,7 @@ public class AddCaffeine extends AppCompatActivity {
                     caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
                     caffeineValueDefault += caffeineValue;
                     textView.setText("Caffeine Amount: " + caffeineValueDefault);
+                    updateHandler.removeCallbacksAndMessages(null);
 
                     // Pass back the data and safely finish the activity
                     Intent intent = new Intent();
