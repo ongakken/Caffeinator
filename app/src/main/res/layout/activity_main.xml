@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3f3f3f"
-    tools:context=".Activities.MainActivity">
+    tools:context="sk.smdtech.caffeinator.Activities.MainActivity">
 
     <TextView
         android:id="@+id/text_caffeineIntake"
@@ -86,7 +86,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.26"
-        android:progressTint="#FFA500"
         />
 
     <TextView

@@ -1,4 +1,57 @@
 <resources>
     <string name="app_name">Caffeinator</string>
     <item name="caffeineIntakeValue" format="float" type="string">0</item>
+
+    <string name="too_much_caffeine_notification_title">You\'ve consumed too much caffeine!</string>
+
+    <string name="too_much_caffeine_notification_text">Your caffeine amount is %1$s, this is way too high
+        and could lead to some undesired health complications like cardiovascular problems in the future. Drink a lot of water, do some light exercise and eat
+        fruits with high Vitamin C content.
+    </string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+
+    <string name="health_advice1_notification_title">Did you know?</string>
+
+    <string name="health_advice1_notification_text">Drinking coffee in the morning is the most
+        effective due to lower Adenosine amount in the brain. Consuming Caffeine or Coffee later than 12PM
+        already has detrimental effects on your sleep.
+        \nDon\'t forget to drink some water with your coffee!
+        \nClick me for more information!
+    </string>
+
+    <string name="health_advice2_notification_title">Did you know?</string>
+
+    <string name="health_advice2_notification_text">Regularly drinking coffee
+        may have health benefits such as reduced risk of illnesses
+        like cancer, heart disease , Alzheimer\'s and depression.
+        \nDon\'t overdo it with the sugar!
+        \nClick me for more information!
+    </string>
+
+    <string name="health_advice3_notification_title">How much caffeine is too much caffeine?</string>
+
+    <string name="health_advice3_notification_text">The FDA deems up to 400 mg a day of caffeine as safe for healthy adults.
+        Moderate caffeine consumption is associated with numerous health benefits,
+        including increased alertness, enhanced physical performance,
+        and better cognitive functioning.
+        \nClick me for more information!
+    </string>
+
+    <string name="health_advice4_notification_title">Did you know?</string>
+
+    <string name="health_advice4_notification_text">Energy drinks contain lower amounts of caffeine
+        than your standard cup of coffee. Coffee however, has antioxidative properties that are good for your health,
+        but energy drinks contain synthetic caffeine, high amounts of refined sugars, taurine and many other unwanted substances.
+        \nClick me for more information!
+    </string>
+
+    <string name="health_advice5_notification_title">Did you know?</string>
+
+    <string name="health_advice5_notification_text">It is strongly discouraged to consume caffeine within an hour after eating in order to
+        prevent the caffeine from absorbing iron from the consumed food. Previously consumed caffeine in the same day doesn\'t affect your
+        diet as long as more than two hours have passed. Ignoring this fact could cause anemia in the future, especially in women.
+        \nClick me for more information!
+    </string>
 </resources>

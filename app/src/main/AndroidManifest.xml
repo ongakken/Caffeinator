@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.simtoonsoftware.caffeinator">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -12,8 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Activities.AddCaffeine"></activity>
-        <activity android:name=".Activities.MainActivity">
+        <receiver
+            android:name="broadcasters.SensorRestarterBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name="services.caffeineMetabolizationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name="sk.smdtech.caffeinator.Activities.AddCaffeine" />
+        <activity android:name="sk.smdtech.caffeinator.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

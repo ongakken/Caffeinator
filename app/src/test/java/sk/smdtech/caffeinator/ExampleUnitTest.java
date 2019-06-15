@@ -1,4 +1,4 @@
-package com.simtoonsoftware.caffeinator;
+package sk.smdtech.caffeinator;
 
 import org.junit.Test;
 

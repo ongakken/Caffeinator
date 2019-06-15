@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3f3f3f"
-    tools:context=".Activities.AddCaffeine">
+    tools:context="sk.smdtech.caffeinator.Activities.AddCaffeine">
 
 
     <EditText
@@ -28,6 +28,7 @@
         android:layout_width="172dp"
         android:layout_height="25dp"
         android:layout_marginStart="108dp"
+        android:layout_marginLeft="108dp"
         android:layout_marginBottom="16dp"
         android:text="Add Caffeine"
         android:textColor="#FFA500"
@@ -41,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
+        android:layout_marginLeft="160dp"
         android:layout_marginTop="52dp"
         android:text="Add"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +53,7 @@
         android:layout_width="177dp"
         android:layout_height="36dp"
         android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
         android:layout_marginTop="56dp"
 
         android:text=""
