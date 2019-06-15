@@ -87,7 +87,7 @@ public class tooMuchCaffeine {
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(text)
                         .setBigContentTitle(title)
-                        .setSummaryText("High caffeine amount detected"))
+                        .setSummaryText("Too much caffeine!"))
 
                 // Example additional actions for this notification. These will
                 // only show on devices running Android 4.1 or later, so you
@@ -95,8 +95,9 @@ public class tooMuchCaffeine {
                 // content intent provides access to the same actions in
                 // another way.
                 // Automatically dismiss the notification when it is touched.
-                .setOngoing(false)
+                .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.deathwishcoffee.com/blogs/news/coffee-jitters-here-s-the-fix")), PendingIntent.FLAG_UPDATE_CURRENT))
                 .setAutoCancel(true);
+
         notify(context, builder.build());
     }
 

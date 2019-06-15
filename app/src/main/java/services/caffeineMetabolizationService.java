@@ -10,9 +10,10 @@ import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ThreadLocalRandom;
 
 import broadcasters.SensorRestarterBroadcastReceiver;
-import notifications.tooMuchCaffeine;
+import notifications.*;
 
 public class caffeineMetabolizationService extends Service {
 
@@ -29,8 +30,13 @@ public class caffeineMetabolizationService extends Service {
 
     int notificationDelay;
     int counter;
+    int randomNotification;
 
     private boolean tooMuchCaffeineBool = false;
+    private boolean appearedBefore1;
+    private boolean appearedBefore2;
+    private boolean appearedBefore3;
+    private boolean appearedBefore4;
 
 
 
@@ -120,18 +126,40 @@ public class caffeineMetabolizationService extends Service {
     }
 
     private void checkNotify() {
+        // Random notification generator:
+        randomNotification = (int) (Math.random()*4);
         // This displays the tooMuchCaffeine notification.
         if (caffeineIntakeValue >= 400 && tooMuchCaffeineBool == false) {
             tooMuchCaffeine.notify(ctx, String.valueOf(caffeineIntakeValue));
             tooMuchCaffeineBool = true;
-        } else if(caffeineIntakeValue <= 399.9) {
+        } else if(caffeineIntakeValue <= 399.9 && tooMuchCaffeineBool == true) {
             tooMuchCaffeineBool = false;
         }
-        //This displays the healthAdvice1# notification.
-        if (notificationDelay == 0) {
-
+        //This displays the healthAdvice notifications.
+        if (notificationDelay == 0 && randomNotification == 1 && !appearedBefore1) {
+            healthAdvice1.notify(ctx);
+            appearedBefore1 = true;
+            //notificationDelay += 21600;
+        } else if (notificationDelay == 0 && randomNotification == 2 && !appearedBefore2) {
+            healthAdvice2.notify(ctx);
+            appearedBefore2 = true;
+            //notificationDelay += 21600;
+        } else if (notificationDelay == 0 && randomNotification == 3 && !appearedBefore3) {
+            healthAdvice3.notify(ctx);
+            appearedBefore3 = true;
+            //notificationDelay += 21600;
+        } else if (notificationDelay == 0 && randomNotification == 4 && !appearedBefore4) {
+            healthAdvice4.notify(ctx);
+            appearedBefore4 = true;
+            //notificationDelay += 21600;
         }
-
+        // Check if all the notifications appeared previously and if true, reset them.
+        if (appearedBefore1 == true && appearedBefore2 == true && appearedBefore3 == true && appearedBefore4 == true) {
+            appearedBefore1 = false;
+            appearedBefore2 = false;
+            appearedBefore3 = false;
+            appearedBefore4 = false;
+        }
 
     }
 

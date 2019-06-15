@@ -15,8 +15,10 @@
     <string name="health_advice1_notification_title">Did you know?</string>
 
     <string name="health_advice1_notification_text">Drinking coffee in the morning is the most
-        effective due to lower Adenosine amount in the brain. Consuming Caffeine or Coffee later than 12PM can
-        already affect your sleep. Don't forget to drink some water!
+        effective due to lower Adenosine amount in the brain. Consuming Caffeine or Coffee later than 12PM
+        already has detrimental effects on your sleep.
+        Don\'t forget to drink some water!
+        \nClick me for more information!
     </string>
 
     <string name="health_advice2_notification_title">Did you know?</string>
@@ -24,22 +26,24 @@
     <string name="health_advice2_notification_text">Regularly drinking coffee
         may have health benefits such as reduced risk of illnesses
         like cancer, heart disease , Alzheimer\'s and depression.
-        Don't overdo it with the sugar!
+        Don\'t overdo it with the sugar!
+        \nClick me for more information!
     </string>
 
-    <string name="health_advice3_notification_title"></string>
+    <string name="health_advice3_notification_title">How much caffeine is too much caffeine?</string>
 
-    <string name="health_advice3_notification_text">Regularly drinking coffee
-        may have health benefits such as reduced risk of illnesses
-        like cancer, heart disease , Alzheimer\'s and depression.
-        Just don't overdo it with the sugar.
+    <string name="health_advice3_notification_text">The FDA deems up to 400 mg a day of caffeine as safe for healthy adults.
+        Moderate caffeine consumption is associated with numerous health benefits,
+        including increased alertness, enhanced physical performance,
+        and better cognitive functioning.
+        \nClick me for more information!
     </string>
 
     <string name="health_advice4_notification_title">Did you know?</string>
 
-    <string name="health_advice4_notification_text">Regularly drinking coffee
-        may have health benefits such as reduced risk of illnesses
-        like cancer, heart disease , Alzheimer\'s and depression.
-        Just don't overdo it with the sugar.
+    <string name="health_advice4_notification_text">Energy drinks contain lower amounts of caffeine
+        than your standard cup of coffee. Coffee however, has antioxidative properties that are good for your health,
+        but energy drinks contain synthetic caffeine, high amounts of refined sugars, taurine and many other unwanted substances.
+        \nClick me for more information!
     </string>
 </resources>

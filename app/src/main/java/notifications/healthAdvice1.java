@@ -64,11 +64,11 @@ public class healthAdvice1 {
 
                 // Set the pending intent to be initiated when the user touches
                 // the notification.
-                .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")), PendingIntent.FLAG_UPDATE_CURRENT))
+                .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.psychologytoday.com/us/blog/sleep-newzzz/201312/new-details-caffeine-s-sleep-disrupting-effects")), PendingIntent.FLAG_UPDATE_CURRENT))
 
                 // Show expanded text content on devices running Android 4.1 or
                 // later.
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(text).setBigContentTitle(title).setSummaryText("Health Adviser"))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(text).setBigContentTitle(title).setSummaryText("Health Advisor"))
                 // Automatically dismiss the notification when it is touched.
                 .setAutoCancel(true);
 
