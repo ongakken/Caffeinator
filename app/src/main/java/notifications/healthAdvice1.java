@@ -12,24 +12,21 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 
 import com.simtoonsoftware.caffeinator.R;
 
-import sk.smdtech.caffeinator.Activities.MainActivity;
-
 /**
- * Helper class for showing and canceling too much caffeine
+ * Helper class for showing and canceling health advice
  * notifications.
  * <p>
  * This class makes heavy use of the {@link NotificationCompat.Builder} helper
  * class to create notifications in a backward-compatible way.
  */
-public class tooMuchCaffeine {
+public class healthAdvice1 {
     /**
      * The unique identifier for this type of notification.
      */
-    private static final String NOTIFICATION_TAG = "tooMuchCaffeine";
+    private static final String NOTIFICATION_TAG = "healthAdvice1";
 
     /**
      * Shows the notification, or updates a previously shown notification of
@@ -39,24 +36,23 @@ public class tooMuchCaffeine {
      * the notification.
      * <p>
      * TODO: Customize the contents of this method to tweak the behavior and
-     * presentation of too much caffeine notifications. Make
+     * presentation of health advice notifications. Make
      * sure to follow the
      * <a href="https://developer.android.com/design/patterns/notifications.html">
      * Notification design guidelines</a> when doing so.
      *
      * @see #cancel(Context)
      */
-    public static void notify(final Context context, final String caffeineStringCount) {
+    public static void notify(final Context context, final String header) {
         final Resources res = context.getResources();
 
         // This image is used as the notification's large icon (thumbnail).
         final Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.example_picture);
 
-        final String ticker = caffeineStringCount;
-        final String title = res.getString(R.string.too_much_caffeine_notification_title, caffeineStringCount);
-        final String text = res.getString(
-                R.string.too_much_caffeine_notification_text, caffeineStringCount);
 
+        final String ticker = header;
+        final String title = res.getString(R.string.health_advice_notification_title, header);
+        final String text = res.getString(R.string.health_advice_notification_text, null);
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
 
@@ -66,7 +62,7 @@ public class tooMuchCaffeine {
 
                 // Set required fields, including the small icon, the
                 // notification title, and text.
-                .setSmallIcon(R.drawable.ic_stat_too_much_caffeine)
+                .setSmallIcon(R.drawable.ic_stat_health_advice)
                 .setContentTitle(title)
                 .setContentText(text)
 
@@ -83,30 +79,37 @@ public class tooMuchCaffeine {
                 // Set ticker text (preview) information for this notification.
                 .setTicker(ticker)
 
-                // If this notification relates to a past or upcoming event, you
-                // should set the relevant time information using the setWhen
-                // method below. If this call is omitted, the notification's
-                // timestamp will by set to the time at which it was shown.
-                // TODO: Call setWhen if this notification relates to a past or
-                // upcoming event. The sole argument to this method should be
-                // the notification timestamp in milliseconds.
-                //.setWhen(...)
+                // Set the pending intent to be initiated when the user touches
+                // the notification.
+                .setContentIntent(PendingIntent.getActivity(context, 0, new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")), PendingIntent.FLAG_UPDATE_CURRENT))
 
                 // Show expanded text content on devices running Android 4.1 or
                 // later.
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(text)
-                        .setBigContentTitle(title)
-                        .setSummaryText("Dummy summary text"))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(text).setBigContentTitle(title).setSummaryText("Health Adviser"))
 
                 // Example additional actions for this notification. These will
                 // only show on devices running Android 4.1 or later, so you
                 // should ensure that the activity in this notification's
                 // content intent provides access to the same actions in
                 // another way.
+                .addAction(
+                        R.drawable.ic_action_stat_share,
+                        res.getString(R.string.action_share),
+                        PendingIntent.getActivity(
+                                context,
+                                0,
+                                Intent.createChooser(new Intent(Intent.ACTION_SEND)
+                                        .setType("text/plain")
+                                        .putExtra(Intent.EXTRA_TEXT, "Dummy text"), "Dummy title"),
+                                PendingIntent.FLAG_UPDATE_CURRENT))
+                .addAction(
+                        R.drawable.ic_action_stat_reply,
+                        res.getString(R.string.action_reply),
+                        null)
+
                 // Automatically dismiss the notification when it is touched.
-                .setOngoing(false)
                 .setAutoCancel(true);
+
         notify(context, builder.build());
     }
 

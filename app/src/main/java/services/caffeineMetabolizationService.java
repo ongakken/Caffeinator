@@ -12,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import broadcasters.SensorRestarterBroadcastReceiver;
+import notifications.tooMuchCaffeine;
 
 public class caffeineMetabolizationService extends Service {
 
@@ -26,21 +27,23 @@ public class caffeineMetabolizationService extends Service {
     float caffeineIntakeValue;
     float caffeineAddValue;
 
+    int notificationDelay;
+    int counter;
+
+    private boolean tooMuchCaffeineBool = false;
+
+
+
     Thread updateThread;
     Thread computeDifference;
 
     Handler updateHandler = new Handler();
 
-    public int counter;
-
-    private Handler computeHandler = new Handler();
-
-    private Timer metabolizationTimer = new Timer();
     Context ctx = this;
 
     public caffeineMetabolizationService(Context applicationContext) {
         super();
-        Log.i("HERE", "here I am!");
+        Log.i("Service", "here I am!");
     }
 
     public caffeineMetabolizationService() {
@@ -62,11 +65,11 @@ public class caffeineMetabolizationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Intent broadcastIntent = new Intent(this, SensorRestarterBroadcastReceiver.class);
+        Intent broadcastIntent = new Intent(ctx, SensorRestarterBroadcastReceiver.class);
         sendBroadcast(broadcastIntent);
         stoptimertask();
         saveData();
-        Log.i("EXIT", "ondestroy!");
+        Log.i("EXIT", "onDestroy!");
     }
 
     private Timer timer;
@@ -77,7 +80,7 @@ public class caffeineMetabolizationService extends Service {
 
         //initialize the TimerTask's job
         initializeTimerTask();
-        //schedule the timer, to wake up every 1 second
+        //schedule the timer, to execute the code every x milliseconds
         timer.schedule(timerTask, 1000, 1000);
     }
 
@@ -101,12 +104,12 @@ public class caffeineMetabolizationService extends Service {
                 Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
                 oldTime = System.currentTimeMillis();
                 saveData();
+                notificationDelay -= 1;
                 Log.i("in timer", "DATA SAVED!  ");
                 Log.i("Service", " Caffeine Count: " + caffeineIntakeValue);
             }
         };
     }
-
 
     public void stoptimertask() {
         //stop the timer, if it's not already null
@@ -116,16 +119,21 @@ public class caffeineMetabolizationService extends Service {
         }
     }
 
-    private Runnable executeUpdater = new Runnable() {
-        @Override
-        public void run() {
-            // Do something here on the main thread
-            receiveData();
-            sendData();
-            // Repeat this every 250ms
-            updateHandler.postDelayed(executeUpdater, 250);
+    private void checkNotify() {
+        // This displays the tooMuchCaffeine notification.
+        if (caffeineIntakeValue >= 400 && tooMuchCaffeineBool == false) {
+            tooMuchCaffeine.notify(ctx, String.valueOf(caffeineIntakeValue));
+            tooMuchCaffeineBool = true;
+        } else if(caffeineIntakeValue <= 400) {
+            tooMuchCaffeineBool = false;
         }
-    };
+        //This displays the healthAdvice1# notification.
+        if (notificationDelay == 0) {
+
+        }
+
+
+    }
 
     private void computeMetabolization() {
         if(caffeineIntakeValue > 0) {
@@ -141,6 +149,8 @@ public class caffeineMetabolizationService extends Service {
         caffeineIntakeValue = prefsDataLoad.getFloat("caffeineIntakeValue", caffeineIntakeValue);
         counter = prefsDataLoad.getInt("counter", 0);
         oldTime = prefsDataLoad.getLong("oldTime", newTime);
+        notificationDelay = prefsDataLoad.getInt("notificationDelay", notificationDelay);
+        tooMuchCaffeineBool = prefsDataLoad.getBoolean("tooMuchCaffeineBool", tooMuchCaffeineBool);
     }
 
     private void saveData() {
@@ -148,7 +158,9 @@ public class caffeineMetabolizationService extends Service {
         SharedPreferences.Editor dataSave = prefsDataSave.edit();
         dataSave.putFloat("caffeineIntakeValue", caffeineIntakeValue);
         dataSave.putInt("counter", counter);
+        dataSave.putInt("notificationDelay", notificationDelay);
         dataSave.putLong("oldTime", oldTime);
+        dataSave.putBoolean("tooMuchCaffeineBool", tooMuchCaffeineBool);
         dataSave.apply();
     }
 
@@ -171,6 +183,18 @@ public class caffeineMetabolizationService extends Service {
             dataDelete.apply();
         }
     }
+
+    private Runnable executeUpdater = new Runnable() {
+        @Override
+        public void run() {
+            // Do something here on the main thread
+            receiveData();
+            checkNotify();
+            sendData();
+            // Repeat this every 250ms
+            updateHandler.postDelayed(executeUpdater, 250);
+        }
+    };
 
     @Override
     public IBinder onBind(Intent intent) {
