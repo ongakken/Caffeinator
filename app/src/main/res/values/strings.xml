@@ -46,4 +46,11 @@
         but energy drinks contain synthetic caffeine, high amounts of refined sugars, taurine and many other unwanted substances.
         \nClick me for more information!
     </string>
+
+    <string name="health_advice5_notification_title">Did you know?</string>
+
+    <string name="health_advice5_notification_text">It is advised to eat at least one hour before consuming caffeine,
+        in order to prevent the caffeine from absorbing iron from the consumed food. Previously consumed caffeine in the same day doesn\'t affect your
+        diet as long as at least more than two hours have passed.
+    </string>
 </resources>
