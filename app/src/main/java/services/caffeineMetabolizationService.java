@@ -139,19 +139,19 @@ public class caffeineMetabolizationService extends Service {
         if (notificationDelay == 0 && randomNotification == 1 && !appearedBefore1) {
             healthAdvice1.notify(ctx);
             appearedBefore1 = true;
-            //notificationDelay += 21600;
+            notificationDelay += 21600;
         } else if (notificationDelay == 0 && randomNotification == 2 && !appearedBefore2) {
             healthAdvice2.notify(ctx);
             appearedBefore2 = true;
-            //notificationDelay += 21600;
+            notificationDelay += 21600;
         } else if (notificationDelay == 0 && randomNotification == 3 && !appearedBefore3) {
             healthAdvice3.notify(ctx);
             appearedBefore3 = true;
-            //notificationDelay += 21600;
+            notificationDelay += 21600;
         } else if (notificationDelay == 0 && randomNotification == 4 && !appearedBefore4) {
             healthAdvice4.notify(ctx);
             appearedBefore4 = true;
-            //notificationDelay += 21600;
+            notificationDelay += 21600;
         }
         // Check if all the notifications appeared previously and if true, reset them.
         if (appearedBefore1 == true && appearedBefore2 == true && appearedBefore3 == true && appearedBefore4 == true) {
