@@ -52,7 +52,7 @@ public class healthAdvice1 {
 
         final String ticker = header;
         final String title = res.getString(R.string.health_advice_notification_title, header);
-        final String text = res.getString(R.string.health_advice_notification_text, null);
+        final String text = res.getString(R.string.health_advice_notification_text);
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
 

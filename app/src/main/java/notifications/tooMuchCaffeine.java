@@ -53,7 +53,7 @@ public class tooMuchCaffeine {
         final Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.example_picture);
 
         final String ticker = caffeineStringCount;
-        final String title = res.getString(R.string.too_much_caffeine_notification_title, caffeineStringCount);
+        final String title = res.getString(R.string.too_much_caffeine_notification_title);
         final String text = res.getString(
                 R.string.too_much_caffeine_notification_text, caffeineStringCount);
 
@@ -82,22 +82,12 @@ public class tooMuchCaffeine {
 
                 // Set ticker text (preview) information for this notification.
                 .setTicker(ticker)
-
-                // If this notification relates to a past or upcoming event, you
-                // should set the relevant time information using the setWhen
-                // method below. If this call is omitted, the notification's
-                // timestamp will by set to the time at which it was shown.
-                // TODO: Call setWhen if this notification relates to a past or
-                // upcoming event. The sole argument to this method should be
-                // the notification timestamp in milliseconds.
-                //.setWhen(...)
-
                 // Show expanded text content on devices running Android 4.1 or
                 // later.
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(text)
                         .setBigContentTitle(title)
-                        .setSummaryText("Dummy summary text"))
+                        .setSummaryText("High caffeine amount detected"))
 
                 // Example additional actions for this notification. These will
                 // only show on devices running Android 4.1 or later, so you

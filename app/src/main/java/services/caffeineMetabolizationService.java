@@ -124,7 +124,7 @@ public class caffeineMetabolizationService extends Service {
         if (caffeineIntakeValue >= 400 && tooMuchCaffeineBool == false) {
             tooMuchCaffeine.notify(ctx, String.valueOf(caffeineIntakeValue));
             tooMuchCaffeineBool = true;
-        } else if(caffeineIntakeValue <= 400) {
+        } else if(caffeineIntakeValue <= 399.9) {
             tooMuchCaffeineBool = false;
         }
         //This displays the healthAdvice1# notification.
