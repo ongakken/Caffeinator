@@ -17,7 +17,7 @@
     <string name="health_advice1_notification_text">Drinking coffee in the morning is the most
         effective due to lower Adenosine amount in the brain. Consuming Caffeine or Coffee later than 12PM
         already has detrimental effects on your sleep.
-        Don\'t forget to drink some water!
+        \nDon\'t forget to drink some water with your coffee!
         \nClick me for more information!
     </string>
 
@@ -26,7 +26,7 @@
     <string name="health_advice2_notification_text">Regularly drinking coffee
         may have health benefits such as reduced risk of illnesses
         like cancer, heart disease , Alzheimer\'s and depression.
-        Don\'t overdo it with the sugar!
+        \nDon\'t overdo it with the sugar!
         \nClick me for more information!
     </string>
 
