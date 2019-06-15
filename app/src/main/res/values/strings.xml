@@ -49,8 +49,9 @@
 
     <string name="health_advice5_notification_title">Did you know?</string>
 
-    <string name="health_advice5_notification_text">It is advised to eat at least one hour before consuming caffeine,
+    <string name="health_advice5_notification_text">It is advised to eat at least one hour before consuming caffeine
         in order to prevent the caffeine from absorbing iron from the consumed food. Previously consumed caffeine in the same day doesn\'t affect your
-        diet as long as at least more than two hours have passed.
+        diet as long as at least more than two hours have passed. Ignoring this fact could cause anemia in the future, especially in women.
+        \nClick me for more information!
     </string>
 </resources>
