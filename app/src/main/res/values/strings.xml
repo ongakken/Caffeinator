@@ -5,21 +5,41 @@
     <string name="too_much_caffeine_notification_title">You\'ve consumed too much caffeine!</string>
 
     <string name="too_much_caffeine_notification_text">Your caffeine amount is %1$s, this is way too high
-        and could lead to some undesired health complications like cardiovascular disease in the future. Drink a lot of water, do some light exercise and eat
+        and could lead to some undesired health complications like cardiovascular problems in the future. Drink a lot of water, do some light exercise and eat
         fruits with high Vitamin C content.
     </string>
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
 
-    <string name="health_advice_notification_title">Health advice: %1$s</string>
+    <string name="health_advice1_notification_title">Did you know?</string>
 
-    <string name="health_advice_notification_text">You said %1$s and lorem
-        ipsum dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit
-        vel semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis.
-        Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper
-        ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis
-        viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec
-        tortor.
+    <string name="health_advice1_notification_text">Drinking coffee in the morning is the most
+        effective due to lower Adenosine amount in the brain. Consuming Caffeine or Coffee later than 12PM can
+        already affect your sleep. Don't forget to drink some water!
+    </string>
+
+    <string name="health_advice2_notification_title">Did you know?</string>
+
+    <string name="health_advice2_notification_text">Regularly drinking coffee
+        may have health benefits such as reduced risk of illnesses
+        like cancer, heart disease , Alzheimer\'s and depression.
+        Don't overdo it with the sugar!
+    </string>
+
+    <string name="health_advice3_notification_title"></string>
+
+    <string name="health_advice3_notification_text">Regularly drinking coffee
+        may have health benefits such as reduced risk of illnesses
+        like cancer, heart disease , Alzheimer\'s and depression.
+        Just don't overdo it with the sugar.
+    </string>
+
+    <string name="health_advice4_notification_title">Did you know?</string>
+
+    <string name="health_advice4_notification_text">Regularly drinking coffee
+        may have health benefits such as reduced risk of illnesses
+        like cancer, heart disease , Alzheimer\'s and depression.
+        Just don't overdo it with the sugar.
     </string>
 </resources>

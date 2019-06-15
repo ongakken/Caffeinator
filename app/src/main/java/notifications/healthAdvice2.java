@@ -22,19 +22,19 @@ import com.simtoonsoftware.caffeinator.R;
  * This class makes heavy use of the {@link NotificationCompat.Builder} helper
  * class to create notifications in a backward-compatible way.
  */
-public class healthAdvice1 {
+public class healthAdvice2 {
     /**
      * The unique identifier for this type of notification.
      */
-    private static final String NOTIFICATION_TAG = "healthAdvice1";
+    private static final String NOTIFICATION_TAG = "healthAdvice2";
     public static void notify(final Context context) {
         final Resources res = context.getResources();
 
         // This image is used as the notification's large icon (thumbnail).
         final Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.example_picture);
 
-        final String title = res.getString(R.string.health_advice1_notification_title);
-        final String text = res.getString(R.string.health_advice1_notification_text);
+        final String title = res.getString(R.string.health_advice2_notification_title);
+        final String text = res.getString(R.string.health_advice2_notification_text);
         final String ticker = title;
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
