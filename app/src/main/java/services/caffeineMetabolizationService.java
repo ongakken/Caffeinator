@@ -94,7 +94,7 @@ public class caffeineMetabolizationService extends Service {
     public void initializeTimerTask() {
         timerTask = new TimerTask() {
             public void run() {
-                //Check for time differences
+                //Check for time differences and for correction overshoot
                 if(differenceTime >= 1) {
                     computeDifference = new Thread(new Runnable() {
                         public void run() {
@@ -105,6 +105,14 @@ public class caffeineMetabolizationService extends Service {
                             }
                         }
                     });computeDifference.start();
+                } else if (differenceTime <= -1) {
+                    for (; differenceTime <= -1; differenceTime++) {
+                        //Do reverse work to fix any time correction errors
+                        caffeineIntakeValue += 0.1;
+                        caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
+                        sendData();
+                        Log.i("Watchdog: ", "An time error occured! Correcting.. ");
+                    }
                 }
                 //Do some work
                 computeMetabolization();
