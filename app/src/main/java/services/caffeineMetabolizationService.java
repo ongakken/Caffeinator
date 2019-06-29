@@ -216,7 +216,7 @@ public class caffeineMetabolizationService extends Service {
             notificationDelay += 21600;
         }
         // Check if all the notifications appeared previously and if true, reset them.
-        if (appearedBefore1 == true && appearedBefore2 == true && appearedBefore3 == true && appearedBefore4 == true && appearedBefore5) {
+        if (appearedBefore1 == true && appearedBefore2 == true && appearedBefore3 == true && appearedBefore4 == true && appearedBefore5 == true) {
             appearedBefore1 = false;
             appearedBefore2 = false;
             appearedBefore3 = false;

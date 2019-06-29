@@ -11,6 +11,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,9 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.simtoonsoftware.caffeinator.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 
 import services.caffeineMetabolizationService;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     int currentCaffeineLevel;
     int maxCaffeineIntake = 400;
     int getPrg_maxCaffeine_currentValue;
+
+    String logHistory;
 
     private Handler updateHandler;
 
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     // UI data types
     TextView text_caffeineIntakeValue;
     TextView text_caffeineIntakeLeft;
+    TextView intakeLog;
     ProgressBar prg_maxCaffeine;
     private InterstitialAd RandomInterstitialAd;
     private AdView RandomBannerAd;
@@ -81,11 +88,13 @@ public class MainActivity extends AppCompatActivity {
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         RandomBannerAd = findViewById(R.id.adView);
+        intakeLog = findViewById(R.id.intakeLog);
 
         // Auto Save/Load section
         final SharedPreferences loadInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
 
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
+        logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
 
         // Ad section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
@@ -101,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
         startServices();
 
         // UI
+        intakeLog.setMovementMethod(new ScrollingMovementMethod());
+        intakeLog.append(logHistory);
         drawer_layout = (DrawerLayout)findViewById(R.id.main_activity_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -163,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 // Get data from Intent and send them
                 caffeineAddValue = data.getFloatExtra("caffeineAddValue", caffeineAddValue);
                 Log.i("AddCaffeine ", "Caffeine received! " + caffeineAddValue + "-----------------------------------------");
+                log(caffeineAddValue);
                 sendData();
                 receiveData();
             }
@@ -172,6 +184,9 @@ public class MainActivity extends AppCompatActivity {
     private void saveData() {
         SharedPreferences saveInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
         SharedPreferences.Editor save = saveInstance.edit();
+
+        logHistory = intakeLog.getText().toString();
+        save.putString("logHistory", logHistory);
         save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
         save.apply();
     }
@@ -226,6 +241,10 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i ("isMyServiceRunning?", false+"");
         return false;
+    }
+    private void log(float amount) {
+        Date currentTime = Calendar.getInstance().getTime();
+        intakeLog.append("\n | " + currentTime + " | Consumed: " + amount + "mg");
     }
 
     @Override
