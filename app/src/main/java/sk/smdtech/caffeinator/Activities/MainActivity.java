@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         startServices();
 
         // UI
-
         drawer_layout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -126,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
 
         updateHandler.postDelayed(new Runnable() {
             @Override
