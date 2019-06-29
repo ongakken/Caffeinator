@@ -6,8 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -53,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
     private InterstitialAd RandomInterstitialAd;
     private AdView RandomBannerAd;
 
+    private DrawerLayout drawer_layout;
+    private ActionBarDrawerToggle drawerToggle;
+    private NavigationView navigationView;
+
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
 
     public static final String SAVE = "Caffeinator%Save%File";
@@ -79,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
 
-
         // Ad section
         MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
             //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
@@ -95,16 +103,41 @@ public class MainActivity extends AppCompatActivity {
 
         // UI
 
+        drawer_layout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
+        drawerToggle.setDrawerIndicatorEnabled(true);
+
+        drawer_layout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        NavigationView navView = (NavigationView)findViewById(R.id.nv);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if(id == R.id.overview) {
+                    switchIntent(MainActivity.class);
+                } else if(id == R.id.graph) {
+                    switchIntent(GraphActivity.class);
+                } else if(id == R.id.about) {
+                    switchIntent(AboutActivity.class);
+                }
+                return true;
+            }
+        });
+
+
+
         updateHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // Do something here on the main thread
-                computeData();Log.i("computeData", "Calculations complete! ");
+                //computeData();Log.i("computeData", "Calculations complete! ");
                 receiveData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
                 updateUI();Log.i("updateUI", "UI Updated! ");
                 saveData();Log.i("saveData", "Saving... ");
-                // Repeat this every 250ms
-                updateHandler.postDelayed(this, 250);
+                // Repeat this every 250ms  updateHandler.postDelayed(this, 250);
             }
         }, 25);
 
@@ -173,8 +206,9 @@ public class MainActivity extends AppCompatActivity {
         send.apply();
         caffeineAddValue = 0; //This value has been sent and we don't need it anymore
     }
-    private void computeData() {
-
+    private void switchIntent(Class targetClass) {
+        Intent intent = new Intent(this, targetClass);
+        startActivity(intent);
     }
 
     public void startServices() {
@@ -196,6 +230,11 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i ("isMyServiceRunning?", false+"");
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override

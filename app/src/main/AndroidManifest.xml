@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name="sk.smdtech.caffeinator.Activities.AboutActivity"></activity>
+        <activity android:name="sk.smdtech.caffeinator.Activities.GraphActivity" />
+
         <receiver
             android:name="broadcasters.SensorRestarterBroadcastReceiver"
             android:enabled="true"

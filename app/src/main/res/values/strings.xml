@@ -54,4 +54,12 @@
         diet as long as more than two hours have passed. Ignoring this fact could cause anemia in the future, especially in women.
         \nClick me for more information!
     </string>
+
+    <string name="overview">Overview</string>
+    <string name="graph">Graph</string>
+    <string name="about">About</string>
+    <string name="Open">open</string>
+    <string name="Close">close</string>
+
+
 </resources>
