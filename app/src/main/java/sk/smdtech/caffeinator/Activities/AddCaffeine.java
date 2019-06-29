@@ -44,7 +44,8 @@ public class AddCaffeine extends AppCompatActivity {
         final EditText caffeineAmount = findViewById(R.id.caffeineAmount);
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
         final TextView invalidValue = findViewById(R.id.invalidValue);
-        final TextView textView = findViewById(R.id.addCaffeineText);
+        final TextView bodyCaffeineLevel = findViewById(R.id.bodyCaffeineLevel);
+        final TextView bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
 
         // Get data from MainActivity and put them in the TextView
         Intent getData = getIntent();
@@ -78,7 +79,8 @@ public class AddCaffeine extends AppCompatActivity {
             @Override
             public void run() {
                 receiveData();
-                textView.setText("Caffeine Amount: " + caffeineValue);
+                bodyCaffeineLevel.setText("Body caffeine level: " + caffeineValue);
+                bloodstreamCaffeineLevel.setText("Bloodstream caffeine level: " + "N/A");
                 updateHandler.postDelayed(this, 250);
             }
         }, 25);
@@ -92,7 +94,7 @@ public class AddCaffeine extends AppCompatActivity {
                 } else {
                     caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
                     caffeineValueDefault += caffeineValue;
-                    textView.setText("Caffeine Amount: " + caffeineValueDefault);
+                    bodyCaffeineLevel.setText("Caffeine Amount: " + caffeineValueDefault);
                     updateHandler.removeCallbacksAndMessages(null);
 
                     // Pass back the data and safely finish the activity
