@@ -63,12 +63,12 @@ public class AddCaffeine extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
-
                 if(id == R.id.overview) {
                     switchIntent(MainActivity.class);
                 } else if(id == R.id.graph) {
                     switchIntent(GraphActivity.class);
                 }
+                finish();
                 return true;
             }
         });

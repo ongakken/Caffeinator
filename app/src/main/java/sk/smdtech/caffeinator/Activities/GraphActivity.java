@@ -41,6 +41,7 @@ public class GraphActivity extends AppCompatActivity {
                 } else if(id == R.id.graph) {
                     switchIntent(GraphActivity.class);
                 }
+                finish();
                 return true;
             }
         });
