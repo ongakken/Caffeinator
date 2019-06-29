@@ -6,7 +6,7 @@
     android:background="#3f3f3f"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:id="@+id/drawer_layout">
+    android:id="@+id/main_activity_drawer_layout">
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -186,7 +186,7 @@
         app:menu="@menu/navigation_menu"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        android:id="@+id/nv">
+        android:id="@+id/main_activity_nv">
 
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

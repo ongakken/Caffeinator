@@ -13,8 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="sk.smdtech.caffeinator.Activities.AboutActivity"></activity>
-        <activity android:name="sk.smdtech.caffeinator.Activities.GraphActivity" />
 
         <receiver
             android:name="broadcasters.SensorRestarterBroadcastReceiver"
@@ -27,6 +25,7 @@
             android:exported="true" />
 
         <activity android:name="sk.smdtech.caffeinator.Activities.AddCaffeine" />
+        <activity android:name="sk.smdtech.caffeinator.Activities.GraphActivity" />
         <activity android:name="sk.smdtech.caffeinator.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

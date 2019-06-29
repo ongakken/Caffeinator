@@ -3,8 +3,13 @@ package sk.smdtech.caffeinator.Activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +29,10 @@ public class AddCaffeine extends AppCompatActivity {
     String caffeineValueText;
     String invalidCharacter = ".";
 
+    // UI Data
+    private DrawerLayout drawer_layout;
+    private ActionBarDrawerToggle drawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +50,30 @@ public class AddCaffeine extends AppCompatActivity {
         Intent getData = getIntent();
         caffeineValueDefault = getData.getFloatExtra("caffeineIntakeValue", caffeineValueDefault);
 
-        //UI
+        // UI
+        drawer_layout = (DrawerLayout)findViewById(R.id.addCaffeine_activity_drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
+        drawerToggle.setDrawerIndicatorEnabled(true);
+
+        drawer_layout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        NavigationView navView = (NavigationView)findViewById(R.id.addCaffeine_activity_nv);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if(id == R.id.overview) {
+                    switchIntent(MainActivity.class);
+                } else if(id == R.id.graph) {
+                    switchIntent(GraphActivity.class);
+                }
+                return true;
+            }
+        });
+
+
         updateHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -74,9 +106,19 @@ public class AddCaffeine extends AppCompatActivity {
         });
     }
 
+    private void switchIntent(Class targetClass) {
+        Intent intent = new Intent(this, targetClass);
+        startActivity(intent);
+    }
+
     private void receiveData() {
         SharedPreferences receiveData = getSharedPreferences(SAVE, MODE_PRIVATE);
 
         caffeineValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineValue);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 }

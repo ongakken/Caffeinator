@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
-    private NavigationView navigationView;
 
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
 
@@ -102,14 +101,14 @@ public class MainActivity extends AppCompatActivity {
         startServices();
 
         // UI
-        drawer_layout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawer_layout = (DrawerLayout)findViewById(R.id.main_activity_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
         drawerToggle.setDrawerIndicatorEnabled(true);
 
         drawer_layout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        NavigationView navView = (NavigationView)findViewById(R.id.nv);
+        NavigationView navView = (NavigationView)findViewById(R.id.main_activity_nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -119,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
                     switchIntent(MainActivity.class);
                 } else if(id == R.id.graph) {
                     switchIntent(GraphActivity.class);
-                } else if(id == R.id.about) {
-                    switchIntent(AboutActivity.class);
                 }
                 return true;
             }
@@ -134,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
                 receiveData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
                 updateUI();Log.i("updateUI", "UI Updated! ");
                 saveData();Log.i("saveData", "Saving... ");
-                // Repeat this every 250ms  updateHandler.postDelayed(this, 250);
+                // Repeat this every 250ms
+                updateHandler.postDelayed(this, 250);
             }
         }, 25);
 
