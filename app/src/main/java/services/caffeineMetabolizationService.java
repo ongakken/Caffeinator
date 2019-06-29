@@ -185,7 +185,7 @@ public class caffeineMetabolizationService extends Service {
 
     private void checkNotify() {
         // Random notification generator:
-        randomNotification = (int) (Math.random()*5);
+        randomNotification = (int) (Math.random()*4);
         // This displays the tooMuchCaffeine notification.
         if (caffeineIntakeValue >= 400 && tooMuchCaffeineBool == false) {
             tooMuchCaffeine.notify(ctx, String.valueOf(caffeineIntakeValue));
@@ -194,24 +194,24 @@ public class caffeineMetabolizationService extends Service {
             tooMuchCaffeineBool = false;
         }
         //This displays the healthAdvice notifications.
-        if (notificationDelay == 0 && randomNotification == 1 && !appearedBefore1) {
+        if (notificationDelay == 0 && randomNotification == 0 && !appearedBefore1) {
             healthAdvice1.notify(ctx);
             appearedBefore1 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 2 && !appearedBefore2) {
+        } else if (notificationDelay == 0 && randomNotification == 1 && !appearedBefore2) {
             healthAdvice2.notify(ctx);
             appearedBefore2 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 3 && !appearedBefore3) {
+        } else if (notificationDelay == 0 && randomNotification == 2 && !appearedBefore3) {
             healthAdvice3.notify(ctx);
             appearedBefore3 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 4 && !appearedBefore4) {
+        } else if (notificationDelay == 0 && randomNotification == 3 && !appearedBefore4) {
             healthAdvice4.notify(ctx);
             appearedBefore4 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 5 && !appearedBefore5) {
-            healthAdvice4.notify(ctx);
+        } else if (notificationDelay == 0 && randomNotification == 4 && !appearedBefore5) {
+            healthAdvice5.notify(ctx);
             appearedBefore5 = true;
             notificationDelay += 21600;
         }
