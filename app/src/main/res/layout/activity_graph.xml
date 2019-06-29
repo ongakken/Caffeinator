@@ -4,20 +4,15 @@
     android:layout_height="match_parent"
     android:id="@+id/graph_activity_drawer_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<android.support.constraint.ConstraintLayout
-    android:background="#3f3f3f"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:menu="@menu/navigation_menu"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        android:id="@+id/graph_activity_nv">
+        android:background="3f3f3f">
 
-    </android.support.design.widget.NavigationView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 </android.support.v4.widget.DrawerLayout>

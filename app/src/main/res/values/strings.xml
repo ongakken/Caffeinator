@@ -4,7 +4,7 @@
 
     <string name="too_much_caffeine_notification_title">You\'ve consumed too much caffeine!</string>
 
-    <string name="too_much_caffeine_notification_text">Your caffeine amount is over 400 (%1$s)! This is way too high
+    <string name="too_much_caffeine_notification_text">Your caffeine amount is over 400mg(%1$s)! This is way too high
         and could lead to some undesired health complications like cardiovascular problems. Drink a lot of water, do some light exercise and eat
         fruits with higher Vitamin C content.
     </string>
@@ -60,6 +60,9 @@
     <string name="about">About</string>
     <string name="Open">open</string>
     <string name="Close">close</string>
+    <string name="caffeinator">Caffeinator</string>
+    <string name="intakeLevel">Caffeine in body: </string>
+    <string name="bloodstreamLevel">Caffeine in blood:</string>
 
 
 </resources>
