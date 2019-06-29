@@ -4,9 +4,9 @@
 
     <string name="too_much_caffeine_notification_title">You\'ve consumed too much caffeine!</string>
 
-    <string name="too_much_caffeine_notification_text">Your caffeine amount is %1$s, this is way too high
-        and could lead to some undesired health complications like cardiovascular problems in the future. Drink a lot of water, do some light exercise and eat
-        fruits with high Vitamin C content.
+    <string name="too_much_caffeine_notification_text">Your caffeine amount is over 400 (%1$s)! This is way too high
+        and could lead to some undesired health complications like cardiovascular problems. Drink a lot of water, do some light exercise and eat
+        fruits with higher Vitamin C content.
     </string>
 
     <string name="action_share">Share</string>
