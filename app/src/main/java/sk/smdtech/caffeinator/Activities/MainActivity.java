@@ -126,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // Do something here on the main thread
                 //computeData();Log.i("computeData", "Calculations complete! ");
-                receiveData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
-                updateUI();Log.i("updateUI", "UI Updated! ");
-                saveData();Log.i("saveData", "Saving... ");
+                receiveData();//Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
+                updateUI();//Log.i("updateUI", "UI Updated! ");
+                saveData();//Log.i("saveData", "Saving... ");
                 // Repeat this every 250ms
                 updateHandler.postDelayed(this, 250);
             }
