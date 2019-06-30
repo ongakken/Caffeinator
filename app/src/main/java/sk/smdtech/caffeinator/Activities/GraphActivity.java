@@ -32,6 +32,8 @@ public class GraphActivity extends AppCompatActivity {
         drawer_layout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         NavigationView navView = (NavigationView)findViewById(R.id.graph_activity_nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
