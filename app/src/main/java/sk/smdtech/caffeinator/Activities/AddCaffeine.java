@@ -20,8 +20,8 @@ import com.simtoonsoftware.caffeinator.R;
 public class AddCaffeine extends AppCompatActivity {
 
     // Variables
-    float caffeineValueDefault = 0;
-    float caffeineValue = 0;
+    float caffeineValueDefault;
+    float caffeineValue;
 
     private Handler updateHandler;
 
