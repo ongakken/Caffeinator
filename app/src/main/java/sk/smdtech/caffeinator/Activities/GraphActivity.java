@@ -1,3 +1,5 @@
+// Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
+
 package sk.smdtech.caffeinator.Activities;
 
 import android.content.Intent;
