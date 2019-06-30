@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.simtoonsoftware.caffeinator.R;
+import sk.smdtech.caffeinator.R;
 
 public class GraphActivity extends AppCompatActivity {
 

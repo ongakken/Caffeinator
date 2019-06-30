@@ -20,13 +20,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.simtoonsoftware.caffeinator.R;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 
 import services.caffeineMetabolizationService;
+import sk.smdtech.caffeinator.R;
 
 public class MainActivity extends AppCompatActivity {
 

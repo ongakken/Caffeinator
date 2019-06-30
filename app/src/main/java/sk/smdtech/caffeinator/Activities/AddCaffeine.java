@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.simtoonsoftware.caffeinator.R;
+import sk.smdtech.caffeinator.R;
 
 public class AddCaffeine extends AppCompatActivity {
 
