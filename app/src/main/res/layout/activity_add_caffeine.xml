@@ -37,7 +37,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
 
-        android:text="Body caffeine level: "
+        android:text="Body caffeine level: 0"
         android:textColor="#FFA500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.098"
@@ -54,7 +54,7 @@
         android:layout_marginTop="72dp"
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
-        android:text="Bloodstream caffeine level: "
+        android:text="Bloodstream caffeine level: 0"
         android:textColor="#FFA500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.049"

@@ -20,8 +20,8 @@ import com.simtoonsoftware.caffeinator.R;
 public class AddCaffeine extends AppCompatActivity {
 
     // Variables
-    float caffeineValueDefault;
-    float caffeineValue;
+    float caffeineValueDefault = 0;
+    float caffeineValue = 0;
 
     private Handler updateHandler;
 
@@ -32,6 +32,12 @@ public class AddCaffeine extends AppCompatActivity {
     // UI Data
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
+
+    EditText caffeineAmount;
+
+    TextView invalidValue;
+    TextView bodyCaffeineLevel;
+    TextView bloodstreamCaffeineLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,7 @@ public class AddCaffeine extends AppCompatActivity {
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final TextView bodyCaffeineLevel = findViewById(R.id.bodyCaffeineLevel);
-        final TextView bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
+        bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
 
         // Get data from MainActivity and put them in the TextView
         Intent getData = getIntent();
