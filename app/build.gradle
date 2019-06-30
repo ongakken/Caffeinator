@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.simtoonsoftware.caffeinator"
+        applicationId "sk.smdtech.caffeinator"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 4
-        versionName "0.8.1"
+        versionCode 5
+        versionName "0.3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
