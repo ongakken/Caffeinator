@@ -20,14 +20,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.simtoonsoftware.caffeinator.R;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -64,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
     TextView text_caffeineIntakeLeft;
     TextView intakeLog;
     ProgressBar prg_maxCaffeine;
-    private InterstitialAd RandomInterstitialAd;
-    private AdView RandomBannerAd;
 
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
@@ -89,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         text_caffeineIntakeLeft = findViewById(R.id.text_caffeineIntakeLeft);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
-        RandomBannerAd = findViewById(R.id.adView);
         intakeLog = findViewById(R.id.intakeLog);
 
         // Auto Save/Load section
@@ -97,16 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
         logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
-
-        // Ad section
-        MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
-            //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
-        RandomInterstitialAd = new InterstitialAd(this);
-        RandomInterstitialAd.setAdUnitId("ca-app-pub-9086446979210331/2057677460"); // Real AD ID
-            //RandomInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // Testing AD ID
-
-        RandomInterstitialAd.loadAd(new AdRequest.Builder().build());
-        RandomBannerAd.loadAd(new AdRequest.Builder().build());
 
         // Services
         startServices();
@@ -156,14 +137,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent addCaffeineIntakeActivity = new Intent(MainActivity.this, AddCaffeine.class);
                 addCaffeineIntakeActivity.putExtra("caffeineIntakeValue", caffeineIntakeValue);
                 startActivityForResult(addCaffeineIntakeActivity, SECOND_ACTIVITY_REQUEST_CODE);
-                if (RandomInterstitialAd.isLoaded()) {
-                    RandomInterstitialAd.show();
-                } else {
-                    Log.d("TAG", "The interstitial ad hasn't been loaded yet");
-                }
             }
         });
-
     }
 
     // This method is called when the second activity finishes
