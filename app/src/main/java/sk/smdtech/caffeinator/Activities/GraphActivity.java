@@ -1,3 +1,5 @@
+// Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
+
 package sk.smdtech.caffeinator.Activities;
 
 import android.content.Intent;
@@ -7,9 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
-import com.simtoonsoftware.caffeinator.R;
+import sk.smdtech.caffeinator.R;
 
 public class GraphActivity extends AppCompatActivity {
 
@@ -29,6 +32,8 @@ public class GraphActivity extends AppCompatActivity {
 
         drawer_layout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navView = (NavigationView)findViewById(R.id.graph_activity_nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -55,5 +60,10 @@ public class GraphActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
     }
 }

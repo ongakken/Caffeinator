@@ -104,7 +104,8 @@ public class caffeineMetabolizationService extends Service {
                                 Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
                             }
                         }
-                    });computeDifference.start();
+                    });
+                    computeDifference.start();
                 } else if (differenceTime <= -1) {
                     for (; differenceTime <= -1; differenceTime++) {
                         //Do reverse work to fix any time correction errors

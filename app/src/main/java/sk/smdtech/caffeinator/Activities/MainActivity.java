@@ -1,3 +1,5 @@
+// Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
+
 package sk.smdtech.caffeinator.Activities;
 
 import android.app.ActivityManager;
@@ -13,24 +15,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.simtoonsoftware.caffeinator.R;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 
 import services.caffeineMetabolizationService;
+import sk.smdtech.caffeinator.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     TextView text_caffeineIntakeLeft;
     TextView intakeLog;
     ProgressBar prg_maxCaffeine;
-    private InterstitialAd RandomInterstitialAd;
-    private AdView RandomBannerAd;
 
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
@@ -87,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         text_caffeineIntakeLeft = findViewById(R.id.text_caffeineIntakeLeft);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
-        RandomBannerAd = findViewById(R.id.adView);
         intakeLog = findViewById(R.id.intakeLog);
 
         // Auto Save/Load section
@@ -95,16 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
         logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
-
-        // Ad section
-        MobileAds.initialize(this, "ca-app-pub-9086446979210331~8508547502"); // Real AD ID
-            //MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713"); // Testing AD ID
-        RandomInterstitialAd = new InterstitialAd(this);
-        RandomInterstitialAd.setAdUnitId("ca-app-pub-9086446979210331/2057677460"); // Real AD ID
-            //RandomInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); // Testing AD ID
-
-        RandomInterstitialAd.loadAd(new AdRequest.Builder().build());
-        RandomBannerAd.loadAd(new AdRequest.Builder().build());
 
         // Services
         startServices();
@@ -119,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         drawer_layout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationView navView = (NavigationView)findViewById(R.id.main_activity_nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -141,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 // Do something here on the main thread
                 //computeData();Log.i("computeData", "Calculations complete! ");
-                receiveData();Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
-                updateUI();Log.i("updateUI", "UI Updated! ");
-                saveData();Log.i("saveData", "Saving... ");
+                receiveData();//Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
+                updateUI();//Log.i("updateUI", "UI Updated! ");
+                saveData();//Log.i("saveData", "Saving... ");
                 // Repeat this every 250ms
                 updateHandler.postDelayed(this, 250);
             }
@@ -155,14 +141,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent addCaffeineIntakeActivity = new Intent(MainActivity.this, AddCaffeine.class);
                 addCaffeineIntakeActivity.putExtra("caffeineIntakeValue", caffeineIntakeValue);
                 startActivityForResult(addCaffeineIntakeActivity, SECOND_ACTIVITY_REQUEST_CODE);
-                if (RandomInterstitialAd.isLoaded()) {
-                    RandomInterstitialAd.show();
-                } else {
-                    Log.d("TAG", "The interstitial ad hasn't been loaded yet");
-                }
             }
         });
-
     }
 
     // This method is called when the second activity finishes
@@ -252,6 +232,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
     }
 
     @Override

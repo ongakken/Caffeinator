@@ -13,7 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
-import com.simtoonsoftware.caffeinator.R;
+import sk.smdtech.caffeinator.R;
 
 /**
  * Helper class for showing and canceling health advice
