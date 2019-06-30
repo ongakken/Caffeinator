@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "295980823641",
+    "firebase_url": "https://caffeinator-527b3.firebaseio.com",
+    "project_id": "caffeinator-527b3",
+    "storage_bucket": "caffeinator-527b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295980823641:android:e3704384ec06368a",
+        "android_client_info": {
+          "package_name": "sk.smdtech.caffeinator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295980823641-th8jkq11suvt0e4mm164ofr9v8bb4q3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFjB8uIVJFzVKds2vFztbPbyF7MvhuBNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295980823641-th8jkq11suvt0e4mm164ofr9v8bb4q3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-9086446979210331~1298398018"
+    }
+  ],
+  "configuration_version": "1"
+}
