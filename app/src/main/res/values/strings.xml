@@ -58,11 +58,17 @@
     <string name="overview">Overview</string>
     <string name="graph">Graph</string>
     <string name="about">About</string>
-    <string name="Open">open</string>
-    <string name="Close">close</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
     <string name="caffeinator">Caffeinator</string>
     <string name="intakeLevel">Caffeine in body: </string>
     <string name="bloodstreamLevel">Caffeine in blood:</string>
+    <string name="unknown">N/A</string>
+    <string name="addCaffeineIntake">Add caffeine intake</string>
+    <string name="howMuchCaffeineCanItakeText">How much more caffeine can I take in today?</string>
+    <string name="youCanSafelyTakeInText">You can safely take in: </string>
+    <string name="zeromg">0mg</string>
+    <string name="ofCaffeineText">of caffeine.</string>
 
 
 </resources>

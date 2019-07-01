@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Data resources
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
-        text_caffeineIntakeLeft = findViewById(R.id.text_caffeineIntakeLeft);
+        text_caffeineIntakeLeft = findViewById(R.id.caffeineIntakeLeftText);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         intakeLog = findViewById(R.id.intakeLog);
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         intakeLog.setMovementMethod(new ScrollingMovementMethod());
         intakeLog.append(logHistory);
         drawer_layout = (DrawerLayout)findViewById(R.id.main_activity_drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
+        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.open, R.string.close);
         drawerToggle.setDrawerIndicatorEnabled(true);
 
         drawer_layout.addDrawerListener(drawerToggle);

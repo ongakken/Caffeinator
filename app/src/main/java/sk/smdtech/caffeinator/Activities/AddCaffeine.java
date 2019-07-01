@@ -56,7 +56,7 @@ public class AddCaffeine extends AppCompatActivity {
 
         // UI
         drawer_layout = (DrawerLayout)findViewById(R.id.addCaffeine_activity_drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
+        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.open, R.string.close);
         drawerToggle.setDrawerIndicatorEnabled(true);
 
         drawer_layout.addDrawerListener(drawerToggle);
