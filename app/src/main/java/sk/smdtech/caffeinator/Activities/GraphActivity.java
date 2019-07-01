@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import services.caffeineMetabolizationService;
 import sk.smdtech.caffeinator.R;
 
 public class GraphActivity extends AppCompatActivity {

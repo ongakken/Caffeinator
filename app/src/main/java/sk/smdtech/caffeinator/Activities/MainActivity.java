@@ -212,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
         if (!isMyServiceRunning(caffeineMetabolizationService.class)) {
             startService(startCaffeineMetabolizationService);
         }
-
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
