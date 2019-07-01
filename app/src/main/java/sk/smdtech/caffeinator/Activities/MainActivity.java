@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer_layout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+        
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -219,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
+        finish();
     }
 
     public void startServices() {
@@ -325,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         stopService(startCaffeineMetabolizationService);
-        Log.i("MAINACT", "onDestroy!");
+        Log.i("Watchdog:", "Main Activity has been destroyed!");
         super.onDestroy();
     }
 }
