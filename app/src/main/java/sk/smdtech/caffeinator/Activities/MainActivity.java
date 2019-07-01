@@ -26,7 +26,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Timer;
 
 import services.caffeineMetabolizationService;
 import sk.smdtech.caffeinator.R;
@@ -52,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public Context getCtx() {
         return ctx;
     }
-
-    // Timers
-    Timer autosave = new Timer();
 
     // UI data types
     TextView text_caffeineIntakeValue;
@@ -129,10 +125,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Do something here on the main thread
-                //computeData();Log.i("computeData", "Calculations complete! ");
-                receiveData();//Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
-                updateUI();//Log.i("updateUI", "UI Updated! ");
-                saveData();//Log.i("saveData", "Saving... ");
+                receiveData();  //Log.i("exchangeData", "Data Exchange complete! "+ caffeineIntakeValue);
+                updateUI(); //Log.i("updateUI", "UI Updated! ");
+                saveData(); //Log.i("saveData", "Saving... ");
                 // Repeat this every 250ms
                 updateHandler.postDelayed(this, 250);
             }
