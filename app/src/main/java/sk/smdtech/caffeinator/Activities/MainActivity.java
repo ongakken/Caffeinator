@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -108,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
         startServices();
 
         // GPS
-        Location startLocation = getGPSLocation();
-        intakeLog.append("\n " + (CharSequence) startLocation);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         // UI
         intakeLog.setMovementMethod(new ScrollingMovementMethod());
@@ -245,8 +245,6 @@ public class MainActivity extends AppCompatActivity {
         Date currentTime = Calendar.getInstance().getTime();
         intakeLog.append("\n | " + currentTime + " | Consumed: " + amount + "mg");
 
-        Location startLocation = getGPSLocation();
-        intakeLog.append("\n | " + "Starting location: "+ (CharSequence) startLocation);
     }
 
     @Override
@@ -259,43 +257,27 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean isLocationEnabled() {
-        LocationManager lm = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
-        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-    private void showAlert() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Enable Location")
-                .setMessage("Your Location Settings are disabled.\nPlease enable your location settings to " +
-                        "use this app")
-                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(myIntent);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    }
-                });
-        dialog.show();
-    }
-
     @SuppressLint("MissingPermission")
     private Location getGPSLocation() {
+        if(!(checkLocationPermission()))
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        else return null;
+
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-        Location net_loc = null, gps_loc = null, finalLoc = null;
-        if (gps_enabled)
+        Location gps_loc = new Location("GPS_PROVIDER");
+        Location net_loc = new Location("NETWORK_PROVIDER");
+        Location finalLoc = new Location("Caffeinator_Provider");
+
+        if (gps_enabled && checkLocationPermission()) {
             gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (network_enabled)
+        }
+        if (network_enabled && checkLocationPermission()) {
             net_loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
         if (gps_loc != null && net_loc != null) {
             //smaller the number more accurate result will
             if (gps_loc.getAccuracy() > net_loc.getAccuracy())
@@ -312,6 +294,32 @@ public class MainActivity extends AppCompatActivity {
         return finalLoc;
     }
 
+    public boolean checkLocationPermission()
+    {
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Location startingLocation = getGPSLocation();
+                    intakeLog.append("\n " + (CharSequence) startingLocation);
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    intakeLog.append("\n " + "PERMISSION DENIED "+ "\n " +" Couldn't retrieve user location!");
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
     @Override
     protected void onDestroy() {
         stopService(startCaffeineMetabolizationService);
