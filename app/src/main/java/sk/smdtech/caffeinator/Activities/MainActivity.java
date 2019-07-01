@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if(id== R.id.about) {
                     switchIntent(AboutActivity.class);
                 }
-                finish();
                 return true;
             }
         });
