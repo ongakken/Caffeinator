@@ -117,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
                     switchIntent(MainActivity.class);
                 } else if(id == R.id.graph) {
                     switchIntent(GraphActivity.class);
+                } else if(id== R.id.about) {
+                    switchIntent(AboutActivity.class);
                 }
                 finish();
                 return true;

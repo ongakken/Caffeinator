@@ -1,20 +1,24 @@
-// Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
+/*
+ * Copyright 2019 SMD Technologies, s.r.o. All rights reserved.
+ */
 
 package sk.smdtech.caffeinator.Activities;
 
-import android.content.Intent;
 import androidx.annotation.NonNull;
-import com.google.android.material.navigation.NavigationView;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.navigation.NavigationView;
+
 import sk.smdtech.caffeinator.R;
 
-public class GraphActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
     // UI Data
     private DrawerLayout drawer_layout;
@@ -23,10 +27,10 @@ public class GraphActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph);
+        setContentView(R.layout.activity_about);
 
         // UI
-        drawer_layout = (DrawerLayout)findViewById(R.id.graph_activity_drawer_layout);
+        drawer_layout = (DrawerLayout)findViewById(R.id.about_activity_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
         drawerToggle.setDrawerIndicatorEnabled(true);
 
@@ -35,7 +39,7 @@ public class GraphActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationView navView = (NavigationView)findViewById(R.id.graph_activity_nv);
+        NavigationView navView = (NavigationView)findViewById(R.id.about_activity_nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -52,6 +56,7 @@ public class GraphActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     private void switchIntent(Class targetClass) {
