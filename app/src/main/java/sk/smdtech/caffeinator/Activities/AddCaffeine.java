@@ -36,6 +36,12 @@ public class AddCaffeine extends AppCompatActivity {
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
 
+    EditText caffeineAmount;
+
+    TextView invalidValue;
+    TextView bodyCaffeineLevel;
+    TextView bloodstreamCaffeineLevel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +54,7 @@ public class AddCaffeine extends AppCompatActivity {
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final TextView bodyCaffeineLevel = findViewById(R.id.bodyCaffeineLevel);
-        final TextView bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
+        bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
 
         // Get data from MainActivity and put them in the TextView
         Intent getData = getIntent();

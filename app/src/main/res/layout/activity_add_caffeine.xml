@@ -36,7 +36,6 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-
         android:text="@string/intakeLevel"
         android:textColor="#FFA500"
         app:layout_constraintEnd_toEndOf="parent"
