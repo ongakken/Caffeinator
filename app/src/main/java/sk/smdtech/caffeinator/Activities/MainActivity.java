@@ -319,8 +319,7 @@ public class MainActivity extends AppCompatActivity {
             default: {
                 // nothing
             }
-            // other 'case' lines to check for other
-            // permissions this app might request
+            // other 'case' lines to check for other permissions this app might request
         }
     }
     @Override
