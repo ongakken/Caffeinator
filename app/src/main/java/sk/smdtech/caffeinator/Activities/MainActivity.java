@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNeutralButton(R.string.show_policy, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switchIntent(AboutActivity.class);
+                        switchIntent(PrivacyPolicyActivity.class);
                     }
                 })
                 .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {

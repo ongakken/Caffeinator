@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".Activities.AboutActivity"></activity>
+        <activity android:name=".Activities.PrivacyPolicyActivity"></activity>
+        <activity android:name=".Activities.AboutActivity" />
 
         <receiver
             android:name="broadcasters.SensorRestarterBroadcastReceiver"
