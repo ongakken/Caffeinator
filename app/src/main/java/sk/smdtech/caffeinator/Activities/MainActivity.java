@@ -5,6 +5,7 @@ package sk.smdtech.caffeinator.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +37,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
 import java.util.Date;
-
 import services.caffeineMetabolizationService;
 import sk.smdtech.caffeinator.R;
 
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     //GPS
     boolean gps_enabled = false;
     boolean network_enabled = false;
+    boolean privacy_policy_accepted = false;
 
     LocationManager lm;
 
@@ -92,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
         ctx = this;
         updateHandler = new Handler();
 
+        // Privacy Policy Dialog
+        if(!privacy_policy_accepted)
+            showPrivacyPolicyAlert();
+
         // Data resources
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
         text_caffeineIntakeLeft = findViewById(R.id.caffeineIntakeLeftText);
@@ -109,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
         startServices();
 
         // GPS
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        if(privacy_policy_accepted)
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         // UI
         intakeLog.setMovementMethod(new ScrollingMovementMethod());
@@ -324,6 +330,36 @@ public class MainActivity extends AppCompatActivity {
             // other 'case' lines to check for other permissions this app might request
         }
     }
+    private void showPrivacyPolicyAlert() {
+        new AlertDialog.Builder(ctx)
+                .setTitle("Privacy Policy")
+                .setMessage(R.string.privacy_policy_dialog)
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        privacy_policy_accepted = true;
+                        intakeLog.append("\n " + "Privacy policy accepted!");
+
+                    }
+                })
+                .setNeutralButton(R.string.show_policy, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switchIntent(AboutActivity.class);
+                    }
+                })
+                .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        privacy_policy_accepted = false;
+                        finish();
+                    }
+                })
+        .show();
+    }
+
+
     @Override
     protected void onDestroy() {
         stopService(startCaffeineMetabolizationService);

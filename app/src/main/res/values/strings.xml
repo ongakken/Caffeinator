@@ -69,6 +69,10 @@
     <string name="youCanSafelyTakeInText">You can safely take in: </string>
     <string name="zeromg">0mg</string>
     <string name="ofCaffeineText">of caffeine.</string>
+    <string name="privacy_policy_dialog">Do you accept the privacy policy terms?</string>
+    <string name="deny">Deny</string>
+    <string name="show_policy">Show privacy policy</string>
+    <string name="accept">Accept</string>
 
 
     <string name="privacyPolicy">Privacy Policy of Caffeinator
