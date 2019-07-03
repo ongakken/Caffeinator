@@ -334,6 +334,7 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(ctx)
                 .setTitle("Privacy Policy")
                 .setMessage(R.string.privacy_policy_dialog)
+                .setCancelable(false)
 
                 // Specifying a listener allows you to take an action before dismissing the dialog.
                 // The dialog is automatically dismissed when a dialog button is clicked.
@@ -341,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         privacy_policy_accepted = true;
                         intakeLog.append("\n " + "Privacy policy accepted!");
-
                     }
                 })
                 .setNeutralButton(R.string.show_policy, new DialogInterface.OnClickListener() {
