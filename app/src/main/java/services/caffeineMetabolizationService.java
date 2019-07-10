@@ -25,6 +25,8 @@ public class caffeineMetabolizationService extends Service {
     long newTime;
     long differenceTime;
 
+    float caffeineIntakeMetabolized;
+    float caffeineIntakeHalved;
     float caffeineIntakeValue;
     float caffeineAddValue;
 
@@ -141,6 +143,13 @@ public class caffeineMetabolizationService extends Service {
             caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
             sendData();
             Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+        }
+    }
+
+    private void computeHalfLife() {
+        caffeineIntakeHalved = caffeineIntakeValue /= 2;
+        for(;caffeineIntakeHalved <= caffeineIntakeValue; caffeineIntakeMetabolized ++); {
+            
         }
     }
 
