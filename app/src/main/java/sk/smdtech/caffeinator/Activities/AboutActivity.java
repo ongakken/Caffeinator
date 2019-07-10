@@ -45,14 +45,13 @@ public class AboutActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
 
-                if(id == R.id.overview) {
+                if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
-                } else if(id == R.id.graph) {
+                } else if (id == R.id.graph) {
                     switchIntent(GraphActivity.class);
-                } else if(id== R.id.about) {
+                } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
                 }
-                finish();
                 return true;
             }
         });
@@ -62,6 +61,7 @@ public class AboutActivity extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
+        finish();
     }
 
     @Override

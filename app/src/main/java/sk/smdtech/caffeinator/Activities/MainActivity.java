@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
 
-    public static final String SAVE = "Caffeinator%Save%File";
+    public static final String SAVE = "Caffeinator%Main%Save%File";
+    public static final String RECEIVE_FROM_SERVICE = "Caffeinator%Share%File";
 
     //icon - cup of coffee HEX #FFA500 [do not remove]
 
@@ -92,10 +93,6 @@ public class MainActivity extends AppCompatActivity {
         // Variables
         ctx = this;
         updateHandler = new Handler();
-
-        // Privacy Policy Dialog
-        if(!privacy_policy_accepted)
-            showPrivacyPolicyAlert();
 
         // Data resources
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
@@ -109,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
         logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
+        privacy_policy_accepted = loadInstance.getBoolean("privacyPolicyAccepted", privacy_policy_accepted);
+
+        // Privacy Policy Dialog
+        if(!privacy_policy_accepted)
+            showPrivacyPolicyAlert();
 
         // Services
         startServices();
@@ -193,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         logHistory = intakeLog.getText().toString();
         save.putString("logHistory", logHistory);
         save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+        save.putBoolean("privacyPolicyAccepted", privacy_policy_accepted);
         save.apply();
     }
 
@@ -209,13 +212,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void receiveData() {
-        SharedPreferences receiveData = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences receiveData = getSharedPreferences(RECEIVE_FROM_SERVICE, MODE_PRIVATE);
 
         caffeineIntakeValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineIntakeValue);
     }
 
     private void sendData() {
-        SharedPreferences sendData = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences sendData = getSharedPreferences(RECEIVE_FROM_SERVICE, MODE_PRIVATE);
         SharedPreferences.Editor send = sendData.edit();
 
         send.putFloat("caffeineAddValue", caffeineAddValue);
@@ -226,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
-        finish();
     }
 
     public void startServices() {

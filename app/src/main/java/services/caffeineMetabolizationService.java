@@ -19,7 +19,7 @@ public class caffeineMetabolizationService extends Service {
 
     // Variables
     public static final String SAVE = "Caffeinator%Service%Save%File";
-    public static final String SEND_TO_ACTIVITY = "Caffeinator%Save%File";
+    public static final String SEND_TO_ACTIVITY = "Caffeinator%Share%File";
 
     long oldTime;
     long newTime;
@@ -47,6 +47,7 @@ public class caffeineMetabolizationService extends Service {
     Thread computeDifference;
 
     Handler updateHandler = new Handler();
+    Handler calculationHandler = new Handler();
 
     Context ctx = this;
 
@@ -67,7 +68,7 @@ public class caffeineMetabolizationService extends Service {
         loadData();
         differenceTime = (newTime - oldTime) / 1000;
         Log.i("DEBUG", "time difference: " + differenceTime + " oldTime: " + oldTime + " newTime " + newTime);
-        startTimer();
+        calculationHandler.post(executeCalculationHandler);
         updateHandler.post(executeUpdater);
         return START_STICKY;
     }
@@ -76,66 +77,47 @@ public class caffeineMetabolizationService extends Service {
         super.onDestroy();
         Intent broadcastIntent = new Intent(ctx, SensorRestarterBroadcastReceiver.class);
         sendBroadcast(broadcastIntent);
-        stoptimertask();
         saveData();
         Log.i("EXIT", "onDestroy!");
     }
 
-    private Timer timer;
-    private TimerTask timerTask;
-    public void startTimer() {
-        //set a new Timer
-        timer = new Timer();
-
-        //initialize the TimerTask's job
-        initializeTimerTask();
-        //schedule the timer, to execute the code every x milliseconds
-        timer.schedule(timerTask, 1000, 1000);
-    }
-
-    public void initializeTimerTask() {
-        timerTask = new TimerTask() {
-            public void run() {
-                //Check for time differences and for correction overshoot
-                if(differenceTime >= 1) {
-                    computeDifference = new Thread(new Runnable() {
-                        public void run() {
-                            for (; differenceTime >= 1; differenceTime--) {
-                                //Do the same work as below, or in other words do the missing work
-                                computeMetabolization();
-                                Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
-                            }
+    private Runnable executeCalculationHandler = new Runnable() {
+        @Override
+        public void run() {
+            //Check for time differences and for correction overshoot
+            if (differenceTime >= 1) {
+                computeDifference = new Thread(new Runnable() {
+                    public void run() {
+                        for (; differenceTime >= 1; differenceTime--) {
+                            //Do the same work as below, or in other words do the missing work
+                            computeMetabolization();
+                            Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
                         }
-                    });
-                    computeDifference.start();
-                } else if (differenceTime <= -1) {
-                    for (; differenceTime <= -1; differenceTime++) {
-                        //Do reverse work to fix any time correction errors
-                        caffeineIntakeValue += 0.1;
-                        caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
-                        sendData();
-                        Log.i("Watchdog: ", "An time error occured! Correcting.. ");
                     }
+                });
+                computeDifference.start();
+            } else if (differenceTime <= -1) {
+                for (; differenceTime <= -1; differenceTime++) {
+                    //Do reverse work to fix any time correction errors
+                    caffeineIntakeValue += 0.1;
+                    caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
+                    sendData();
+                    Log.i("Watchdog: ", "An time error occured! Correcting.. ");
                 }
-                //Do some work
-                computeMetabolization();
-                Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
-                oldTime = System.currentTimeMillis();
-                saveData();
-                notificationDelay -= 1;
-                Log.i("in timer", "DATA SAVED!  ");
-                Log.i("Service", " Caffeine Count: " + caffeineIntakeValue);
             }
-        };
-    }
+            //Do some work
+            computeMetabolization();
+            Log.i("in timer", "in timer ++++  " + (counter += 1) + " Difference: " + differenceTime);
+            oldTime = System.currentTimeMillis();
+            saveData();
+            notificationDelay -= 1;
+            Log.i("in timer", "DATA SAVED!  ");
+            Log.i("Service", " Caffeine Count: " + caffeineIntakeValue);
 
-    public void stoptimertask() {
-        //stop the timer, if it's not already null
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
+            // Repeat this every x ms
+            calculationHandler.postDelayed(executeCalculationHandler, 1000);
         }
-    }
+    };
 
     private void computeMetabolization() {
         if(caffeineIntakeValue > 0) {
@@ -149,7 +131,7 @@ public class caffeineMetabolizationService extends Service {
     private void computeHalfLife() {
         caffeineIntakeHalved = caffeineIntakeValue /= 2;
         for(;caffeineIntakeHalved <= caffeineIntakeValue; caffeineIntakeMetabolized ++); {
-            
+
         }
     }
 
