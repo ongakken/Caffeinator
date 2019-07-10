@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Variables
     float caffeineIntakeValue;
+    float caffeineBloodValue;
     float caffeineAddValue;
     float caffeineIntakeLeft;
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     // UI data types
     TextView text_caffeineIntakeValue;
+    TextView text_caffeineBloodValue;
     TextView text_caffeineIntakeLeft;
     TextView intakeLog;
     ProgressBar prg_maxCaffeine;
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
         text_caffeineIntakeLeft = findViewById(R.id.caffeineIntakeLeftText);
         text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
+        text_caffeineBloodValue = findViewById(R.id.text_caffeineBloodstreamValue);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
         intakeLog = findViewById(R.id.intakeLog);
 
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences loadInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
 
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
+        caffeineBloodValue = loadInstance.getFloat("caffeineBloodValue", 0);
         logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
         privacy_policy_accepted = loadInstance.getBoolean("privacyPolicyAccepted", privacy_policy_accepted);
 
@@ -166,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent addCaffeineIntakeActivity = new Intent(MainActivity.this, AddCaffeine.class);
                 addCaffeineIntakeActivity.putExtra("caffeineIntakeValue", caffeineIntakeValue);
+                addCaffeineIntakeActivity.putExtra("caffeineBloodValue", caffeineBloodValue);
                 startActivityForResult(addCaffeineIntakeActivity, SECOND_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -195,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
         logHistory = intakeLog.getText().toString();
         save.putString("logHistory", logHistory);
         save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+        save.putFloat("caffeineBloodValue", caffeineBloodValue);
         save.putBoolean("privacyPolicyAccepted", privacy_policy_accepted);
         save.apply();
     }
@@ -202,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI() {
         // UI
         text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
+        text_caffeineBloodValue.setText(caffeineBloodValue + "mg");
         currentCaffeineLevel = (int) caffeineIntakeValue;
         caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
         caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
@@ -214,7 +221,8 @@ public class MainActivity extends AppCompatActivity {
     private void receiveData() {
         SharedPreferences receiveData = getSharedPreferences(RECEIVE_FROM_SERVICE, MODE_PRIVATE);
 
-        caffeineIntakeValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineIntakeValue);
+        caffeineIntakeValue = receiveData.getFloat("caffeineIntakeValue", caffeineIntakeValue);
+        caffeineBloodValue = receiveData.getFloat("caffeineBloodValue", caffeineBloodValue);
     }
 
     private void sendData() {

@@ -22,14 +22,16 @@ public class caffeineMetabolizationService extends Service {
     long differenceTime;
 
     float caffeineIntakeMetabolized;
-    float caffeineIntakeValue;
+    float caffeineBloodValue;
     float caffeineAddValue;
+    float caffeineToAbsorb;
 
     int notificationDelay;
     int counter;
     int randomNotification;
     int halflifeDuration = 21600;
     int caffeineToZeroDuration = 64800;
+    int caffeineAbsorptionDuration = 2700;
 
     private boolean tooMuchCaffeineBool = false;
     private boolean appearedBefore1;
@@ -93,12 +95,12 @@ public class caffeineMetabolizationService extends Service {
             }
             //Do some work
             computeMetabolization();
-            Log.i("in timer", "in timer ++++  " + (counter += 1) + " Difference: " + differenceTime);
+            Log.i("DEBUG", "in timer ++++  " + (counter += 1) + " Difference: " + differenceTime);
             oldTime = System.currentTimeMillis();
             saveData();
             notificationDelay -= 1;
-            Log.i("in timer", "DATA SAVED!  ");
-            Log.i("Service", " Caffeine Count: " + caffeineIntakeValue);
+            Log.i("Watchdog", "DATA SAVED!  ");
+            Log.i("Service", " Caffeine Count: " + caffeineBloodValue);
 
             // Repeat this every x ms
             calculationHandler.postDelayed(executeCalculationHandler, 1000);
@@ -106,40 +108,59 @@ public class caffeineMetabolizationService extends Service {
     };
 
     private void computeMetabolization() {
-        if(caffeineIntakeValue > 0) {
-            float caffeineIntakeBefore = caffeineIntakeValue;
-            caffeineIntakeValue -= caffeineHalfLifeMetabolizationCoefficient();
-            //caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
-            caffeineIntakeMetabolized -= (caffeineIntakeValue - caffeineIntakeBefore);
+        if(caffeineToAbsorb > 0) {
+            Log.i("DEBUG", "CAFFEINE TO ABSORB RECEIVED: " + caffeineToAbsorb);
+            float caffeineBloodValueBefore = caffeineBloodValue;
+            caffeineBloodValue += caffeineAbsorptionCoefficient();
+            float caffeineBloodValueAbsorbed = caffeineBloodValue - caffeineBloodValueBefore;
+            Log.i("COMPUTE ", "CAFFEINE ABSORBED | " + "ABSORBED VALUE: " + (caffeineBloodValueAbsorbed) + " CAFFEINE IN BLOOD: | " + caffeineBloodValue + " | CAFFEINE IN BODY: " + caffeineToAbsorb);
+            caffeineToAbsorb = Math.round(caffeineToAbsorb * 100.0f) / 100.0f;
+            caffeineToAbsorb -= caffeineBloodValueAbsorbed;
             sendData();
-            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+            Log.i("DEBUG", "ABSORBED CAFFEINE SENT: " + caffeineToAbsorb);
+        }
+        if(caffeineBloodValue > 0) {
+            float caffeineIntakeBefore = caffeineBloodValue;
+            caffeineBloodValue -= caffeineHalfLifeMetabolizationCoefficient();
+            caffeineBloodValue = Math.round(caffeineBloodValue * 100.0f) / 100.0f;
+            caffeineIntakeMetabolized -= (caffeineBloodValue - caffeineIntakeBefore);
+            sendData();
+            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineBloodValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineBloodValue);
         }
         if(caffeineIntakeMetabolized > 0) {
             float caffeineIntakeMetabolizedBefore = caffeineIntakeMetabolized;
             caffeineIntakeMetabolized -= caffeineZeroMetabolizationCoefficient();
-            //caffeineIntakeMetabolized = Math.round(caffeineIntakeMetabolized * 100.0f) / 100.0f;
-            caffeineIntakeValue -= (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore);
+            caffeineIntakeMetabolized = Math.round(caffeineIntakeMetabolized * 100.0f) / 100.0f;
+            caffeineBloodValue -= (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore);
             sendData();
-            Log.i("COMPUTE ", "CAFFEINE ZERO METABOLIZED | " + "METABOLIZED ZERO VALUE: " + (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+            Log.i("COMPUTE ", "CAFFEINE ZERO METABOLIZED | " + "METABOLIZED ZERO VALUE: " + (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore) + " CAFFEINE IN SYSTEM: | " + caffeineBloodValue);
         }
     }
 
+    private float caffeineAbsorptionCoefficient() {
+        float caffeineToBeAbsorbed = caffeineToAbsorb; //Sounds stupid but it won't work otherwise
+        float caffeineAbsorptionPerSecond = caffeineToBeAbsorbed / caffeineAbsorptionDuration;
+        Log.i("COMPUTE", "CAFFEINE ABSORPTION COEFFICIENT FOUND: " + caffeineAbsorptionPerSecond);
+        return caffeineAbsorptionPerSecond;
+    }
+
     private float caffeineHalfLifeMetabolizationCoefficient() {
-        float caffeineIntakeHalved = caffeineIntakeValue /= 2;
-        float caffeinePerSecond = caffeineIntakeHalved /= halflifeDuration;
+        float caffeineIntakeHalved = caffeineBloodValue / 2;
+        float caffeinePerSecond = caffeineIntakeHalved / halflifeDuration;
         Log.i("COMPUTE", "CAFFEINE COEFFICIENT FOUND: " + caffeinePerSecond);
         return caffeinePerSecond;
     }
 
     private float caffeineZeroMetabolizationCoefficient() {
-        float caffeineIntakeToZero = caffeineIntakeMetabolized /= caffeineToZeroDuration;
+        float caffeineIntakeToZero = caffeineIntakeMetabolized / caffeineToZeroDuration;
         Log.i("COMPUTE", "CAFFEINE ZERO COEFFICIENT FOUND: " + caffeineIntakeToZero);
         return caffeineIntakeToZero;
     }
 
     private void loadData() {
         SharedPreferences prefsDataLoad = getSharedPreferences(SAVE, MODE_PRIVATE);
-        caffeineIntakeValue = prefsDataLoad.getFloat("caffeineIntakeValue", caffeineIntakeValue);
+        caffeineBloodValue = prefsDataLoad.getFloat("caffeineBloodValue", caffeineBloodValue);
+        caffeineToAbsorb = prefsDataLoad.getFloat("caffeineToAbsorb", caffeineToAbsorb);
         counter = prefsDataLoad.getInt("counter", 0);
         oldTime = prefsDataLoad.getLong("oldTime", newTime);
         notificationDelay = prefsDataLoad.getInt("notificationDelay", notificationDelay);
@@ -149,7 +170,8 @@ public class caffeineMetabolizationService extends Service {
     private void saveData() {
         SharedPreferences prefsDataSave = getSharedPreferences(SAVE, MODE_PRIVATE);
         SharedPreferences.Editor dataSave = prefsDataSave.edit();
-        dataSave.putFloat("caffeineIntakeValue", caffeineIntakeValue);
+        dataSave.putFloat("caffeineBloodValue", caffeineBloodValue);
+        dataSave.putFloat("caffeineToAbsorb", caffeineToAbsorb);
         dataSave.putInt("counter", counter);
         dataSave.putInt("notificationDelay", notificationDelay);
         dataSave.putLong("oldTime", oldTime);
@@ -161,7 +183,8 @@ public class caffeineMetabolizationService extends Service {
         SharedPreferences prefsDataSend = getSharedPreferences(SEND_TO_ACTIVITY, MODE_PRIVATE);
         SharedPreferences.Editor dataSend = prefsDataSend.edit();
 
-        dataSend.putFloat("caffeineMetabolizedValue", caffeineIntakeValue);
+        dataSend.putFloat("caffeineBloodValue", caffeineBloodValue);
+        dataSend.putFloat("caffeineIntakeValue", caffeineToAbsorb);
         dataSend.apply();
     }
 
@@ -170,7 +193,7 @@ public class caffeineMetabolizationService extends Service {
         caffeineAddValue = prefsDataUpdate.getFloat("caffeineAddValue", caffeineAddValue);
         SharedPreferences.Editor dataDelete = prefsDataUpdate.edit();
         if (caffeineAddValue > 0) {
-            caffeineIntakeValue += caffeineAddValue;
+            caffeineToAbsorb += caffeineAddValue;
             caffeineAddValue = 0;
             dataDelete.remove("caffeineAddValue");
             dataDelete.apply();
@@ -181,10 +204,10 @@ public class caffeineMetabolizationService extends Service {
         // Random notification generator:
         randomNotification = (int) (Math.random()*4);
         // This displays the tooMuchCaffeine notification.
-        if (caffeineIntakeValue >= 400 && tooMuchCaffeineBool == false) {
-            tooMuchCaffeine.notify(ctx, String.valueOf(caffeineIntakeValue));
+        if (caffeineBloodValue >= 400 && tooMuchCaffeineBool == false) {
+            tooMuchCaffeine.notify(ctx, String.valueOf(caffeineBloodValue));
             tooMuchCaffeineBool = true;
-        } else if(caffeineIntakeValue <= 399.9 && tooMuchCaffeineBool == true) {
+        } else if(caffeineBloodValue <= 399.9 && tooMuchCaffeineBool == true) {
             tooMuchCaffeineBool = false;
         }
         //This displays the healthAdvice notifications.
