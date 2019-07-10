@@ -40,7 +40,7 @@ import java.util.Date;
 import services.caffeineMetabolizationService;
 import sk.smdtech.caffeinator.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
     // Variables
     float caffeineIntakeValue;
@@ -366,12 +366,11 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-        .show();
+                .setOnDismissListener(MainActivity.this)
+                .show();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
+    public void onDismiss(DialogInterface dialog) {
         // Privacy Policy Dialog
         if(!privacy_policy_accepted)
             showPrivacyPolicyAlert();
