@@ -23,8 +23,9 @@ import sk.smdtech.caffeinator.R;
 public class AddCaffeine extends AppCompatActivity {
 
     // Variables
-    float caffeineValueDefault;
     float caffeineValue;
+    float caffeineValueDefault;
+    float caffeineBloodValue;
 
     private Handler updateHandler;
 
@@ -55,6 +56,7 @@ public class AddCaffeine extends AppCompatActivity {
         // Get data from MainActivity and put them in the TextView
         Intent getData = getIntent();
         caffeineValueDefault = getData.getFloatExtra("caffeineIntakeValue", caffeineValueDefault);
+        caffeineBloodValue = getData.getFloatExtra("caffeineBloodValue", caffeineBloodValue);
 
         // UI
         drawer_layout = (DrawerLayout)findViewById(R.id.addCaffeine_activity_drawer_layout);
@@ -82,13 +84,12 @@ public class AddCaffeine extends AppCompatActivity {
             }
         });
 
-
         updateHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 receiveData();
-                bodyCaffeineLevel.setText("Body caffeine level: " + caffeineValue);
-                bloodstreamCaffeineLevel.setText("Bloodstream caffeine level: " + "N/A");
+                bodyCaffeineLevel.setText("Body caffeine level: " + caffeineValue + "mg");
+                bloodstreamCaffeineLevel.setText("Bloodstream caffeine level: " + caffeineBloodValue + "mg");
                 updateHandler.postDelayed(this, 250);
             }
         }, 25);
@@ -126,6 +127,7 @@ public class AddCaffeine extends AppCompatActivity {
         SharedPreferences receiveData = getSharedPreferences(COMM, MODE_PRIVATE);
 
         caffeineValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineValue);
+        caffeineBloodValue = receiveData.getFloat("caffeineIntakeValue", caffeineValue);
     }
 
     @Override
