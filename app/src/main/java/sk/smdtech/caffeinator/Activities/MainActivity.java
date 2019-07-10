@@ -361,6 +361,13 @@ public class MainActivity extends AppCompatActivity {
         .show();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // Privacy Policy Dialog
+        if(!privacy_policy_accepted)
+            showPrivacyPolicyAlert();
+    }
 
     @Override
     protected void onDestroy() {

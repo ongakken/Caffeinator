@@ -8,10 +8,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ThreadLocalRandom;
-
 import broadcasters.SensorRestarterBroadcastReceiver;
 import notifications.*;
 
@@ -33,6 +29,7 @@ public class caffeineMetabolizationService extends Service {
     int counter;
     int randomNotification;
     int halflifeDuration = 21600;
+    int caffeineToZeroDuration = 64800;
 
     private boolean tooMuchCaffeineBool = false;
     private boolean appearedBefore1;
@@ -93,14 +90,6 @@ public class caffeineMetabolizationService extends Service {
                     }
                 });
                 computeDifference.start();
-            } else if (differenceTime <= -1) {
-                for (; differenceTime <= -1; differenceTime++) {
-                    //Do reverse work to fix any time correction errors
-                    caffeineIntakeValue += 0.1;
-                    caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
-                    sendData();
-                    Log.i("Watchdog: ", "An time error occured! Correcting.. ");
-                }
             }
             //Do some work
             computeMetabolization();
@@ -118,20 +107,34 @@ public class caffeineMetabolizationService extends Service {
 
     private void computeMetabolization() {
         if(caffeineIntakeValue > 0) {
-            caffeineIntakeValue -= caffeineMetabolizationCoefficient();
-            caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
+            float caffeineIntakeBefore = caffeineIntakeValue;
+            caffeineIntakeValue -= caffeineHalfLifeMetabolizationCoefficient();
+            //caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
+            caffeineIntakeMetabolized -= (caffeineIntakeValue - caffeineIntakeBefore);
             sendData();
-            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+        }
+        if(caffeineIntakeMetabolized > 0) {
+            float caffeineIntakeMetabolizedBefore = caffeineIntakeMetabolized;
+            caffeineIntakeMetabolized -= caffeineZeroMetabolizationCoefficient();
+            //caffeineIntakeMetabolized = Math.round(caffeineIntakeMetabolized * 100.0f) / 100.0f;
+            caffeineIntakeValue -= (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore);
+            sendData();
+            Log.i("COMPUTE ", "CAFFEINE ZERO METABOLIZED | " + "METABOLIZED ZERO VALUE: " + (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
         }
     }
 
-    private double caffeineMetabolizationCoefficient() {
-        float caffeineIntakeHalved;
-        double caffeinePerSecond;
-        caffeineIntakeHalved = caffeineIntakeValue /= 2;
-        caffeinePerSecond = caffeineIntakeHalved /= halflifeDuration;
+    private float caffeineHalfLifeMetabolizationCoefficient() {
+        float caffeineIntakeHalved = caffeineIntakeValue /= 2;
+        float caffeinePerSecond = caffeineIntakeHalved /= halflifeDuration;
         Log.i("COMPUTE", "CAFFEINE COEFFICIENT FOUND: " + caffeinePerSecond);
         return caffeinePerSecond;
+    }
+
+    private float caffeineZeroMetabolizationCoefficient() {
+        float caffeineIntakeToZero = caffeineIntakeMetabolized /= caffeineToZeroDuration;
+        Log.i("COMPUTE", "CAFFEINE ZERO COEFFICIENT FOUND: " + caffeineIntakeToZero);
+        return caffeineIntakeToZero;
     }
 
     private void loadData() {
