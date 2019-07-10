@@ -26,13 +26,13 @@ public class caffeineMetabolizationService extends Service {
     long differenceTime;
 
     float caffeineIntakeMetabolized;
-    float caffeineIntakeHalved;
     float caffeineIntakeValue;
     float caffeineAddValue;
 
     int notificationDelay;
     int counter;
     int randomNotification;
+    int halflifeDuration = 21600;
 
     private boolean tooMuchCaffeineBool = false;
     private boolean appearedBefore1;
@@ -41,9 +41,6 @@ public class caffeineMetabolizationService extends Service {
     private boolean appearedBefore4;
     private boolean appearedBefore5;
 
-
-
-    Thread updateThread;
     Thread computeDifference;
 
     Handler updateHandler = new Handler();
@@ -121,18 +118,20 @@ public class caffeineMetabolizationService extends Service {
 
     private void computeMetabolization() {
         if(caffeineIntakeValue > 0) {
-            caffeineIntakeValue -= 0.1;
+            caffeineIntakeValue -= caffeineMetabolizationCoefficient();
             caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
             sendData();
             Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
         }
     }
 
-    private void computeHalfLife() {
+    private double caffeineMetabolizationCoefficient() {
+        float caffeineIntakeHalved;
+        double caffeinePerSecond;
         caffeineIntakeHalved = caffeineIntakeValue /= 2;
-        for(;caffeineIntakeHalved <= caffeineIntakeValue; caffeineIntakeMetabolized ++); {
-
-        }
+        caffeinePerSecond = caffeineIntakeHalved /= halflifeDuration;
+        Log.i("COMPUTE", "CAFFEINE COEFFICIENT FOUND: " + caffeinePerSecond);
+        return caffeinePerSecond;
     }
 
     private void loadData() {

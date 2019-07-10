@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,6 +25,7 @@ public class AboutActivity extends AppCompatActivity {
     // UI Data
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
+    private Button showPrivacyPolicyButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,15 @@ public class AboutActivity extends AppCompatActivity {
         drawerToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        showPrivacyPolicyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addCaffeineIntakeActivity = new Intent(AboutActivity.this, AddCaffeine.class);
+                startActivity(addCaffeineIntakeActivity);
+                finish();
+            }
+        });
 
         NavigationView navView = (NavigationView)findViewById(R.id.about_activity_nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
