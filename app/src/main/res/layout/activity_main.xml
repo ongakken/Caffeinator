@@ -39,7 +39,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
-            android:text="N/A"
+            android:text="@string/unknown"
             android:textColor="#FFA500"
             app:layout_constraintBottom_toBottomOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,12 +57,14 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="Add caffeine intake"
+            android:background="#3F3F40"
+            android:text="@string/addCaffeineIntake"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.415" />
+            app:layout_constraintVertical_bias="0.377" />
 
         <!--ads:adUnitId="ca-app-pub-3940256099942544/6300978111 TEST AD ID"-->
 
@@ -77,79 +79,79 @@
             android:layout_marginBottom="8dp"
             android:max="100"
             android:progress="0"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintBottom_toTopOf="@+id/youCanSafelyTakeInText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.777" />
+            app:layout_constraintTop_toBottomOf="@+id/howMuchCaffeineCanItakeText"
+            app:layout_constraintVertical_bias="0.896" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/howMuchCaffeineCanItakeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="How much more caffeine can I take in today?"
+            android:text="@string/howMuchCaffeineCanItakeText"
             android:textAlignment="center"
             android:textColor="#FFA500"
-            android:textSize="15dp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.244" />
+            app:layout_constraintVertical_bias="0.158" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/youCanSafelyTakeInText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="You can safely take in: "
+            android:text="@string/youCanSafelyTakeInText"
             android:textColor="#FFA500"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/text_caffeineIntakeLeft"
-            app:layout_constraintHorizontal_bias="0.478"
+            app:layout_constraintEnd_toStartOf="@+id/caffeineIntakeLeftText"
+            app:layout_constraintHorizontal_bias="0.436"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.339" />
+            app:layout_constraintVertical_bias="0.288" />
 
         <TextView
-            android:id="@+id/text_caffeineIntakeLeft"
+            android:id="@+id/caffeineIntakeLeftText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="0mg"
+            android:text="@string/zeromg"
             android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="@+id/textView3"
-            app:layout_constraintEnd_toStartOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="@+id/youCanSafelyTakeInText"
+            app:layout_constraintEnd_toStartOf="@+id/ofCaffeineText"
             app:layout_constraintHorizontal_bias="0.884"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/youCanSafelyTakeInText"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/ofCaffeineText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text=" of caffeine."
+            android:text="@string/ofCaffeineText"
             android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="@+id/text_caffeineIntakeLeft"
+            app:layout_constraintBottom_toBottomOf="@+id/caffeineIntakeLeftText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.905"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_caffeineIntakeLeft"
+            app:layout_constraintTop_toTopOf="@+id/caffeineIntakeLeftText"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -166,10 +168,10 @@
             android:textColor="#FFA500"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.16"
+            app:layout_constraintHorizontal_bias="0.166"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.107" />
+            app:layout_constraintVertical_bias="0.011" />
 
         <TextView
             android:id="@+id/textView4"

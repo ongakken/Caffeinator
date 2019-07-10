@@ -36,8 +36,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-
-        android:text="Body caffeine level: 0"
+        android:text="@string/intakeLevel"
         android:textColor="#FFA500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.098"
@@ -54,10 +53,10 @@
         android:layout_marginTop="72dp"
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
-        android:text="Bloodstream caffeine level: 0"
+        android:text="@string/bloodstreamLevel"
         android:textColor="#FFA500"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.225"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,20 +64,22 @@
         android:id="@+id/addCaffeineButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="52dp"
-        android:text="Add"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/addCaffeineIntake"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caffeineAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/caffeineAmount"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/invalidValue"
         android:layout_width="177dp"
         android:layout_height="36dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="36dp"
 
         android:text=""
         android:textColor="#FFA500"

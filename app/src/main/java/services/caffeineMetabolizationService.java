@@ -8,10 +8,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ThreadLocalRandom;
-
 import broadcasters.SensorRestarterBroadcastReceiver;
 import notifications.*;
 
@@ -19,18 +15,21 @@ public class caffeineMetabolizationService extends Service {
 
     // Variables
     public static final String SAVE = "Caffeinator%Service%Save%File";
-    public static final String SEND_TO_ACTIVITY = "Caffeinator%Save%File";
+    public static final String SEND_TO_ACTIVITY = "Caffeinator%Share%File";
 
     long oldTime;
     long newTime;
     long differenceTime;
 
+    float caffeineIntakeMetabolized;
     float caffeineIntakeValue;
     float caffeineAddValue;
 
     int notificationDelay;
     int counter;
     int randomNotification;
+    int halflifeDuration = 21600;
+    int caffeineToZeroDuration = 64800;
 
     private boolean tooMuchCaffeineBool = false;
     private boolean appearedBefore1;
@@ -39,12 +38,10 @@ public class caffeineMetabolizationService extends Service {
     private boolean appearedBefore4;
     private boolean appearedBefore5;
 
-
-
-    Thread updateThread;
     Thread computeDifference;
 
     Handler updateHandler = new Handler();
+    Handler calculationHandler = new Handler();
 
     Context ctx = this;
 
@@ -65,7 +62,7 @@ public class caffeineMetabolizationService extends Service {
         loadData();
         differenceTime = (newTime - oldTime) / 1000;
         Log.i("DEBUG", "time difference: " + differenceTime + " oldTime: " + oldTime + " newTime " + newTime);
-        startTimer();
+        calculationHandler.post(executeCalculationHandler);
         updateHandler.post(executeUpdater);
         return START_STICKY;
     }
@@ -74,74 +71,70 @@ public class caffeineMetabolizationService extends Service {
         super.onDestroy();
         Intent broadcastIntent = new Intent(ctx, SensorRestarterBroadcastReceiver.class);
         sendBroadcast(broadcastIntent);
-        stoptimertask();
         saveData();
         Log.i("EXIT", "onDestroy!");
     }
 
-    private Timer timer;
-    private TimerTask timerTask;
-    public void startTimer() {
-        //set a new Timer
-        timer = new Timer();
-
-        //initialize the TimerTask's job
-        initializeTimerTask();
-        //schedule the timer, to execute the code every x milliseconds
-        timer.schedule(timerTask, 1000, 1000);
-    }
-
-    public void initializeTimerTask() {
-        timerTask = new TimerTask() {
-            public void run() {
-                //Check for time differences and for correction overshoot
-                if(differenceTime >= 1) {
-                    computeDifference = new Thread(new Runnable() {
-                        public void run() {
-                            for (; differenceTime >= 1; differenceTime--) {
-                                //Do the same work as below, or in other words do the missing work
-                                computeMetabolization();
-                                Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
-                            }
+    private Runnable executeCalculationHandler = new Runnable() {
+        @Override
+        public void run() {
+            //Check for time differences and for correction overshoot
+            if (differenceTime >= 1) {
+                computeDifference = new Thread(new Runnable() {
+                    public void run() {
+                        for (; differenceTime >= 1; differenceTime--) {
+                            //Do the same work as below, or in other words do the missing work
+                            computeMetabolization();
+                            Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
                         }
-                    });
-                    computeDifference.start();
-                } else if (differenceTime <= -1) {
-                    for (; differenceTime <= -1; differenceTime++) {
-                        //Do reverse work to fix any time correction errors
-                        caffeineIntakeValue += 0.1;
-                        caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
-                        sendData();
-                        Log.i("Watchdog: ", "An time error occured! Correcting.. ");
                     }
-                }
-                //Do some work
-                computeMetabolization();
-                Log.i("in timer", "in timer ++++  "+ (counter += 1) +" Difference: " + differenceTime);
-                oldTime = System.currentTimeMillis();
-                saveData();
-                notificationDelay -= 1;
-                Log.i("in timer", "DATA SAVED!  ");
-                Log.i("Service", " Caffeine Count: " + caffeineIntakeValue);
+                });
+                computeDifference.start();
             }
-        };
-    }
+            //Do some work
+            computeMetabolization();
+            Log.i("in timer", "in timer ++++  " + (counter += 1) + " Difference: " + differenceTime);
+            oldTime = System.currentTimeMillis();
+            saveData();
+            notificationDelay -= 1;
+            Log.i("in timer", "DATA SAVED!  ");
+            Log.i("Service", " Caffeine Count: " + caffeineIntakeValue);
 
-    public void stoptimertask() {
-        //stop the timer, if it's not already null
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
+            // Repeat this every x ms
+            calculationHandler.postDelayed(executeCalculationHandler, 1000);
         }
-    }
+    };
 
     private void computeMetabolization() {
         if(caffeineIntakeValue > 0) {
-            caffeineIntakeValue -= 0.1;
-            caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
+            float caffeineIntakeBefore = caffeineIntakeValue;
+            caffeineIntakeValue -= caffeineHalfLifeMetabolizationCoefficient();
+            //caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
+            caffeineIntakeMetabolized -= (caffeineIntakeValue - caffeineIntakeBefore);
             sendData();
-            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeValue + 0.1) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+            Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineIntakeValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
         }
+        if(caffeineIntakeMetabolized > 0) {
+            float caffeineIntakeMetabolizedBefore = caffeineIntakeMetabolized;
+            caffeineIntakeMetabolized -= caffeineZeroMetabolizationCoefficient();
+            //caffeineIntakeMetabolized = Math.round(caffeineIntakeMetabolized * 100.0f) / 100.0f;
+            caffeineIntakeValue -= (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore);
+            sendData();
+            Log.i("COMPUTE ", "CAFFEINE ZERO METABOLIZED | " + "METABOLIZED ZERO VALUE: " + (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore) + " CAFFEINE IN SYSTEM: | " + caffeineIntakeValue);
+        }
+    }
+
+    private float caffeineHalfLifeMetabolizationCoefficient() {
+        float caffeineIntakeHalved = caffeineIntakeValue /= 2;
+        float caffeinePerSecond = caffeineIntakeHalved /= halflifeDuration;
+        Log.i("COMPUTE", "CAFFEINE COEFFICIENT FOUND: " + caffeinePerSecond);
+        return caffeinePerSecond;
+    }
+
+    private float caffeineZeroMetabolizationCoefficient() {
+        float caffeineIntakeToZero = caffeineIntakeMetabolized /= caffeineToZeroDuration;
+        Log.i("COMPUTE", "CAFFEINE ZERO COEFFICIENT FOUND: " + caffeineIntakeToZero);
+        return caffeineIntakeToZero;
     }
 
     private void loadData() {

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name=".Activities.PrivacyPolicyActivity"></activity>
+        <activity android:name=".Activities.AboutActivity" />
 
         <receiver
             android:name="broadcasters.SensorRestarterBroadcastReceiver"
@@ -24,9 +27,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name="sk.smdtech.caffeinator.Activities.AddCaffeine" />
-        <activity android:name="sk.smdtech.caffeinator.Activities.GraphActivity" />
-        <activity android:name="sk.smdtech.caffeinator.Activities.MainActivity">
+        <activity android:name=".Activities.AddCaffeine" />
+        <activity android:name=".Activities.GraphActivity" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

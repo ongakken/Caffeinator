@@ -28,7 +28,7 @@ public class AddCaffeine extends AppCompatActivity {
 
     private Handler updateHandler;
 
-    public static final String SAVE = "Caffeinator%Save%File";
+    public static final String COMM = "Caffeinator%Share%File";
     String caffeineValueText;
     String invalidCharacter = ".";
 
@@ -36,10 +36,6 @@ public class AddCaffeine extends AppCompatActivity {
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
 
-    EditText caffeineAmount;
-
-    TextView invalidValue;
-    TextView bodyCaffeineLevel;
     TextView bloodstreamCaffeineLevel;
 
     @Override
@@ -62,7 +58,7 @@ public class AddCaffeine extends AppCompatActivity {
 
         // UI
         drawer_layout = (DrawerLayout)findViewById(R.id.addCaffeine_activity_drawer_layout);
-        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.Open, R.string.Close);
+        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.open, R.string.close);
         drawerToggle.setDrawerIndicatorEnabled(true);
 
         drawer_layout.addDrawerListener(drawerToggle);
@@ -75,12 +71,13 @@ public class AddCaffeine extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
-                if(id == R.id.overview) {
+                if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
-                } else if(id == R.id.graph) {
+                } else if (id == R.id.graph) {
                     switchIntent(GraphActivity.class);
+                } else if (id == R.id.about) {
+                    switchIntent(AboutActivity.class);
                 }
-                finish();
                 return true;
             }
         });
@@ -122,10 +119,11 @@ public class AddCaffeine extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
+        finish();
     }
 
     private void receiveData() {
-        SharedPreferences receiveData = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences receiveData = getSharedPreferences(COMM, MODE_PRIVATE);
 
         caffeineValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineValue);
     }
