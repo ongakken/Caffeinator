@@ -5,8 +5,10 @@
         android:icon="@drawable/caffeinator_icon"
         android:title="@string/overview"/>
     <item android:id="@+id/graph"
+        android:icon="@drawable/ic_insert_chart_black_48dp"
         android:title="@string/graph"/>
     <item android:id="@+id/about"
+        android:icon="@drawable/ic_info_black_48dp"
         android:title="@string/about"/>
 
 </menu>
