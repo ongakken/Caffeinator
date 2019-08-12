@@ -37,6 +37,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import classes.CircularProgressBar;
 import services.caffeineMetabolizationService;
 import sk.smdtech.caffeinator.R;
 
@@ -48,9 +50,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     float caffeineAddValue;
     float caffeineIntakeLeft;
 
-    int currentCaffeineLevel;
     int maxCaffeineIntake = 400;
-    int getPrg_maxCaffeine_currentValue;
 
     String logHistory;
 
@@ -72,14 +72,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     LocationManager lm;
 
     // UI data types
-    TextView text_caffeineIntakeValue;
-    TextView text_caffeineBloodValue;
-    TextView text_caffeineIntakeLeft;
-    TextView intakeLog;
-    ProgressBar prg_maxCaffeine;
+    TextView bodyCaffeine;
+    TextView bloodCaffeine;
+    TextView safeAmount;
 
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
+    private CircularProgressBar circularProgressBar;
 
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
 
@@ -97,12 +96,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         updateHandler = new Handler();
 
         // Data resources
-        prg_maxCaffeine = findViewById(R.id.prgBar_maxCaffeine);
-        text_caffeineIntakeLeft = findViewById(R.id.caffeineIntakeLeftText);
-        text_caffeineIntakeValue = findViewById(R.id.text_caffeineIntakeValue);
-        text_caffeineBloodValue = findViewById(R.id.text_caffeineBloodstreamValue);
         Button btn_addCaffeineIntake = findViewById(R.id.btn_addCaffeineIntake);
-        intakeLog = findViewById(R.id.intakeLog);
 
         // Auto Save/Load section
         final SharedPreferences loadInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
@@ -124,8 +118,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         // UI
-        intakeLog.setMovementMethod(new ScrollingMovementMethod());
-        intakeLog.append(logHistory);
+        bodyCaffeine = findViewById(R.id.bodyCaffeine);
+        bloodCaffeine = findViewById(R.id.bloodCaffeine);
+        circularProgressBar = findViewById(R.id.custom_progressBar);
+        safeAmount = findViewById(R.id.safeAmount);
+
         drawer_layout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout, R.string.open, R.string.close);
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -197,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         SharedPreferences saveInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
         SharedPreferences.Editor save = saveInstance.edit();
 
-        logHistory = intakeLog.getText().toString();
         save.putString("logHistory", logHistory);
         save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
         save.putFloat("caffeineBloodValue", caffeineBloodValue);
@@ -207,15 +203,13 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private void updateUI() {
         // UI
-        text_caffeineIntakeValue.setText(caffeineIntakeValue + "mg");
-        text_caffeineBloodValue.setText(caffeineBloodValue + "mg");
-        currentCaffeineLevel = (int) caffeineIntakeValue;
+        bodyCaffeine.setText("Caffeine in body: " + caffeineIntakeValue);
+        bloodCaffeine.setText("Caffeine in blood: " + caffeineBloodValue);
         caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
         caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
-        text_caffeineIntakeLeft.setText(caffeineIntakeLeft + "mg");
-        prg_maxCaffeine.setMax(maxCaffeineIntake);
-        prg_maxCaffeine.setProgress(currentCaffeineLevel); //we have to figure out how to calculate person's max daily caffeine intake and interpret it with this progressbar
-        getPrg_maxCaffeine_currentValue = prg_maxCaffeine.getProgress();
+
+        safeAmount.setText("You can still consume: " + caffeineIntakeLeft + "mg");
+        circularProgressBar.setProgress(currentCaffeineDisplayLevel());
     }
 
     private void receiveData() {
@@ -261,7 +255,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private void log(float amount) {
         Date currentTime = Calendar.getInstance().getTime();
-        intakeLog.append("\n | " + currentTime + " | Consumed: " + amount + "mg");
 
     }
 
@@ -326,11 +319,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Location startingLocation = getGPSLocation();
-                    intakeLog.append("\n " + (CharSequence) startingLocation);
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    intakeLog.append("\n " + "PERMISSION DENIED "+ "\n " +" Couldn't retrieve user location!");
                 }
                 return;
             }
@@ -351,7 +342,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         privacy_policy_accepted = true;
-                        intakeLog.append("\n " + "Privacy policy accepted!");
                     }
                 })
                 .setNeutralButton(R.string.show_policy, new DialogInterface.OnClickListener() {
@@ -381,5 +371,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         stopService(startCaffeineMetabolizationService);
         Log.i("Watchdog:", "Main Activity has been destroyed!");
         super.onDestroy();
+    }
+
+    private float currentCaffeineDisplayLevel(){
+        float totalCaffeine = caffeineIntakeValue + caffeineBloodValue;
+        return totalCaffeine;
     }
 }
