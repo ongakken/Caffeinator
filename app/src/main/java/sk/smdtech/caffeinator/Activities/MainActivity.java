@@ -204,13 +204,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         // UI
         bodyCaffeine.setText("Caffeine in body: " + caffeineIntakeValue);
         bloodCaffeine.setText("Caffeine in blood: " + caffeineBloodValue);
-        caffeineIntakeLeft = maxCaffeineIntake - caffeineIntakeValue;
+        caffeineIntakeLeft = maxCaffeineIntake - currentCaffeineDisplayLevel();
         caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
 
         safeAmount.setText("You can still consume: " + caffeineIntakeLeft + "mg");
-        float totalCaffeine;
-        circularProgressBar.setProgress(caffeineIntakeValue += caffeineBloodValue);
-        totalCaffeine = 0;
+        circularProgressBar.setProgress(currentCaffeineDisplayLevel());
     }
 
     private void receiveData() {
