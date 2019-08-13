@@ -170,12 +170,15 @@ public class caffeineMetabolizationService extends Service {
             caffeineAbsorptionCoefficient = calculateCaffeineAbsorptionCoefficient();
             caffeineHalfLifeMetabolizationCoefficient = calculateCaffeineHalfLifeMetabolizationCoefficient();
             //caffeineZeroMetabolizationCoefficient = calculateCaffeineZeroMetabolizationCoefficient(); ***WIP***
+
             caffeineToCalculate = 0;
         }
     }
 
     private void loadData() {
         SharedPreferences prefsDataLoad = getSharedPreferences(SAVE, MODE_PRIVATE);
+        caffeineAbsorptionCoefficient = prefsDataLoad.getFloat("caffeineAbsorptionCoefficient", caffeineAbsorptionCoefficient);
+        caffeineHalfLifeMetabolizationCoefficient = prefsDataLoad.getFloat("caffeineHalfLifeMetabolizationCoefficient", caffeineHalfLifeMetabolizationCoefficient);
         caffeineBloodValue = prefsDataLoad.getFloat("caffeineBloodValue", caffeineBloodValue);
         caffeineToAbsorb = prefsDataLoad.getFloat("caffeineToAbsorb", caffeineToAbsorb);
         counter = prefsDataLoad.getInt("counter", 0);
@@ -187,6 +190,8 @@ public class caffeineMetabolizationService extends Service {
     private void saveData() {
         SharedPreferences prefsDataSave = getSharedPreferences(SAVE, MODE_PRIVATE);
         SharedPreferences.Editor dataSave = prefsDataSave.edit();
+        dataSave.putFloat("caffeineAbsorptionCoefficient", caffeineAbsorptionCoefficient);
+        dataSave.putFloat("caffeineHalfLifeMetabolizationCoefficient", caffeineHalfLifeMetabolizationCoefficient);
         dataSave.putFloat("caffeineBloodValue", caffeineBloodValue);
         dataSave.putFloat("caffeineToAbsorb", caffeineToAbsorb);
         dataSave.putInt("counter", counter);
