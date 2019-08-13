@@ -118,9 +118,9 @@ public class caffeineMetabolizationService extends Service {
             Log.i("DEBUG", "CAFFEINE TO ABSORB RECEIVED: " + caffeineToAbsorb);
             float caffeineBloodValueBefore = caffeineBloodValue;
             caffeineBloodValue += caffeineAbsorptionCoefficient;
-            float caffeineBloodValueAbsorbed = caffeineBloodValue - caffeineBloodValueBefore;
+            float caffeineBloodValueAbsorbed = (caffeineBloodValue - caffeineBloodValueBefore);
             Log.i("COMPUTE ", "CAFFEINE ABSORBED | " + "ABSORBED VALUE: " + (caffeineBloodValueAbsorbed) + " CAFFEINE IN BLOOD: | " + caffeineBloodValue + " | CAFFEINE IN BODY: " + caffeineToAbsorb);
-            caffeineToAbsorb = Math.round(caffeineToAbsorb * 100.0f) / 100.0f;
+            //caffeineToAbsorb = Math.round(caffeineToAbsorb * 100.0f) / 100.0f;
             caffeineToAbsorb -= caffeineBloodValueAbsorbed;
             sendData();
             Log.i("DEBUG", "ABSORBED CAFFEINE SENT: " + caffeineToAbsorb);
@@ -128,7 +128,7 @@ public class caffeineMetabolizationService extends Service {
         if(caffeineBloodValue > 0) {
             float caffeineIntakeBefore = caffeineBloodValue;
             caffeineBloodValue -= caffeineHalfLifeMetabolizationCoefficient;
-            caffeineBloodValue = Math.round(caffeineBloodValue * 100.0f) / 100.0f;
+            //caffeineBloodValue = Math.round(caffeineBloodValue * 100.0f) / 100.0f;
             caffeineIntakeMetabolized -= (caffeineBloodValue - caffeineIntakeBefore);
             sendData();
             Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineBloodValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineBloodValue);
