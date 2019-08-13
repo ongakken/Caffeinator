@@ -108,8 +108,7 @@ public class AddCaffeine extends AppCompatActivity {
 
                     // Pass back the data and safely finish the activity
                     Intent intent = new Intent();
-                    Bundle bundle = new Bundle();
-                    bundle.putFloat("caffeineAddValue", caffeineValue);
+                    intent.putExtra("caffeineAddValue", caffeineValue);
                     caffeineValue = 0;
                     setResult(RESULT_OK, intent);
                     finish();
