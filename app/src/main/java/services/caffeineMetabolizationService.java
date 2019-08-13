@@ -21,10 +21,15 @@ public class caffeineMetabolizationService extends Service {
     long newTime;
     long differenceTime;
 
+    float caffeineToCalculate;
     float caffeineIntakeMetabolized;
     float caffeineBloodValue;
     float caffeineAddValue;
     float caffeineToAbsorb;
+
+    float caffeineAbsorptionCoefficient;
+    float caffeineHalfLifeMetabolizationCoefficient;
+    float caffeineZeroMetabolizationCoefficient;
 
     int notificationDelay;
     int counter;
@@ -94,6 +99,7 @@ public class caffeineMetabolizationService extends Service {
                 computeDifference.start();
             }
             //Do some work
+            checkForNewIntake();
             computeMetabolization();
             Log.i("DEBUG", "in timer ++++  " + (counter += 1) + " Difference: " + differenceTime);
             oldTime = System.currentTimeMillis();
@@ -111,7 +117,7 @@ public class caffeineMetabolizationService extends Service {
         if(caffeineToAbsorb > 0) {
             Log.i("DEBUG", "CAFFEINE TO ABSORB RECEIVED: " + caffeineToAbsorb);
             float caffeineBloodValueBefore = caffeineBloodValue;
-            caffeineBloodValue += caffeineAbsorptionCoefficient();
+            caffeineBloodValue += caffeineAbsorptionCoefficient;
             float caffeineBloodValueAbsorbed = caffeineBloodValue - caffeineBloodValueBefore;
             Log.i("COMPUTE ", "CAFFEINE ABSORBED | " + "ABSORBED VALUE: " + (caffeineBloodValueAbsorbed) + " CAFFEINE IN BLOOD: | " + caffeineBloodValue + " | CAFFEINE IN BODY: " + caffeineToAbsorb);
             caffeineToAbsorb = Math.round(caffeineToAbsorb * 100.0f) / 100.0f;
@@ -121,7 +127,7 @@ public class caffeineMetabolizationService extends Service {
         }
         if(caffeineBloodValue > 0) {
             float caffeineIntakeBefore = caffeineBloodValue;
-            caffeineBloodValue -= caffeineHalfLifeMetabolizationCoefficient();
+            caffeineBloodValue -= caffeineHalfLifeMetabolizationCoefficient;
             caffeineBloodValue = Math.round(caffeineBloodValue * 100.0f) / 100.0f;
             caffeineIntakeMetabolized -= (caffeineBloodValue - caffeineIntakeBefore);
             sendData();
@@ -129,7 +135,7 @@ public class caffeineMetabolizationService extends Service {
         }
         if(caffeineIntakeMetabolized > 0) {
             float caffeineIntakeMetabolizedBefore = caffeineIntakeMetabolized;
-            caffeineIntakeMetabolized -= caffeineZeroMetabolizationCoefficient();
+            caffeineIntakeMetabolized -= caffeineZeroMetabolizationCoefficient;
             caffeineIntakeMetabolized = Math.round(caffeineIntakeMetabolized * 100.0f) / 100.0f;
             caffeineBloodValue -= (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore);
             sendData();
@@ -137,24 +143,34 @@ public class caffeineMetabolizationService extends Service {
         }
     }
 
-    private float caffeineAbsorptionCoefficient() {
+    private float calculateCaffeineAbsorptionCoefficient() {
         float caffeineToBeAbsorbed = caffeineToAbsorb; //Sounds stupid but it won't work otherwise
         float caffeineAbsorptionPerSecond = caffeineToBeAbsorbed / caffeineAbsorptionDuration;
         Log.i("COMPUTE", "CAFFEINE ABSORPTION COEFFICIENT FOUND: " + caffeineAbsorptionPerSecond);
         return caffeineAbsorptionPerSecond;
     }
 
-    private float caffeineHalfLifeMetabolizationCoefficient() {
+    private float calculateCaffeineHalfLifeMetabolizationCoefficient() {
         float caffeineIntakeHalved = caffeineBloodValue / 2;
         float caffeinePerSecond = caffeineIntakeHalved / halflifeDuration;
         Log.i("COMPUTE", "CAFFEINE COEFFICIENT FOUND: " + caffeinePerSecond);
         return caffeinePerSecond;
     }
 
-    private float caffeineZeroMetabolizationCoefficient() {
+    private float calculateCaffeineZeroMetabolizationCoefficient() {
         float caffeineIntakeToZero = caffeineIntakeMetabolized / caffeineToZeroDuration;
         Log.i("COMPUTE", "CAFFEINE ZERO COEFFICIENT FOUND: " + caffeineIntakeToZero);
         return caffeineIntakeToZero;
+    }
+
+    private void checkForNewIntake() {
+        if (caffeineToCalculate > 0) {
+            caffeineAbsorptionCoefficient = calculateCaffeineAbsorptionCoefficient();
+            caffeineHalfLifeMetabolizationCoefficient = calculateCaffeineHalfLifeMetabolizationCoefficient();
+            caffeineZeroMetabolizationCoefficient = calculateCaffeineZeroMetabolizationCoefficient();
+            caffeineToCalculate = 0;
+        }
+
     }
 
     private void loadData() {
@@ -194,6 +210,7 @@ public class caffeineMetabolizationService extends Service {
         SharedPreferences.Editor dataDelete = prefsDataUpdate.edit();
         if (caffeineAddValue > 0) {
             caffeineToAbsorb += caffeineAddValue;
+            caffeineToCalculate += caffeineAddValue;
             caffeineAddValue = 0;
             dataDelete.remove("caffeineAddValue");
             dataDelete.apply();
