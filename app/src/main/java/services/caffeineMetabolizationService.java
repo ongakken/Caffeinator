@@ -144,30 +144,30 @@ public class caffeineMetabolizationService extends Service {
     }
 
     private float calculateCaffeineAbsorptionCoefficient() {
-        float caffeineToBeAbsorbed = caffeineToAbsorb; //Sounds stupid but it won't work otherwise
+        float caffeineToBeAbsorbed = caffeineToCalculate; //Sounds stupid but it won't work otherwise
         float caffeineAbsorptionPerSecond = caffeineToBeAbsorbed / caffeineAbsorptionDuration;
         Log.i("COMPUTE", "CAFFEINE ABSORPTION COEFFICIENT FOUND: " + caffeineAbsorptionPerSecond);
         return caffeineAbsorptionPerSecond;
     }
 
     private float calculateCaffeineHalfLifeMetabolizationCoefficient() {
-        float caffeineIntakeHalved = caffeineBloodValue / 2;
+        float caffeineIntakeHalved = caffeineToCalculate / 2;
         float caffeinePerSecond = caffeineIntakeHalved / halflifeDuration;
         Log.i("COMPUTE", "CAFFEINE COEFFICIENT FOUND: " + caffeinePerSecond);
         return caffeinePerSecond;
     }
-
+/*   ***WIP***
     private float calculateCaffeineZeroMetabolizationCoefficient() {
         float caffeineIntakeToZero = caffeineIntakeMetabolized / caffeineToZeroDuration;
         Log.i("COMPUTE", "CAFFEINE ZERO COEFFICIENT FOUND: " + caffeineIntakeToZero);
         return caffeineIntakeToZero;
-    }
-
+    } ***WIP***
+*/
     private void checkForNewIntake() {
         if (caffeineToCalculate > 0) {
             caffeineAbsorptionCoefficient = calculateCaffeineAbsorptionCoefficient();
             caffeineHalfLifeMetabolizationCoefficient = calculateCaffeineHalfLifeMetabolizationCoefficient();
-            caffeineZeroMetabolizationCoefficient = calculateCaffeineZeroMetabolizationCoefficient();
+            //caffeineZeroMetabolizationCoefficient = calculateCaffeineZeroMetabolizationCoefficient(); ***WIP***
             caffeineToCalculate = 0;
         }
 
