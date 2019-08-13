@@ -133,6 +133,7 @@ public class caffeineMetabolizationService extends Service {
             sendData();
             Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineBloodValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineBloodValue);
         }
+        /* ***WIP***
         if(caffeineIntakeMetabolized > 0) {
             float caffeineIntakeMetabolizedBefore = caffeineIntakeMetabolized;
             caffeineIntakeMetabolized -= caffeineZeroMetabolizationCoefficient;
@@ -140,7 +141,8 @@ public class caffeineMetabolizationService extends Service {
             caffeineBloodValue -= (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore);
             sendData();
             Log.i("COMPUTE ", "CAFFEINE ZERO METABOLIZED | " + "METABOLIZED ZERO VALUE: " + (caffeineIntakeMetabolized - caffeineIntakeMetabolizedBefore) + " CAFFEINE IN SYSTEM: | " + caffeineBloodValue);
-        }
+        }  ***WIP***
+        */
     }
 
     private float calculateCaffeineAbsorptionCoefficient() {
@@ -170,7 +172,6 @@ public class caffeineMetabolizationService extends Service {
             //caffeineZeroMetabolizationCoefficient = calculateCaffeineZeroMetabolizationCoefficient(); ***WIP***
             caffeineToCalculate = 0;
         }
-
     }
 
     private void loadData() {

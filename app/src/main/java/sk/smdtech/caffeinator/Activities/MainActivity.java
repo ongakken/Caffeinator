@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         drawer_layout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-        
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -209,7 +208,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
 
         safeAmount.setText("You can still consume: " + caffeineIntakeLeft + "mg");
-        circularProgressBar.setProgress(currentCaffeineDisplayLevel());
+        float totalCaffeine;
+        circularProgressBar.setProgress(caffeineIntakeValue += caffeineBloodValue);
+        totalCaffeine = 0;
     }
 
     private void receiveData() {
