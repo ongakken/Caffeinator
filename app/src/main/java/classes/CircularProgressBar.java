@@ -33,7 +33,7 @@ public class CircularProgressBar extends View {
      * Start the progress at 12 o'clock
      */
     private int startAngle = -90;
-    private int color = Color.RED;
+    private int color = Color.rgb(255,110,64);
     private RectF rectF;
     private Paint backgroundPaint;
     private Paint foregroundPaint;
