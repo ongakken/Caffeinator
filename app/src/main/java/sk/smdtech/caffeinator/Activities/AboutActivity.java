@@ -36,6 +36,7 @@ public class AboutActivity extends AppCompatActivity {
         drawer_layout = (DrawerLayout)findViewById(R.id.about_activity_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.string.open, R.string.close);
         drawerToggle.setDrawerIndicatorEnabled(true);
+        showPrivacyPolicyButton = findViewById(R.id.privacyPolicyButton);
 
         drawer_layout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
@@ -45,7 +46,7 @@ public class AboutActivity extends AppCompatActivity {
         showPrivacyPolicyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addCaffeineIntakeActivity = new Intent(AboutActivity.this, AddCaffeine.class);
+                Intent addCaffeineIntakeActivity = new Intent(AboutActivity.this, PrivacyPolicyActivity.class);
                 startActivity(addCaffeineIntakeActivity);
                 finish();
             }

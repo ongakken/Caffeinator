@@ -15,147 +15,39 @@
         android:background="#3f3f3f"
         tools:context="sk.smdtech.caffeinator.Activities.MainActivity">
 
-        <TextView
-            android:id="@+id/text_caffeineIntakeValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.758"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/text_caffeineBloodstreamValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:text="@string/unknown"
-            android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.748"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.0" />
-
         <Button
             android:id="@+id/btn_addCaffeineIntake"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:background="#3F3F40"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:background="#795548"
             android:text="@string/addCaffeineIntake"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.50"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.377" />
+            app:layout_constraintTop_toBottomOf="@+id/custom_progressBar"
+            app:layout_constraintVertical_bias="1.0" />
 
         <!--ads:adUnitId="ca-app-pub-3940256099942544/6300978111 TEST AD ID"-->
 
-        <ProgressBar
-            android:id="@+id/prgBar_maxCaffeine"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="210dp"
-            android:layout_height="25dp"
+        <classes.CircularProgressBar
+            android:id="@+id/custom_progressBar"
+            android:layout_width="275dp"
+            android:layout_height="275dp"
+            android:layout_margin="10dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:max="100"
-            android:progress="0"
-            app:layout_constraintBottom_toTopOf="@+id/youCanSafelyTakeInText"
+            android:layout_marginRight="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/howMuchCaffeineCanItakeText"
-            app:layout_constraintVertical_bias="0.896" />
-
-        <TextView
-            android:id="@+id/howMuchCaffeineCanItakeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/howMuchCaffeineCanItakeText"
-            android:textAlignment="center"
-            android:textColor="#FFA500"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.158" />
+            app:progress="35"
+            app:progressBarThickness="8dp" />
 
         <TextView
-            android:id="@+id/youCanSafelyTakeInText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/youCanSafelyTakeInText"
-            android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/caffeineIntakeLeftText"
-            app:layout_constraintHorizontal_bias="0.436"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.288" />
-
-        <TextView
-            android:id="@+id/caffeineIntakeLeftText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/zeromg"
-            android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="@+id/youCanSafelyTakeInText"
-            app:layout_constraintEnd_toStartOf="@+id/ofCaffeineText"
-            app:layout_constraintHorizontal_bias="0.884"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/youCanSafelyTakeInText"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/ofCaffeineText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/ofCaffeineText"
-            android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="@+id/caffeineIntakeLeftText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.905"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/caffeineIntakeLeftText"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/textView"
+            android:id="@+id/bodyCaffeine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -166,15 +58,45 @@
             android:layout_marginBottom="8dp"
             android:text="@string/intakeLevel"
             android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_addCaffeineIntake"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.166"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.011" />
+            app:layout_constraintTop_toBottomOf="@+id/custom_progressBar"
+            app:layout_constraintVertical_bias="0.10" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/bloodCaffeine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/bloodstreamLevel"
+            android:textColor="#FFA500"
+            app:layout_constraintBottom_toTopOf="@+id/btn_addCaffeineIntake"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_progressBar"
+            app:layout_constraintVertical_bias="0.10" />
+
+        <TextView
+            android:id="@+id/safeAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You can still consume: "
+            android:textColor="#FFA500"
+            app:layout_constraintBottom_toBottomOf="@+id/custom_progressBar"
+            app:layout_constraintEnd_toEndOf="@+id/custom_progressBar"
+            app:layout_constraintStart_toStartOf="@+id/custom_progressBar"
+            app:layout_constraintTop_toTopOf="@+id/custom_progressBar" />
+
+        <TextView
+            android:id="@+id/waterIntake"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -183,32 +105,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/bloodstreamLevel"
+            android:text="Water Intake: N/A"
             android:textColor="#FFA500"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_addCaffeineIntake"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.151"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.027" />
-
-        <TextView
-            android:id="@+id/intakeLog"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="bottom"
-            android:scrollbars="vertical"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_addCaffeineIntake" />
+            app:layout_constraintTop_toBottomOf="@+id/bodyCaffeine"
+            app:layout_constraintVertical_bias="0.05" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
