@@ -202,7 +202,9 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private void updateUI() {
         // UI
+        caffeineIntakeValue = Math.round(caffeineIntakeValue * 100.0f) / 100.0f;
         bodyCaffeine.setText("Caffeine in body: " + caffeineIntakeValue);
+        caffeineBloodValue = Math.round(caffeineBloodValue * 100.0f) / 100.0f;
         bloodCaffeine.setText("Caffeine in blood: " + caffeineBloodValue);
         caffeineIntakeLeft = maxCaffeineIntake - currentCaffeineDisplayLevel();
         caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
