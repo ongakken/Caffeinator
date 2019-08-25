@@ -17,14 +17,14 @@
     <string name="health_advice1_notification_text">Drinking coffee in the morning is the most
         effective due to lower Adenosine amount in the brain. Consuming Caffeine or Coffee later than 12PM
         already has detrimental effects on your sleep.
-        \nDon\\\'t forget to drink some water with your coffee!
+        \nDon\\'t forget to drink some water with your coffee!
         \nClick me for more information!
     </string>
 
     <string name="health_advice2_notification_title">Did you know?</string>
 
-    <string name="health_advice2_notification_text">Regularly drinking coffee
-        may have health benefits such as reduced risk of illnesses
+    <string name="health_advice2_notification_text">Regular coffee consumption has proven
+        health benefits such as reduced risk of illnesses
         like cancer, heart disease , Alzheimer\\\'s and depression.
         \nDon\\\'t overdo it with the sugar!
         \nClick me for more information!
@@ -32,8 +32,8 @@
 
     <string name="health_advice3_notification_title">How much caffeine is too much caffeine?</string>
 
-    <string name="health_advice3_notification_text">The FDA deems up to 400 mg a day of caffeine as safe for healthy adults.
-        Moderate caffeine consumption is associated with numerous health benefits,
+    <string name="health_advice3_notification_text">The FDA deems up to 400 mg of caffeine as a safe daily dosage for healthy adults.
+        Moderate caffeine consumption is associated with many health benefits,
         including increased alertness, enhanced physical performance,
         and better cognitive functioning.
         \nClick me for more information!
@@ -43,7 +43,7 @@
 
     <string name="health_advice4_notification_text">Energy drinks contain lower amounts of caffeine
         than your standard cup of coffee. Coffee however, has antioxidative properties that are good for your health,
-        but energy drinks contain synthetic caffeine, high amounts of refined sugars, taurine and many other unwanted substances.
+        but energy drinks contain synthetic caffeine, high amounts of refined sugars, taurine and lots of other unhealthy substances.
         \nClick me for more information!
     </string>
 
@@ -56,7 +56,7 @@
     </string>
 
     <string name="overview">Overview</string>
-    <string name="graph">Graph</string>
+    <string name="history">History</string>
     <string name="about">About</string>
     <string name="open">open</string>
     <string name="close">close</string>

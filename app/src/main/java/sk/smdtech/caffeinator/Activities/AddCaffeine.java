@@ -75,7 +75,7 @@ public class AddCaffeine extends AppCompatActivity {
                 int id = menuItem.getItemId();
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
-                } else if (id == R.id.graph) {
+                } else if (id == R.id.history) {
                     switchIntent(GraphActivity.class);
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);

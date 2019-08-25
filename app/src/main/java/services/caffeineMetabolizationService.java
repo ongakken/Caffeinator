@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.Random;
+
 import broadcasters.SensorRestarterBroadcastReceiver;
 import notifications.*;
 
@@ -33,7 +35,6 @@ public class caffeineMetabolizationService extends Service {
 
     int notificationDelay;
     int counter;
-    int randomNotification;
     int halflifeDuration = 21600;
     int caffeineToZeroDuration = 64800;
     int caffeineAbsorptionDuration = 2700;
@@ -225,32 +226,34 @@ public class caffeineMetabolizationService extends Service {
 
     private void checkNotify() {
         // Random notification generator:
-        randomNotification = (int) (Math.random()*4);
+        Random rand = new Random();
+        int randomNotification = rand.nextInt(6);
+        //int randomNotification = (int) (Math.random()*4);
         // This displays the tooMuchCaffeine notification.
-        if (caffeineBloodValue >= 400 && tooMuchCaffeineBool == false) {
+        if (caffeineToAbsorb + caffeineBloodValue >= 400 && tooMuchCaffeineBool == false) {
             tooMuchCaffeine.notify(ctx, String.valueOf(caffeineBloodValue));
             tooMuchCaffeineBool = true;
-        } else if(caffeineBloodValue <= 399.9 && tooMuchCaffeineBool == true) {
+        } else if(caffeineToAbsorb + caffeineBloodValue <= 399.9 && tooMuchCaffeineBool == true) {
             tooMuchCaffeineBool = false;
         }
         //This displays the healthAdvice notifications.
-        if (notificationDelay == 0 && randomNotification == 0 && !appearedBefore1) {
+        if (notificationDelay < 0 && randomNotification == 0 && !appearedBefore1) {
             healthAdvice1.notify(ctx);
             appearedBefore1 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 1 && !appearedBefore2) {
+        } else if (notificationDelay < 0 && randomNotification == 1 && !appearedBefore2) {
             healthAdvice2.notify(ctx);
             appearedBefore2 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 2 && !appearedBefore3) {
+        } else if (notificationDelay < 0 && randomNotification == 2 && !appearedBefore3) {
             healthAdvice3.notify(ctx);
             appearedBefore3 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 3 && !appearedBefore4) {
+        } else if (notificationDelay < 0 && randomNotification == 3 && !appearedBefore4) {
             healthAdvice4.notify(ctx);
             appearedBefore4 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 4 && !appearedBefore5) {
+        } else if (notificationDelay < 0 && randomNotification == 4 && !appearedBefore5) {
             healthAdvice5.notify(ctx);
             appearedBefore5 = true;
             notificationDelay += 21600;

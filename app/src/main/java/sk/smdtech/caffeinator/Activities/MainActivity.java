@@ -5,7 +5,6 @@ package sk.smdtech.caffeinator.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,17 +12,13 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -140,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
-                } else if (id == R.id.graph) {
+                } else if (id == R.id.history) {
                     switchIntent(GraphActivity.class);
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
