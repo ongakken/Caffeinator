@@ -134,6 +134,10 @@ public class caffeineMetabolizationService extends Service {
             sendData();
             Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineBloodValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineBloodValue);
         }
+        // Error correction
+        if(caffeineToAbsorb < 0) {
+            caffeineToAbsorb = 0;
+        }
         /* ***WIP***
         if(caffeineIntakeMetabolized > 0) {
             float caffeineIntakeMetabolizedBefore = caffeineIntakeMetabolized;
@@ -147,7 +151,7 @@ public class caffeineMetabolizationService extends Service {
     }
 
     private float calculateCaffeineAbsorptionCoefficient() {
-        float caffeineToBeAbsorbed = caffeineToCalculate; //Sounds stupid but it won't work otherwise
+        float caffeineToBeAbsorbed = caffeineToCalculate;
         float caffeineAbsorptionPerSecond = caffeineToBeAbsorbed / caffeineAbsorptionDuration;
         Log.i("COMPUTE", "CAFFEINE ABSORPTION COEFFICIENT FOUND: " + caffeineAbsorptionPerSecond);
         return caffeineAbsorptionPerSecond;

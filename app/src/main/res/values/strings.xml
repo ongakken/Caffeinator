@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Caffeinator</string>
     <item name="caffeineIntakeValue" format="float" type="string">0</item>
+    <string name="app_name">Caffeinator</string>
 
     <string name="too_much_caffeine_notification_title">You\\\'ve consumed too much caffeine!</string>
 
