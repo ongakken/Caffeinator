@@ -220,6 +220,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         SharedPreferences.Editor send = sendData.edit();
 
         send.putFloat("caffeineAddValue", caffeineAddValue);
+
+        //Send to addCaffeine activity
+        send.putFloat("caffeineBodyValue", caffeineIntakeValue);
+        send.putFloat("caffeineBloodValue", caffeineBloodValue);
+
         send.apply();
         caffeineAddValue = 0; //This value has been sent and we don't need it anymore
     }

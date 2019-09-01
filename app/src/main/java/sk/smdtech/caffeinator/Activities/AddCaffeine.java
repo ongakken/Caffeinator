@@ -126,8 +126,8 @@ public class AddCaffeine extends AppCompatActivity {
     private void receiveData() {
         SharedPreferences receiveData = getSharedPreferences(COMM, MODE_PRIVATE);
 
-        caffeineValue = receiveData.getFloat("caffeineMetabolizedValue", caffeineValue);
-        caffeineBloodValue = receiveData.getFloat("caffeineIntakeValue", caffeineValue);
+        caffeineValue = receiveData.getFloat("caffeineBodyValue", caffeineValue);
+        caffeineBloodValue = receiveData.getFloat("caffeineBloodValue", caffeineValue);
     }
 
     @Override
