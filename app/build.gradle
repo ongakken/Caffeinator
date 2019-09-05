@@ -6,8 +6,8 @@ android {
         applicationId "sk.smdtech.caffeinator"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 12
-        versionName "0.5.0"
+        versionCode 13
+        versionName "0.6.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
