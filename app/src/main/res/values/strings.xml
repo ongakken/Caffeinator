@@ -55,6 +55,11 @@
         \nClick me for more information!
     </string>
 
+    <string-array name="Genders">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
     <string name="overview">Overview</string>
     <string name="history">History</string>
     <string name="about">About</string>
