@@ -120,6 +120,7 @@
             android:layout_height="wrap_content"
             android:text="Total Caffeine: "
             android:textColor="#FFA500"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/safeAmount"
             app:layout_constraintEnd_toEndOf="@+id/custom_progressBar"
             app:layout_constraintStart_toStartOf="@+id/custom_progressBar"
