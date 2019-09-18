@@ -33,29 +33,30 @@ public class WizardActivityMain extends AppCompatActivity implements DialogInter
         setContentView(R.layout.activity_wizard_main);
 
         final SharedPreferences loadInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
-        SharedPreferences loadSecondInstance = getSharedPreferences(RECEIVE_FROM_SERVICE, MODE_PRIVATE);
+        final SharedPreferences loadSecondInstance = getSharedPreferences(RECEIVE_FROM_SERVICE, MODE_PRIVATE);
 
-        privacy_policy_accepted = loadInstance.getBoolean("privacyPolicyAccepted", privacy_policy_accepted);
+        privacy_policy_accepted = loadInstance.getBoolean("privacyPolicyAccepted", false);
         Age = loadSecondInstance.getInt("Age", 0);
-        Gender = loadSecondInstance.getString("Gender", "Hello");
 
-        if(privacy_policy_accepted && Age > 0 && Gender == "Male" || Gender == "Female") {
+        if(privacy_policy_accepted && Age > 0) {
             switchIntent(MainActivity.class);
             finish();
         }
 
         showPrivacyPolicyAlert();
 
-        SharedPreferences saveInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
-        SharedPreferences.Editor save = saveInstance.edit();
-
-        save.putBoolean("privacyPolicyAccepted", privacy_policy_accepted);
-
         Button btn_start = findViewById(R.id.btn_submit);
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences saveInstance = getSharedPreferences(SAVE, MODE_PRIVATE);
+                SharedPreferences.Editor save = saveInstance.edit();
+
+                save.putBoolean("privacyPolicyAccepted", privacy_policy_accepted);
+
+                save.commit();
+
                 switchIntent(WizardActivitySecondary.class);
                 finish();
             }

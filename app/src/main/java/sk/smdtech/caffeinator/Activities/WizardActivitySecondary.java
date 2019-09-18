@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import sk.smdtech.caffeinator.R;
 
@@ -23,6 +24,7 @@ public class WizardActivitySecondary extends AppCompatActivity{
     public static final String RECEIVE_FROM_SERVICE = "Caffeinator%Share%File";
     String Gender;
     String AgeString;
+    String invalidCharacter = ".";
 
     int Age;
 
@@ -31,6 +33,7 @@ public class WizardActivitySecondary extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard_secondary);
 
+        final TextView invalidValue = findViewById(R.id.invalidValue);
         final EditText ageInput = findViewById(R.id.ageInputText);
         final Spinner genderSpinner = (Spinner) findViewById(R.id.spinner);
         Button btn_submit = findViewById(R.id.btn_submit);
@@ -52,12 +55,15 @@ public class WizardActivitySecondary extends AppCompatActivity{
                 } else {
                     Gender = "Female";
                 }
-                String AgeString = ageInput.getText().toString();
-                Age = Integer.valueOf(AgeString);
+                if(ageInput.length() == 0 || ageInput.equals(invalidCharacter)) {
+                    invalidValue.setText("Please enter a valid value.");
+                } else {
+                    Age = Integer.valueOf(ageInput.getText().toString());
 
-                submitData();
-                switchIntent(MainActivity.class);
-                finish();
+                    submitData();
+                    switchIntent(MainActivity.class);
+                    finish();
+                }
             }
         });
     }
@@ -69,20 +75,9 @@ public class WizardActivitySecondary extends AppCompatActivity{
         submit.putInt("Age", Age);
         submit.putString("Gender", Gender);
 
-        submit.apply();
+        submit.commit();
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        String Gender = (String) parent.getItemAtPosition(pos);
-        if (Gender == "Male")
-                finish();
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    }
 
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);

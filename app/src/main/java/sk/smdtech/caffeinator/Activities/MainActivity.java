@@ -37,7 +37,7 @@ import classes.CircularProgressBar;
 import services.caffeineMetabolizationService;
 import sk.smdtech.caffeinator.R;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
+public class MainActivity extends AppCompatActivity {
 
     // Variables
     float caffeineIntakeValue;
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     //GPS
     boolean gps_enabled = false;
     boolean network_enabled = false;
-    boolean privacy_policy_accepted = false;
 
     LocationManager lm;
 
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     TextView bodyCaffeine;
     TextView bloodCaffeine;
     TextView safeAmount;
+    TextView totalCaffeine;
 
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
@@ -99,22 +99,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
         caffeineBloodValue = loadInstance.getFloat("caffeineBloodValue", 0);
         logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
-        privacy_policy_accepted = loadInstance.getBoolean("privacyPolicyAccepted", privacy_policy_accepted);
-
-        // Privacy Policy Dialog
-        if(!privacy_policy_accepted)
-            showPrivacyPolicyAlert();
 
         // Services
         startServices();
 
-        // GPS
-        if(privacy_policy_accepted)
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
         // UI
         bodyCaffeine = findViewById(R.id.bodyCaffeine);
         bloodCaffeine = findViewById(R.id.bloodCaffeine);
+        totalCaffeine = findViewById(R.id.totalCaffeine);
         circularProgressBar = findViewById(R.id.custom_progressBar);
         safeAmount = findViewById(R.id.safeAmount);
 
@@ -191,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         save.putString("logHistory", logHistory);
         save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
         save.putFloat("caffeineBloodValue", caffeineBloodValue);
-        save.putBoolean("privacyPolicyAccepted", privacy_policy_accepted);
         save.apply();
     }
 
@@ -205,6 +196,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
 
         safeAmount.setText("You can still consume: " + caffeineIntakeLeft + "mg");
+
+        Float caffeineDisplayTextInteger = currentCaffeineDisplayLevel();
+        caffeineDisplayTextInteger = Math.round(caffeineDisplayTextInteger * 100.0f) / 100.0f;
+        String totalCaffeineString = Float.toString(caffeineDisplayTextInteger);
+        totalCaffeine.setText("Total Caffeine: " + totalCaffeineString);
         circularProgressBar.setProgress(currentCaffeineDisplayLevel());
     }
 
@@ -332,40 +328,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
             // other 'case' lines to check for other permissions this app might request
         }
     }
-    private void showPrivacyPolicyAlert() {
-        new AlertDialog.Builder(ctx)
-                .setTitle("Privacy Policy")
-                .setMessage(R.string.privacy_policy_dialog)
-                .setCancelable(false)
 
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        privacy_policy_accepted = true;
-                    }
-                })
-                .setNeutralButton(R.string.show_policy, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switchIntent(PrivacyPolicyActivity.class);
-                    }
-                })
-                .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        privacy_policy_accepted = false;
-                        finish();
-                    }
-                })
-                .setOnDismissListener(MainActivity.this)
-                .show();
-    }
-
-    public void onDismiss(DialogInterface dialog) {
-        // Privacy Policy Dialog
-        if(!privacy_policy_accepted)
-            showPrivacyPolicyAlert();
-    }
 
     @Override
     protected void onDestroy() {
