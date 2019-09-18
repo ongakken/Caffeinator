@@ -6,7 +6,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -128,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
                 } else if (id == R.id.history) {
-                    switchIntent(GraphActivity.class);
+                    switchIntent(HistoryActivity.class);
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
                 }

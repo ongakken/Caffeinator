@@ -34,7 +34,7 @@ public class WizardActivitySecondary extends AppCompatActivity{
 
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final EditText ageInput = findViewById(R.id.ageInputText);
-        final Spinner genderSpinner = (Spinner) findViewById(R.id.spinner);
+        final Spinner genderSpinner = findViewById(R.id.spinner);
         Button btn_submit = findViewById(R.id.addCaffeineButton);
 
         // Create an ArrayAdapter using the string array and a default spinner layout

@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import sk.smdtech.caffeinator.R;
@@ -27,11 +29,21 @@ public class AddCaffeine extends AppCompatActivity {
     float caffeineValueDefault;
     float caffeineBloodValue;
 
+    int inputsCount = 0;
+
     private Handler updateHandler;
 
     public static final String COMM = "Caffeinator%Share%File";
+    public static final String HISS = "Caffeinator%History%Save%File";
     String caffeineValueText;
     String invalidCharacter = ".";
+
+    String coffee = "Coffee";
+    String energyDrink = "Energy Drink";
+    String tea = "Tea";
+    String workoutPill = "Workout Pill";
+
+    String currentType;
 
     // UI Data
     private DrawerLayout drawer_layout;
@@ -50,6 +62,15 @@ public class AddCaffeine extends AppCompatActivity {
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final TextView bodyCaffeineLevel = findViewById(R.id.bodyCaffeineLevel);
         final TextView bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
+        final Spinner typeSpinner = findViewById(R.id.typeSpinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Types, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        typeSpinner.setAdapter(adapter);
 
         // Get data from MainActivity and put them in the TextView
         Intent getData = getIntent();
@@ -74,7 +95,7 @@ public class AddCaffeine extends AppCompatActivity {
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
                 } else if (id == R.id.history) {
-                    switchIntent(GraphActivity.class);
+                    switchIntent(HistoryActivity.class);
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
                 }
@@ -107,6 +128,16 @@ public class AddCaffeine extends AppCompatActivity {
                 if(caffeineAmount.length() == 0 || caffeineValueText.equals(invalidCharacter)) {
                     invalidValue.setText("Please enter valid value.");
                 } else {
+                    int genderSpinnerPosition = typeSpinner.getSelectedItemPosition();
+                    if (genderSpinnerPosition == 0) {
+                        currentType = coffee;
+                    } else if (genderSpinnerPosition == 1) {
+                        currentType = energyDrink;
+                    } else if (genderSpinnerPosition == 2) {
+                        currentType = tea;
+                    } else {
+                        currentType = workoutPill;
+                    }
                     caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
                     caffeineValueDefault += caffeineValue;
                     bodyCaffeineLevel.setText("Caffeine Amount: " + caffeineValueDefault);
@@ -115,6 +146,7 @@ public class AddCaffeine extends AppCompatActivity {
                     // Pass back the data and safely finish the activity
                     Intent intent = new Intent();
                     intent.putExtra("caffeineAddValue", caffeineValue);
+                    intakeLog();
                     caffeineValue = 0;
                     setResult(RESULT_OK, intent);
                     finish();
@@ -127,6 +159,18 @@ public class AddCaffeine extends AppCompatActivity {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
         finish();
+    }
+
+    private void intakeLog() {
+        SharedPreferences submitData = getSharedPreferences(HISS, MODE_PRIVATE);
+        SharedPreferences.Editor submit = submitData.edit();
+        inputsCount ++;
+
+        submit.putInt("inputsCount", inputsCount);
+        submit.putString("intakeType", currentType);
+        submit.putFloat("caffeine", caffeineValue);
+
+        submit.commit();
     }
 
     private void receiveData() {

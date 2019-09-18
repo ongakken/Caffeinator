@@ -60,6 +60,15 @@
         <item>Female</item>
     </string-array>
 
+    <string-array name="Types">
+        <item>Coffee</item>
+        <item>Energy Drink</item>
+        <item>Tea</item>
+        <item>Workout Pill</item>
+
+    </string-array>
+
+
     <string name="overview">Overview</string>
     <string name="history">History</string>
     <string name="about">About</string>

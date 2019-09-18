@@ -14,7 +14,7 @@
         <activity android:name=".Activities.PrivacyPolicyActivity" />
         <activity android:name=".Activities.AboutActivity" />
         <activity android:name=".Activities.AddCaffeine" />
-        <activity android:name=".Activities.GraphActivity" />
+        <activity android:name=".Activities.HistoryActivity" />
         <activity android:name=".Activities.WizardActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -61,7 +61,7 @@ public class AboutActivity extends AppCompatActivity {
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
                 } else if (id == R.id.history) {
-                    switchIntent(GraphActivity.class);
+                    switchIntent(HistoryActivity.class);
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
                 }

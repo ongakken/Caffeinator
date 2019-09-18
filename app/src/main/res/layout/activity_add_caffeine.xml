@@ -74,7 +74,7 @@
         android:id="@+id/addCaffeineButton"
         android:layout_width="0dp"
         android:layout_height="75dp"
-        android:background="#D1760B"
+        android:background="#795548"
         android:text="@string/addCaffeineIntake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,6 +82,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invalidValue"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <TextView
+        android:id="@+id/typeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:text="Type:"
+        android:textColor="#FFA500"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
+        app:layout_constraintEnd_toStartOf="@+id/typeSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/invalidValue"
+        app:layout_constraintVertical_bias="0.15" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
