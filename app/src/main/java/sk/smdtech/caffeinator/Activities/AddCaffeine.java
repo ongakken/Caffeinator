@@ -37,8 +37,6 @@ public class AddCaffeine extends AppCompatActivity {
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
 
-    TextView bloodstreamCaffeineLevel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +49,7 @@ public class AddCaffeine extends AppCompatActivity {
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final TextView bodyCaffeineLevel = findViewById(R.id.bodyCaffeineLevel);
-        bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
+        final TextView bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
 
         // Get data from MainActivity and put them in the TextView
         Intent getData = getIntent();
@@ -88,8 +86,16 @@ public class AddCaffeine extends AppCompatActivity {
             @Override
             public void run() {
                 receiveData();
-                bodyCaffeineLevel.setText("Body caffeine level: " + caffeineValue + "mg");
-                bloodstreamCaffeineLevel.setText("Bloodstream caffeine level: " + caffeineBloodValue + "mg");
+                if (caffeineValue > 0.1) {
+                    bodyCaffeineLevel.setText("Body caffeine level: " + caffeineValue + "mg");
+                } else {
+                    bodyCaffeineLevel.setText("Body caffeine level: " + 0 + "mg");
+                }
+                if (caffeineBloodValue > 0.1) {
+                    bloodstreamCaffeineLevel.setText("Body caffeine level: " + caffeineBloodValue + "mg");
+                } else {
+                    bloodstreamCaffeineLevel.setText("Body caffeine level: " + 0 + "mg");
+                }
                 updateHandler.postDelayed(this, 250);
             }
         }, 25);
@@ -126,7 +132,7 @@ public class AddCaffeine extends AppCompatActivity {
     private void receiveData() {
         SharedPreferences receiveData = getSharedPreferences(COMM, MODE_PRIVATE);
 
-        caffeineValue = receiveData.getFloat("caffeineBodyValue", caffeineValue);
+        caffeineValue = receiveData.getFloat("caffeineIntakeValue", caffeineValue);
         caffeineBloodValue = receiveData.getFloat("caffeineBloodValue", caffeineValue);
     }
 

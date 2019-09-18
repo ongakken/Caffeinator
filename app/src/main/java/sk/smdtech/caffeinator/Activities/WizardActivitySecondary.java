@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +35,7 @@ public class WizardActivitySecondary extends AppCompatActivity{
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final EditText ageInput = findViewById(R.id.ageInputText);
         final Spinner genderSpinner = (Spinner) findViewById(R.id.spinner);
-        Button btn_submit = findViewById(R.id.btn_submit);
+        Button btn_submit = findViewById(R.id.addCaffeineButton);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

@@ -16,32 +16,28 @@
         android:id="@+id/caffeineAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="137dp"
-        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Decimal Input"
+        android:hint="Caffeine in mg"
         android:inputType="numberDecimal"
         android:textColor="#FFA500"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/bodyCaffeineLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:text="@string/intakeLevel"
         android:textColor="#FFA500"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.050000012" />
 
     <TextView
         android:id="@+id/bloodstreamCaffeineLevel"
@@ -50,41 +46,42 @@
         android:layout_marginStart="8dp"
 
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="72dp"
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
         android:text="@string/bloodstreamLevel"
         android:textColor="#FFA500"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/addCaffeineButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/addCaffeineIntake"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caffeineAmount"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/bodyCaffeineLevel"
+        app:layout_constraintVertical_bias="0.051" />
 
     <TextView
         android:id="@+id/invalidValue"
         android:layout_width="177dp"
         android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="36dp"
 
         android:text=""
         android:textColor="#FFA500"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addCaffeineButton" />
+        app:layout_constraintTop_toBottomOf="@+id/caffeineAmount"
+        app:layout_constraintVertical_bias="0.110000014" />
+
+    <Button
+        android:id="@+id/addCaffeineButton"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:background="#D1760B"
+        android:text="@string/addCaffeineIntake"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

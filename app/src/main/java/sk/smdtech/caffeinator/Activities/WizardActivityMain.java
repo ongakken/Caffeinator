@@ -45,7 +45,7 @@ public class WizardActivityMain extends AppCompatActivity implements DialogInter
 
         showPrivacyPolicyAlert();
 
-        Button btn_start = findViewById(R.id.btn_submit);
+        Button btn_start = findViewById(R.id.addCaffeineButton);
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
