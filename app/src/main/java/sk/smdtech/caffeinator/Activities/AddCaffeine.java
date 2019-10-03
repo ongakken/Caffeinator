@@ -29,7 +29,7 @@ public class AddCaffeine extends AppCompatActivity {
     float caffeineValueDefault;
     float caffeineBloodValue;
 
-    int inputsCount = 0;
+    int inputsCount;
 
     private Handler updateHandler;
 
@@ -164,7 +164,7 @@ public class AddCaffeine extends AppCompatActivity {
     private void intakeLog() {
         SharedPreferences submitData = getSharedPreferences(HISS, MODE_PRIVATE);
         SharedPreferences.Editor submit = submitData.edit();
-        inputsCount ++;
+        inputsCount += 1;
 
         submit.putInt("inputsCount", inputsCount);
         submit.putString("intakeType", currentType);

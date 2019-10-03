@@ -19,7 +19,7 @@
             android:id="@+id/btn_addCaffeineIntake"
             android:layout_width="0dp"
             android:layout_height="75dp"
-            android:background="#795548"
+            android:background="#D1760B"
             android:text="@string/addCaffeineIntake"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:progress="35"
+            app:progress="75"
             app:progressBarThickness="8dp" />
 
         <TextView

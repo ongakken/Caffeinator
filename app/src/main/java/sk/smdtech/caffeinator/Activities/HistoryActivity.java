@@ -100,7 +100,7 @@ public class HistoryActivity extends AppCompatActivity {
         if (inputsCount > inputsCountBefore) {
             Date currentTime = Calendar.getInstance().getTime();
             intakeLog.append("\n | " + currentTime + " | Consumed: " + type + " " + amount + "mg");
-            inputsCountBefore = inputsCount;
+            inputsCountBefore += 1;
         }
     }
 
@@ -118,7 +118,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void getData() {
         final SharedPreferences loadInstance = getSharedPreferences(HISS, MODE_PRIVATE);
 
-        inputsCount = loadInstance.getInt("inputsCount", 0);
+        inputsCount = loadInstance.getInt("inputsCount", inputsCount);
         intakeType = loadInstance.getString("intakeType", "Hello");
         caffeine = loadInstance.getFloat("caffeine", 0);
     }
