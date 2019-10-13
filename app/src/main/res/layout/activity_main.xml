@@ -105,11 +105,11 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Water Intake: N/A"
+            android:text="Recommended Water Intake: 0 cups"
             android:textColor="#FFA500"
             app:layout_constraintBottom_toTopOf="@+id/btn_addCaffeineIntake"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_bias="0.084"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bodyCaffeine"
             app:layout_constraintVertical_bias="0.05" />

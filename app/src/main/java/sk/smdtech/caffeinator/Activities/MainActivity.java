@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     TextView bloodCaffeine;
     TextView safeAmount;
     TextView totalCaffeine;
+    TextView waterIntake;
 
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
@@ -107,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
         totalCaffeine = findViewById(R.id.totalCaffeine);
         circularProgressBar = findViewById(R.id.custom_progressBar);
         safeAmount = findViewById(R.id.safeAmount);
+        waterIntake = findViewById(R.id.waterIntake);
+
 
         drawer_layout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout, R.string.open, R.string.close);
@@ -200,6 +203,19 @@ public class MainActivity extends AppCompatActivity {
         String totalCaffeineString = Float.toString(caffeineDisplayTextInteger);
         totalCaffeine.setText("Total Caffeine: " + totalCaffeineString);
         circularProgressBar.setProgress(currentCaffeineDisplayLevel());
+        calculateWaterIntake();
+    }
+
+    private void calculateWaterIntake() {
+        if(currentCaffeineDisplayLevel() >= 50 || currentCaffeineDisplayLevel() <= 100) {
+            waterIntake.setText("Recommended Water Intake: 1 cup");
+        } else if(currentCaffeineDisplayLevel() >= 100 || currentCaffeineDisplayLevel() <= 200) {
+            waterIntake.setText("Recommended Water Intake: 2 cups");
+        } else if(currentCaffeineDisplayLevel() >= 200 || currentCaffeineDisplayLevel() <= 300) {
+            waterIntake.setText("Recommended Water Intake: 3 cups");
+        } else if(currentCaffeineDisplayLevel() >= 300 || currentCaffeineDisplayLevel() <= 400) {
+            waterIntake.setText("Recommended Water Intake: 4 cups");
+        }
     }
 
     private void receiveData() {
