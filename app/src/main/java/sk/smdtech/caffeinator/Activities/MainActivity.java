@@ -207,13 +207,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculateWaterIntake() {
-        if(currentCaffeineDisplayLevel() >= 50 || currentCaffeineDisplayLevel() <= 100) {
+        if(currentCaffeineDisplayLevel() >= 50 && currentCaffeineDisplayLevel() <= 100) {
             waterIntake.setText("Recommended Water Intake: 1 cup");
-        } else if(currentCaffeineDisplayLevel() >= 100 || currentCaffeineDisplayLevel() <= 200) {
+        } else if(currentCaffeineDisplayLevel() >= 100 && currentCaffeineDisplayLevel() <= 200) {
             waterIntake.setText("Recommended Water Intake: 2 cups");
-        } else if(currentCaffeineDisplayLevel() >= 200 || currentCaffeineDisplayLevel() <= 300) {
+        } else if(currentCaffeineDisplayLevel() >= 200 && currentCaffeineDisplayLevel() <= 300) {
             waterIntake.setText("Recommended Water Intake: 3 cups");
-        } else if(currentCaffeineDisplayLevel() >= 300 || currentCaffeineDisplayLevel() <= 400) {
+        } else if(currentCaffeineDisplayLevel() >= 300) {
             waterIntake.setText("Recommended Water Intake: 4 cups");
         }
     }
