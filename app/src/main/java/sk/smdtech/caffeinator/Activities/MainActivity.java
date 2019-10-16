@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity {
         return ctx;
     }
 
-    //GPS
-    boolean gps_enabled = false;
-    boolean network_enabled = false;
-
     LocationManager lm;
 
     // UI data types
@@ -278,72 +274,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
     }
-
-    @SuppressLint("MissingPermission")
-    private Location getGPSLocation() {
-        if(!(checkLocationPermission()))
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        else return null;
-
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-        Location gps_loc = new Location("GPS_PROVIDER");
-        Location net_loc = new Location("NETWORK_PROVIDER");
-        Location finalLoc = new Location("Caffeinator_Provider");
-
-        if (gps_enabled && checkLocationPermission()) {
-            gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-        if (network_enabled && checkLocationPermission()) {
-            net_loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-        if (gps_loc != null && net_loc != null) {
-            //smaller the number more accurate result will
-            if (gps_loc.getAccuracy() > net_loc.getAccuracy())
-                finalLoc = net_loc;
-            else
-                finalLoc = gps_loc;
-        } else {
-            if (gps_loc != null) {
-                finalLoc = gps_loc;
-            } else if (net_loc != null) {
-                finalLoc = net_loc;
-            }
-        }
-        return finalLoc;
-    }
-
-    public boolean checkLocationPermission()
-    {
-        String permission = "android.permission.ACCESS_FINE_LOCATION";
-        int res = this.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
-    }
-
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Location startingLocation = getGPSLocation();
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-            default: {
-                // nothing
-            }
-            // other 'case' lines to check for other permissions this app might request
-        }
-    }
-
-
     @Override
     protected void onDestroy() {
         stopService(startCaffeineMetabolizationService);
