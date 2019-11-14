@@ -100,13 +100,15 @@ public class caffeineMetabolizationService extends Service {
         calculationHandler.post(executeCalculationHandler);
         updateHandler.post(executeUpdater);
             //return START_STICKY;
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Intent broadcastIntent = new Intent(this, broadcastMetabolizationServiceRestarter.class);
         saveData();
+        sendBroadcast(broadcastIntent);
         Log.i("EXIT", "onDestroy!");
     }
 
