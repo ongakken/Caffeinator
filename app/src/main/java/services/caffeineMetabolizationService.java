@@ -1,17 +1,27 @@
 package services;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+
 import java.util.Random;
 import notifications.*;
+import sk.smdtech.caffeinator.Activities.MainActivity;
+import sk.smdtech.caffeinator.R;
 
 public class caffeineMetabolizationService extends Service {
+    public static final String CHANNEL_ID = "ForegroundServiceChannel";
 
     // Variables
     public static final String SAVE = "Caffeinator%Service%Save%File";
@@ -56,8 +66,31 @@ public class caffeineMetabolizationService extends Service {
         Log.i("Service", "here I am!");
     }
 
+    public caffeineMetabolizationService() {
+
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        String input = intent.getStringExtra("inputExtra");
+        createNotificationChannel();
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, notificationIntent, 0);
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Metabolizing...")
+                .setContentText(input)
+                .setSmallIcon(R.drawable.caffeinator_icon)
+                .setContentIntent(pendingIntent)
+                .build();
+
+        startForeground(1, notification);
+
+        //do heavy work on a background thread
+
+
+        //stopSelf();
         super.onStartCommand(intent, flags, startId);
         // Saving/Loading
         newTime = System.currentTimeMillis();
@@ -66,13 +99,28 @@ public class caffeineMetabolizationService extends Service {
         Log.i("DEBUG", "time difference: " + differenceTime + " oldTime: " + oldTime + " newTime " + newTime);
         calculationHandler.post(executeCalculationHandler);
         updateHandler.post(executeUpdater);
-        return START_STICKY;
+            //return START_STICKY;
+        return START_NOT_STICKY;
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         saveData();
         Log.i("EXIT", "onDestroy!");
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Foreground Service Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
+        }
     }
 
     private Runnable executeCalculationHandler = new Runnable() {
