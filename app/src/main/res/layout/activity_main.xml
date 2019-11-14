@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="#3f3f3f"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -27,8 +28,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/custom_progressBar"
             app:layout_constraintVertical_bias="1.0" />
-
-        <!--ads:adUnitId="ca-app-pub-3940256099942544/6300978111 TEST AD ID"-->
 
         <classes.CircularProgressBar
             android:id="@+id/custom_progressBar"
@@ -126,6 +125,18 @@
             app:layout_constraintStart_toStartOf="@+id/custom_progressBar"
             app:layout_constraintTop_toTopOf="@+id/custom_progressBar"
             app:layout_constraintVertical_bias="0.85" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-9086446979210331/4656200859"
+            app:layout_constraintBottom_toTopOf="@+id/btn_addCaffeineIntake"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waterIntake"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

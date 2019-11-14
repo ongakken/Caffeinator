@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import sk.smdtech.caffeinator.R;
 
 public class OptionsActivity extends AppCompatActivity {
@@ -16,5 +19,6 @@ public class OptionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+
     }
 }
