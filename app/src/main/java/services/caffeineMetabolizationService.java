@@ -9,8 +9,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.util.Random;
-
-import broadcasters.SensorRestarterBroadcastReceiver;
 import notifications.*;
 
 public class caffeineMetabolizationService extends Service {
@@ -58,10 +56,6 @@ public class caffeineMetabolizationService extends Service {
         Log.i("Service", "here I am!");
     }
 
-    public caffeineMetabolizationService() {
-
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
@@ -77,8 +71,6 @@ public class caffeineMetabolizationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Intent broadcastIntent = new Intent(ctx, SensorRestarterBroadcastReceiver.class);
-        sendBroadcast(broadcastIntent);
         saveData();
         Log.i("EXIT", "onDestroy!");
     }

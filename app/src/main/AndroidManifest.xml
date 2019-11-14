@@ -29,11 +29,6 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name="broadcasters.SensorRestarterBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
         <service
             android:name="services.caffeineMetabolizationService"
             android:enabled="true"
