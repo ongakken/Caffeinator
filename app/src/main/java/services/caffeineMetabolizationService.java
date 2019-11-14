@@ -31,6 +31,7 @@ public class caffeineMetabolizationService extends Service {
     long newTime;
     long differenceTime;
 
+    float totalCaffeine;
     float caffeineToCalculate;
     float caffeineIntakeMetabolized;
     float caffeineBloodValue;
@@ -72,26 +73,8 @@ public class caffeineMetabolizationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String input = intent.getStringExtra("inputExtra");
-        createNotificationChannel();
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, 0);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Metabolizing...")
-                .setContentText(input)
-                .setSmallIcon(R.drawable.caffeinator_icon)
-                .setContentIntent(pendingIntent)
-                .build();
-
-        startForeground(1, notification);
-
-        //do heavy work on a background thread
-
-
-        //stopSelf();
         super.onStartCommand(intent, flags, startId);
+        declareNotfication();
         // Saving/Loading
         newTime = System.currentTimeMillis();
         loadData();
@@ -99,8 +82,21 @@ public class caffeineMetabolizationService extends Service {
         Log.i("DEBUG", "time difference: " + differenceTime + " oldTime: " + oldTime + " newTime " + newTime);
         calculationHandler.post(executeCalculationHandler);
         updateHandler.post(executeUpdater);
-            //return START_STICKY;
         return START_STICKY;
+    }
+
+    public void declareNotfication() {
+        createNotificationChannel();
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, notificationIntent, 0);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Current Caffeine: " + totalCaffeine + "mg")
+                .setSmallIcon(R.drawable.caffeinator_icon)
+                .setContentIntent(pendingIntent)
+                .build();
+        startForeground(1, notification);
+
     }
 
     @Override
@@ -145,7 +141,9 @@ public class caffeineMetabolizationService extends Service {
             notificationDelay -= 1;
             Log.i("Watchdog", "DATA SAVED!  ");
             Log.i("Service", " Caffeine Count: " + caffeineBloodValue);
-
+            totalCaffeine = caffeineToAbsorb + caffeineBloodValue;
+            totalCaffeine = Math.round(totalCaffeine * 100.0f) / 100.0f;
+            declareNotfication(); //Update notification of a foreground process
             // Repeat this every x ms
             calculationHandler.postDelayed(executeCalculationHandler, 1000);
         }
