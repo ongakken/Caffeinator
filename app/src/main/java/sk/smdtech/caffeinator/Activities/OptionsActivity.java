@@ -10,7 +10,7 @@ import android.os.Bundle;
 
 import sk.smdtech.caffeinator.R;
 
-public class Options extends AppCompatActivity {
+public class OptionsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

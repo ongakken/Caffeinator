@@ -88,16 +88,11 @@ public class caffeineMetabolizationService extends Service {
         public void run() {
             //Check for time differences and for correction overshoot
             if (differenceTime >= 1) {
-                computeDifference = new Thread(new Runnable() {
-                    public void run() {
-                        for (; differenceTime >= 1; differenceTime--) {
-                            //Do the same work as below, or in other words do the missing work
-                            computeMetabolization();
-                            Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
-                        }
-                    }
-                });
-                computeDifference.start();
+                for (; differenceTime >= 1; differenceTime--) {
+                    //Do the same work as below, or in other words do the missing work
+                    computeMetabolization();
+                    Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
+                }
             }
             //Do some work
             checkForNewIntake();

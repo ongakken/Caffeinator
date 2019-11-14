@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".Activities.Options"></activity>
+        <activity android:name=".Activities.OptionsActivity"></activity>
         <activity android:name=".Activities.WizardActivitySecondary" />
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.PrivacyPolicyActivity" />
