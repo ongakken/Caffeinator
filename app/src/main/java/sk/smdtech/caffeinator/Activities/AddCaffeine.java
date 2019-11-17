@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import sk.smdtech.caffeinator.R;
 
 public class AddCaffeine extends AppCompatActivity {
+    private InterstitialAd mInterstitialAd;
 
     // Variables
     float caffeineValue;
@@ -53,6 +57,10 @@ public class AddCaffeine extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_caffeine);
+        // Ad Section
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
         // Variables
         updateHandler = new Handler();
 
@@ -149,6 +157,7 @@ public class AddCaffeine extends AppCompatActivity {
                     intakeLog();
                     caffeineValue = 0;
                     setResult(RESULT_OK, intent);
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
                     finish();
                 }
             }
