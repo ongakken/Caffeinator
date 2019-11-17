@@ -19,7 +19,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="In order to increase the accuracy of this app please thruthfully answer the questions below:"
+        android:text="In order to increase the accuracy of this app please truthfully answer the questions below:"
         android:textColor="#FFA500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

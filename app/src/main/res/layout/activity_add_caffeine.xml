@@ -12,20 +12,6 @@
     tools:context="sk.smdtech.caffeinator.Activities.AddCaffeine">
 
 
-    <EditText
-        android:id="@+id/caffeineAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Caffeine in mg"
-        android:inputType="numberDecimal"
-        android:textColor="#FFA500"
-        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
     <TextView
         android:id="@+id/bodyCaffeineLevel"
         android:layout_width="wrap_content"
@@ -57,19 +43,6 @@
         app:layout_constraintTop_toBottomOf="@+id/bodyCaffeineLevel"
         app:layout_constraintVertical_bias="0.051" />
 
-    <TextView
-        android:id="@+id/invalidValue"
-        android:layout_width="177dp"
-        android:layout_height="36dp"
-
-        android:text=""
-        android:textColor="#FFA500"
-        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caffeineAmount"
-        app:layout_constraintVertical_bias="0.110000014" />
-
     <Button
         android:id="@+id/addCaffeineButton"
         android:layout_width="0dp"
@@ -87,12 +60,14 @@
         android:id="@+id/typeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/invalidValue"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintStart_toEndOf="@+id/typeText"
+        app:layout_constraintTop_toBottomOf="@+id/bloodstreamCaffeineLevel"
+        app:layout_constraintVertical_bias="0.08" />
 
     <TextView
         android:id="@+id/typeText"
@@ -100,13 +75,101 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginBottom="8dp"
         android:text="Type:"
         android:textColor="#FFA500"
         app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
         app:layout_constraintEnd_toStartOf="@+id/typeSpinner"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/invalidValue"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintTop_toBottomOf="@+id/bloodstreamCaffeineLevel"
+        app:layout_constraintVertical_bias="0.07999998" />
+
+    <Button
+        android:id="@+id/smallCoffee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="Small Coffee"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/mediumCoffee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typeText"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/mediumCoffee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="Medium Coffee"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/largeCoffee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/smallCoffee" />
+
+    <Button
+        android:id="@+id/largeCoffee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="128dp"
+        android:text="Large Coffee"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mediumCoffee" />
+
+    <Button
+        android:id="@+id/cafeLatte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="Cafe Latte"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/cappuccino"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toEndOf="@+id/smallCoffee"
+        app:layout_constraintTop_toBottomOf="@+id/typeText"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/cappuccino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="Capuccino"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/espresso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.712"
+        app:layout_constraintStart_toEndOf="@+id/mediumCoffee"
+        app:layout_constraintTop_toBottomOf="@+id/cafeLatte" />
+
+    <Button
+        android:id="@+id/espresso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="128dp"
+        android:text="Espresso"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.688"
+        app:layout_constraintStart_toEndOf="@+id/largeCoffee"
+        app:layout_constraintTop_toBottomOf="@+id/cappuccino" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
