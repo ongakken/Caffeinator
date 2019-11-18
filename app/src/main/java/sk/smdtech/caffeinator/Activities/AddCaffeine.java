@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,7 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
         updateHandler = new Handler();
 
         // Resources
+        final EditText caffeineAmount = findViewById(R.id.caffeineAmount);
         // Coffee Buttons
         smallCoffee = findViewById(R.id.smallCoffee);
         mediumCoffee = findViewById(R.id.mediumCoffee);
@@ -159,66 +161,71 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
         addCaffeine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calculatePressedButtons();
-                int genderSpinnerPosition = typeSpinner.getSelectedItemPosition();
-                if (genderSpinnerPosition == 0) {
-                    currentType = coffee;
-                } else if (genderSpinnerPosition == 1) {
-                    currentType = energyDrink;
-                } else if (genderSpinnerPosition == 2) {
-                    currentType = tea;
+                caffeineValueText = caffeineAmount.getText().toString();
+                if(caffeineAmount.length() == 0 || caffeineValueText.equals(invalidCharacter)) {
+                    invalidValue.setText("Please enter valid value.");
                 } else {
-                    currentType = workoutPill;
-                }
-                caffeineValueDefault += caffeineValue;
-                bodyCaffeineLevel.setText("Caffeine Amount: " + caffeineValueDefault);
-                updateHandler.removeCallbacksAndMessages(null);
+                    int genderSpinnerPosition = typeSpinner.getSelectedItemPosition();
+                    if (genderSpinnerPosition == 0) {
+                        currentType = coffee;
+                    } else if (genderSpinnerPosition == 1) {
+                        currentType = energyDrink;
+                    } else if (genderSpinnerPosition == 2) {
+                        currentType = tea;
+                    } else {
+                        currentType = workoutPill;
+                    }
+                    caffeineValue = Float.valueOf(caffeineAmount.getText().toString());
+                    caffeineValueDefault += caffeineValue;
+                    bodyCaffeineLevel.setText("Caffeine Amount: " + caffeineValueDefault);
+                    updateHandler.removeCallbacksAndMessages(null);
 
-                // Pass back the data and safely finish the activity
-                Intent intent = new Intent();
-                intent.putExtra("caffeineAddValue", caffeineValue);
-                intakeLog();
-                caffeineValue = 0;
-                setResult(RESULT_OK, intent);
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                finish();
+                    // Pass back the data and safely finish the activity
+                    Intent intent = new Intent();
+                    intent.putExtra("caffeineAddValue", caffeineValue);
+                    intakeLog();
+                    caffeineValue = 0;
+                    setResult(RESULT_OK, intent);
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    finish();
+                }
             }
         });
 
         smallCoffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smallCoffee.setSelected(true);
+                caffeineAmount.setText("70");
             }
         });
         mediumCoffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediumCoffee.setSelected(true);
+                caffeineAmount.setText("110");
             }
         });
         largeCoffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                largeCoffee.setSelected(true);
+                caffeineAmount.setText("160");
             }
         });
         cafeLatte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cafeLatte.setSelected(true);
+                caffeineAmount.setText("31.70");
             }
         });
         cappuccino.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cappuccino.setSelected(true);
+                caffeineAmount.setText("43.39");
             }
         });
         espresso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                espresso.setSelected(true);
+                caffeineAmount.setText("63.6");
             }
         });
     }
@@ -260,22 +267,6 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
         cappuccino.setVisibility(View.INVISIBLE);
         espresso.setVisibility(View.INVISIBLE);
         Log.i("AddCaffeine ", "Coffee Buttons went invisible!");
-    }
-
-    private void calculatePressedButtons() {
-        if (smallCoffee.isSelected()) {
-            caffeineValue += 70;
-        } else if (mediumCoffee.isSelected()) {
-            caffeineValue += 110;
-        } else if (largeCoffee.isSelected()) {
-            caffeineValue += 160;
-        } else if (cafeLatte.isSelected()) {
-            caffeineValue += 31.70;
-        } else if (cappuccino.isSelected()) {
-            caffeineValue += 43.39;
-        } else {
-            caffeineValue += 63.6;
-        }
     }
 
     @Override
