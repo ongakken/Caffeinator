@@ -274,11 +274,6 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return true;
-    }
-
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
