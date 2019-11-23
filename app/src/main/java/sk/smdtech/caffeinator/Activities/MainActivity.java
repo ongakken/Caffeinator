@@ -273,7 +273,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void log(float amount) {
         Date currentTime = Calendar.getInstance().getTime();
-
     }
 
     @Override

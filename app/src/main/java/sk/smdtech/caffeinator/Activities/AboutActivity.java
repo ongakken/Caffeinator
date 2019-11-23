@@ -48,7 +48,6 @@ public class AboutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent addCaffeineIntakeActivity = new Intent(AboutActivity.this, PrivacyPolicyActivity.class);
                 startActivity(addCaffeineIntakeActivity);
-                finish();
             }
         });
 
@@ -74,7 +73,6 @@ public class AboutActivity extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
-        finish();
     }
 
     @Override

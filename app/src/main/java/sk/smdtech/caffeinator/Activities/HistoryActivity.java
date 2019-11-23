@@ -126,7 +126,6 @@ public class HistoryActivity extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
-        finish();
     }
 
     @Override
