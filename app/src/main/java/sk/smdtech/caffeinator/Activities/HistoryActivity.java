@@ -92,7 +92,7 @@ public class HistoryActivity extends AppCompatActivity {
                 // Repeat this every 1500ms
                 updateHandler.postDelayed(this, 250);
             }
-        }, 25);
+        }, 0);
 
     }
 
@@ -118,7 +118,8 @@ public class HistoryActivity extends AppCompatActivity {
     private void getData() {
         final SharedPreferences loadInstance = getSharedPreferences(HISS, MODE_PRIVATE);
 
-        inputsCount = loadInstance.getInt("inputsCount", inputsCount);
+        inputsCountBefore = loadInstance.getInt("inputsCountBefore", 0);
+        inputsCount = loadInstance.getInt("inputsCount", 0);
         intakeType = loadInstance.getString("intakeType", "Hello");
         caffeine = loadInstance.getFloat("caffeine", 0);
     }

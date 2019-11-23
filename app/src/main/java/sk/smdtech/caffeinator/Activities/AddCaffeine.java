@@ -286,6 +286,9 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
     }
 
     private void intakeLog() {
+        final SharedPreferences loadInstance = getSharedPreferences(HISS, MODE_PRIVATE);
+        inputsCount = loadInstance.getInt("inputsCount", 0);
+
         SharedPreferences submitData = getSharedPreferences(HISS, MODE_PRIVATE);
         SharedPreferences.Editor submit = submitData.edit();
         inputsCount += 1;
