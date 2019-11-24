@@ -119,7 +119,7 @@
         android:id="@+id/smallCoffee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Small Coffee"
         android:visibility="visible"
@@ -134,7 +134,7 @@
         android:id="@+id/mediumCoffee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Medium Coffee"
         android:visibility="visible"
@@ -148,7 +148,7 @@
         android:id="@+id/largeCoffee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Large Coffee"
         android:visibility="visible"
@@ -162,7 +162,7 @@
         android:id="@+id/cafeLatte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Cafe Latte"
         android:visibility="visible"
@@ -177,7 +177,7 @@
         android:id="@+id/cappuccino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Capuccino"
         android:visibility="visible"
@@ -191,7 +191,7 @@
         android:id="@+id/espresso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Espresso"
         android:visibility="visible"
@@ -200,6 +200,18 @@
         app:layout_constraintHorizontal_bias="0.688"
         app:layout_constraintStart_toEndOf="@+id/largeCoffee"
         app:layout_constraintTop_toBottomOf="@+id/cappuccino" />
+
+    <Button
+        android:id="@+id/clrbtn"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        app:layout_constraintBottom_toTopOf="@+id/addCaffeineButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/caffeineAmount"
+        app:layout_constraintTop_toBottomOf="@+id/espresso"
+        app:layout_constraintVertical_bias="0.259" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
