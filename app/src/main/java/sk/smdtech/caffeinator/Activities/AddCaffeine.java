@@ -63,6 +63,7 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
     Button cafeLatte;
     Button cappuccino;
     Button espresso;
+    Button clrbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
 
         // Other Resources
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
+        Button clrbtn = findViewById(R.id.clrbtn);
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final TextView bodyCaffeineLevel = findViewById(R.id.bodyCaffeineLevel);
         final TextView bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
@@ -191,7 +193,12 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
                 }
             }
         });
-
+        clrbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                caffeineAmount.setText("");
+            }
+        });
         smallCoffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
