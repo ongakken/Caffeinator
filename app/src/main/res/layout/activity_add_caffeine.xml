@@ -123,13 +123,28 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Small Coffee"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/mediumCoffee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeText"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/greenTea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Green Tea"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/mediumCoffee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typeText"
+        app:layout_constraintVertical_bias="0.445" />
 
     <Button
         android:id="@+id/mediumCoffee"
@@ -166,13 +181,28 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Cafe Latte"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/cappuccino"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.737"
         app:layout_constraintStart_toEndOf="@+id/smallCoffee"
         app:layout_constraintTop_toBottomOf="@+id/typeText"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/blackTea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Black Tea"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/cappuccino"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.702"
+        app:layout_constraintStart_toEndOf="@+id/smallCoffee"
+        app:layout_constraintTop_toBottomOf="@+id/typeText"
+        app:layout_constraintVertical_bias="0.445" />
 
     <Button
         android:id="@+id/cappuccino"

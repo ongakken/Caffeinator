@@ -64,6 +64,9 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
     Button cappuccino;
     Button espresso;
     Button clrbtn;
+    // Tea Buttons
+    Button blackTea;
+    Button greenTea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
         // Resources
         final EditText caffeineAmount = findViewById(R.id.caffeineAmount);
         // Coffee Buttons
+        clrbtn = findViewById(R.id.clrbtn);
         smallCoffee = findViewById(R.id.smallCoffee);
         mediumCoffee = findViewById(R.id.mediumCoffee);
         largeCoffee = findViewById(R.id.largeCoffee);
@@ -92,11 +96,15 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
         cafeLatte.setVisibility(View.INVISIBLE);
         cappuccino.setVisibility(View.INVISIBLE);
         espresso.setVisibility(View.INVISIBLE);
-         // Tea Buttons
+        // Tea Buttons
+        greenTea = findViewById(R.id.greenTea);
+        blackTea = findViewById(R.id.blackTea);
+         // Making Buttons invisible on start
+        greenTea.setVisibility(View.INVISIBLE);
+        blackTea.setVisibility(View.INVISIBLE);
 
         // Other Resources
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
-        Button clrbtn = findViewById(R.id.clrbtn);
         final TextView invalidValue = findViewById(R.id.invalidValue);
         final TextView bodyCaffeineLevel = findViewById(R.id.bodyCaffeineLevel);
         final TextView bloodstreamCaffeineLevel = findViewById(R.id.bloodstreamCaffeineLevel);
@@ -235,6 +243,18 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
                 caffeineAmount.setText("63.6");
             }
         });
+        greenTea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                caffeineAmount.setText("25.0");
+            }
+        });
+        blackTea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                caffeineAmount.setText("50.0");
+            }
+        });
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -242,15 +262,19 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
         if (selectedItem.equals(coffee)) {
             currentType = coffee;
             setCoffeeVisible();
+            setTeaInvisible();
         } else if (selectedItem.equals(energyDrink)) {
             currentType = energyDrink;
             setCoffeeInvisible();
+            setTeaInvisible();
         } else if (selectedItem.equals(tea)) {
             currentType = tea;
+            setTeaVisible();
             setCoffeeInvisible();
         } else if (selectedItem.equals(workoutPill)){
             currentType = workoutPill;
             setCoffeeInvisible();
+            setTeaInvisible();
         }
         Toast.makeText(parent.getContext(), selectedItem, Toast.LENGTH_SHORT).show();
         Log.i("AddCaffeine ", selectedItem + "WAS SELECTED!");
@@ -274,6 +298,16 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
         cappuccino.setVisibility(View.INVISIBLE);
         espresso.setVisibility(View.INVISIBLE);
         Log.i("AddCaffeine ", "Coffee Buttons went invisible!");
+    }
+
+    private void setTeaVisible() {
+        greenTea.setVisibility(View.VISIBLE);
+        blackTea.setVisibility(View.VISIBLE);
+    }
+
+    private void setTeaInvisible() {
+        greenTea.setVisibility(View.INVISIBLE);
+        blackTea.setVisibility(View.INVISIBLE);
     }
 
     @Override
