@@ -361,6 +361,11 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);

@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -45,9 +46,6 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        updateHandler = new Handler();
-
-
         // Auto Save/Load section
         final SharedPreferences loadInstance = getSharedPreferences(HISS, MODE_PRIVATE);
         logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
@@ -64,12 +62,14 @@ public class HistoryActivity extends AppCompatActivity {
         intakeLog.append(logHistory);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Run
+        updateLog();
+
         NavigationView navView = (NavigationView)findViewById(R.id.graph_activity_nv);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
-
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
                 } else if (id == R.id.history) {
@@ -77,22 +77,15 @@ public class HistoryActivity extends AppCompatActivity {
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
                 }
+                finish();
                 return true;
             }
         });
-
-        updateHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Do something here on the main thread
-                getData();
-                log(caffeine, intakeType);
-                saveData();
-
-                // Repeat this every 1500ms
-                updateHandler.postDelayed(this, 250);
-            }
-        }, 0);
+    }
+    private void updateLog() {
+        getData();
+        log(caffeine, intakeType);
+        saveData();
 
     }
 
@@ -127,6 +120,12 @@ public class HistoryActivity extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        finish();
+        super.onDestroy();
     }
 
     @Override
