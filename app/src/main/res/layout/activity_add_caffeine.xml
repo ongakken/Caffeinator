@@ -138,10 +138,25 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Green Tea"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/mediumCoffee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.178"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/typeText"
+        app:layout_constraintVertical_bias="0.445" />
+
+    <Button
+        android:id="@+id/smallEnergy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Small 250ml"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/mediumCoffee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeText"
         app:layout_constraintVertical_bias="0.445" />
@@ -153,12 +168,27 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Medium Coffee"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/largeCoffee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1545"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/smallCoffee" />
+
+    <Button
+        android:id="@+id/mediumEnergy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Medium 355ml"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/largeCoffee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/smallCoffee"
+        app:layout_constraintVertical_bias="0.424" />
 
     <Button
         android:id="@+id/largeCoffee"
@@ -167,12 +197,27 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:text="Large Coffee"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/caffeineAmount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mediumCoffee" />
+
+    <Button
+        android:id="@+id/largeEnergy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Large 473ml"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/caffeineAmount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mediumCoffee"
+        app:layout_constraintVertical_bias="0.488" />
 
     <Button
         android:id="@+id/cafeLatte"

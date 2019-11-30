@@ -67,6 +67,10 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
     // Tea Buttons
     Button blackTea;
     Button greenTea;
+    // Energy Buttons
+    Button smallEnergy;
+    Button mediumEnergy;
+    Button largeEnergy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +106,14 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
          // Making Buttons invisible on start
         greenTea.setVisibility(View.INVISIBLE);
         blackTea.setVisibility(View.INVISIBLE);
+        // Energy Buttons
+        smallEnergy = findViewById(R.id.smallEnergy);
+        mediumEnergy = findViewById(R.id.mediumEnergy);
+        largeEnergy = findViewById(R.id.largeEnergy);
+        // Making Buttons invisible on start
+        smallEnergy.setVisibility(View.INVISIBLE);
+        mediumEnergy.setVisibility(View.INVISIBLE);
+        largeEnergy.setVisibility(View.INVISIBLE);
 
         // Other Resources
         Button addCaffeine = findViewById(R.id.addCaffeineButton);
@@ -255,6 +267,24 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
                 caffeineAmount.setText("50.0");
             }
         });
+        smallEnergy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                caffeineAmount.setText("80.0");
+            }
+        });
+        mediumEnergy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                caffeineAmount.setText("113.6");
+            }
+        });
+        largeEnergy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                caffeineAmount.setText("151.36");
+            }
+        });
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -263,18 +293,22 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
             currentType = coffee;
             setCoffeeVisible();
             setTeaInvisible();
+            setEnergyInvisible();
         } else if (selectedItem.equals(energyDrink)) {
             currentType = energyDrink;
             setCoffeeInvisible();
             setTeaInvisible();
+            setEnergyVisible();
         } else if (selectedItem.equals(tea)) {
             currentType = tea;
             setTeaVisible();
             setCoffeeInvisible();
+            setEnergyInvisible();
         } else if (selectedItem.equals(workoutPill)){
             currentType = workoutPill;
             setCoffeeInvisible();
             setTeaInvisible();
+            setEnergyInvisible();
         }
         Toast.makeText(parent.getContext(), selectedItem, Toast.LENGTH_SHORT).show();
         Log.i("AddCaffeine ", selectedItem + "WAS SELECTED!");
@@ -308,6 +342,18 @@ public class AddCaffeine extends AppCompatActivity implements AdapterView.OnItem
     private void setTeaInvisible() {
         greenTea.setVisibility(View.INVISIBLE);
         blackTea.setVisibility(View.INVISIBLE);
+    }
+
+    private void setEnergyVisible() {
+        smallEnergy.setVisibility(View.VISIBLE);
+        mediumEnergy.setVisibility(View.VISIBLE);
+        largeEnergy.setVisibility(View.VISIBLE);
+    }
+
+    private void setEnergyInvisible() {
+        smallEnergy.setVisibility(View.INVISIBLE);
+        mediumEnergy.setVisibility(View.INVISIBLE);
+        largeEnergy.setVisibility(View.INVISIBLE);
     }
 
     @Override
