@@ -2,37 +2,30 @@
 
 package sk.smdtech.caffeinator.Activities;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
@@ -42,7 +35,8 @@ import classes.CircularProgressBar;
 import services.caffeineMetabolizationService;
 import sk.smdtech.caffeinator.R;
 
-public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
+public class MainActivity extends AppCompatActivity {
+    private AdView mAdView;
 
     // Variables
     float caffeineIntakeValue;
@@ -64,17 +58,14 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         return ctx;
     }
 
-    //GPS
-    boolean gps_enabled = false;
-    boolean network_enabled = false;
-    boolean privacy_policy_accepted = false;
-
     LocationManager lm;
 
     // UI data types
     TextView bodyCaffeine;
     TextView bloodCaffeine;
     TextView safeAmount;
+    TextView totalCaffeine;
+    TextView waterIntake;
 
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
@@ -91,6 +82,16 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //AD Section
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         // Variables
         ctx = this;
         updateHandler = new Handler();
@@ -104,24 +105,18 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         caffeineIntakeValue = loadInstance.getFloat("caffeineIntakeValue", 0);
         caffeineBloodValue = loadInstance.getFloat("caffeineBloodValue", 0);
         logHistory = loadInstance.getString("logHistory", "\n Log initialized!");
-        privacy_policy_accepted = loadInstance.getBoolean("privacyPolicyAccepted", privacy_policy_accepted);
-
-        // Privacy Policy Dialog
-        if(!privacy_policy_accepted)
-            showPrivacyPolicyAlert();
 
         // Services
         startServices();
 
-        // GPS
-        if(privacy_policy_accepted)
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
         // UI
         bodyCaffeine = findViewById(R.id.bodyCaffeine);
         bloodCaffeine = findViewById(R.id.bloodCaffeine);
+        totalCaffeine = findViewById(R.id.totalCaffeine);
         circularProgressBar = findViewById(R.id.custom_progressBar);
         safeAmount = findViewById(R.id.safeAmount);
+        waterIntake = findViewById(R.id.waterIntake);
+
 
         drawer_layout = (DrawerLayout) findViewById(R.id.main_activity_drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(this, drawer_layout, R.string.open, R.string.close);
@@ -140,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
-                } else if (id == R.id.graph) {
-                    switchIntent(GraphActivity.class);
+                } else if (id == R.id.history) {
+                    switchIntent(HistoryActivity.class);
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
                 }
@@ -196,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         save.putString("logHistory", logHistory);
         save.putFloat("caffeineIntakeValue", caffeineIntakeValue);
         save.putFloat("caffeineBloodValue", caffeineBloodValue);
-        save.putBoolean("privacyPolicyAccepted", privacy_policy_accepted);
         save.apply();
     }
 
@@ -210,7 +204,25 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         caffeineIntakeLeft = Math.round(caffeineIntakeLeft * 100.0f) / 100.0f;
 
         safeAmount.setText("You can still consume: " + caffeineIntakeLeft + "mg");
+
+        Float caffeineDisplayTextInteger = currentCaffeineDisplayLevel();
+        caffeineDisplayTextInteger = Math.round(caffeineDisplayTextInteger * 100.0f) / 100.0f;
+        String totalCaffeineString = Float.toString(caffeineDisplayTextInteger);
+        totalCaffeine.setText("Total Caffeine: " + totalCaffeineString);
         circularProgressBar.setProgress(currentCaffeineDisplayLevel());
+        calculateWaterIntake();
+    }
+
+    private void calculateWaterIntake() {
+        if(currentCaffeineDisplayLevel() >= 50 && currentCaffeineDisplayLevel() <= 100) {
+            waterIntake.setText("Recommended Water Intake: 150ml");
+        } else if(currentCaffeineDisplayLevel() >= 100 && currentCaffeineDisplayLevel() <= 200) {
+            waterIntake.setText("Recommended Water Intake: 300ml");
+        } else if(currentCaffeineDisplayLevel() >= 200 && currentCaffeineDisplayLevel() <= 300) {
+            waterIntake.setText("Recommended Water Intake: 450ml");
+        } else if(currentCaffeineDisplayLevel() >= 300) {
+            waterIntake.setText("Recommended Water Intake: 600ml");
+        }
     }
 
     private void receiveData() {
@@ -225,6 +237,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         SharedPreferences.Editor send = sendData.edit();
 
         send.putFloat("caffeineAddValue", caffeineAddValue);
+
+        //Send to addCaffeine activity
+        send.putFloat("caffeineBodyValue", caffeineIntakeValue);
+        send.putFloat("caffeineBloodValue", caffeineBloodValue);
+
         send.apply();
         caffeineAddValue = 0; //This value has been sent and we don't need it anymore
     }
@@ -256,115 +273,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private void log(float amount) {
         Date currentTime = Calendar.getInstance().getTime();
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return true;
-    }
-
-    @SuppressLint("MissingPermission")
-    private Location getGPSLocation() {
-        if(!(checkLocationPermission()))
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        else return null;
-
-        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-        Location gps_loc = new Location("GPS_PROVIDER");
-        Location net_loc = new Location("NETWORK_PROVIDER");
-        Location finalLoc = new Location("Caffeinator_Provider");
-
-        if (gps_enabled && checkLocationPermission()) {
-            gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
-        if (network_enabled && checkLocationPermission()) {
-            net_loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-        if (gps_loc != null && net_loc != null) {
-            //smaller the number more accurate result will
-            if (gps_loc.getAccuracy() > net_loc.getAccuracy())
-                finalLoc = net_loc;
-            else
-                finalLoc = gps_loc;
-        } else {
-            if (gps_loc != null) {
-                finalLoc = gps_loc;
-            } else if (net_loc != null) {
-                finalLoc = net_loc;
-            }
-        }
-        return finalLoc;
-    }
-
-    public boolean checkLocationPermission()
-    {
-        String permission = "android.permission.ACCESS_FINE_LOCATION";
-        int res = this.checkCallingOrSelfPermission(permission);
-        return (res == PackageManager.PERMISSION_GRANTED);
-    }
-
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Location startingLocation = getGPSLocation();
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-            default: {
-                // nothing
-            }
-            // other 'case' lines to check for other permissions this app might request
-        }
-    }
-    private void showPrivacyPolicyAlert() {
-        new AlertDialog.Builder(ctx)
-                .setTitle("Privacy Policy")
-                .setMessage(R.string.privacy_policy_dialog)
-                .setCancelable(false)
-
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        privacy_policy_accepted = true;
-                    }
-                })
-                .setNeutralButton(R.string.show_policy, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switchIntent(PrivacyPolicyActivity.class);
-                    }
-                })
-                .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        privacy_policy_accepted = false;
-                        finish();
-                    }
-                })
-                .setOnDismissListener(MainActivity.this)
-                .show();
-    }
-
-    public void onDismiss(DialogInterface dialog) {
-        // Privacy Policy Dialog
-        if(!privacy_policy_accepted)
-            showPrivacyPolicyAlert();
     }
 
     @Override

@@ -48,7 +48,6 @@ public class AboutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent addCaffeineIntakeActivity = new Intent(AboutActivity.this, PrivacyPolicyActivity.class);
                 startActivity(addCaffeineIntakeActivity);
-                finish();
             }
         });
 
@@ -60,8 +59,8 @@ public class AboutActivity extends AppCompatActivity {
 
                 if (id == R.id.overview) {
                     switchIntent(MainActivity.class);
-                } else if (id == R.id.graph) {
-                    switchIntent(GraphActivity.class);
+                } else if (id == R.id.history) {
+                    switchIntent(HistoryActivity.class);
                 } else if (id == R.id.about) {
                     switchIntent(AboutActivity.class);
                 }
@@ -74,16 +73,10 @@ public class AboutActivity extends AppCompatActivity {
     private void switchIntent(Class targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
-        finish();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return true;
     }
 }

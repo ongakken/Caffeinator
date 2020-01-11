@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sk.smdtech.caffeinator">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -14,28 +15,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".Activities.PrivacyPolicyActivity"></activity>
+        <activity android:name=".Activities.OptionsActivity"></activity>
+        <activity android:name=".Activities.WizardActivitySecondary" />
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.PrivacyPolicyActivity" />
         <activity android:name=".Activities.AboutActivity" />
-
-        <receiver
-            android:name="broadcasters.SensorRestarterBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
-        <service
-            android:name="services.caffeineMetabolizationService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity android:name=".Activities.AddCaffeine" />
-        <activity android:name=".Activities.GraphActivity" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.HistoryActivity" />
+        <activity android:name=".Activities.WizardActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name="services.broadcastMetabolizationServiceRestarter"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped">
+        </receiver>
+
+        <service
+            android:name="services.caffeineMetabolizationService"
+            android:enabled="true"
+            android:exported="true" />
+        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9086446979210331~1298398018"/>
     </application>
 
 </manifest>

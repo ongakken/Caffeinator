@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="#3f3f3f"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -19,7 +20,7 @@
             android:id="@+id/btn_addCaffeineIntake"
             android:layout_width="0dp"
             android:layout_height="75dp"
-            android:background="#795548"
+            android:background="#D1760B"
             android:text="@string/addCaffeineIntake"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +28,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/custom_progressBar"
             app:layout_constraintVertical_bias="1.0" />
-
-        <!--ads:adUnitId="ca-app-pub-3940256099942544/6300978111 TEST AD ID"-->
 
         <classes.CircularProgressBar
             android:id="@+id/custom_progressBar"
@@ -43,7 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:progress="35"
+            app:progress="75"
             app:progressBarThickness="8dp" />
 
         <TextView
@@ -105,14 +104,39 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Water Intake: N/A"
+            android:text="Recommended Water Intake: 0 cups"
             android:textColor="#FFA500"
             app:layout_constraintBottom_toTopOf="@+id/btn_addCaffeineIntake"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_bias="0.084"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bodyCaffeine"
             app:layout_constraintVertical_bias="0.05" />
+
+        <TextView
+            android:id="@+id/totalCaffeine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Caffeine: "
+            android:textColor="#FFA500"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/safeAmount"
+            app:layout_constraintEnd_toEndOf="@+id/custom_progressBar"
+            app:layout_constraintStart_toStartOf="@+id/custom_progressBar"
+            app:layout_constraintTop_toTopOf="@+id/custom_progressBar"
+            app:layout_constraintVertical_bias="0.85" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-9086446979210331/4656200859"
+            app:layout_constraintBottom_toTopOf="@+id/btn_addCaffeineIntake"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waterIntake"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,17 +1,27 @@
 package services;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import broadcasters.SensorRestarterBroadcastReceiver;
+import androidx.core.app.NotificationCompat;
+
+import java.util.Random;
 import notifications.*;
+import sk.smdtech.caffeinator.Activities.MainActivity;
+import sk.smdtech.caffeinator.R;
 
 public class caffeineMetabolizationService extends Service {
+    public static final String CHANNEL_ID = "ForegroundServiceChannel";
 
     // Variables
     public static final String SAVE = "Caffeinator%Service%Save%File";
@@ -21,6 +31,7 @@ public class caffeineMetabolizationService extends Service {
     long newTime;
     long differenceTime;
 
+    float totalCaffeine;
     float caffeineToCalculate;
     float caffeineIntakeMetabolized;
     float caffeineBloodValue;
@@ -33,7 +44,6 @@ public class caffeineMetabolizationService extends Service {
 
     int notificationDelay;
     int counter;
-    int randomNotification;
     int halflifeDuration = 21600;
     int caffeineToZeroDuration = 64800;
     int caffeineAbsorptionDuration = 2700;
@@ -64,6 +74,7 @@ public class caffeineMetabolizationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
+        declareNotfication();
         // Saving/Loading
         newTime = System.currentTimeMillis();
         loadData();
@@ -73,13 +84,41 @@ public class caffeineMetabolizationService extends Service {
         updateHandler.post(executeUpdater);
         return START_STICKY;
     }
+
+    public void declareNotfication() {
+        createNotificationChannel();
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0, notificationIntent, 0);
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("Metabolizing..")
+                .setSmallIcon(R.drawable.caffeinator_icon)
+                .setContentIntent(pendingIntent)
+                .build();
+        startForeground(1, notification);
+
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Intent broadcastIntent = new Intent(ctx, SensorRestarterBroadcastReceiver.class);
-        sendBroadcast(broadcastIntent);
+        Intent broadcastIntent = new Intent(this, broadcastMetabolizationServiceRestarter.class);
         saveData();
+        sendBroadcast(broadcastIntent);
         Log.i("EXIT", "onDestroy!");
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Foreground Service Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
+        }
     }
 
     private Runnable executeCalculationHandler = new Runnable() {
@@ -87,16 +126,11 @@ public class caffeineMetabolizationService extends Service {
         public void run() {
             //Check for time differences and for correction overshoot
             if (differenceTime >= 1) {
-                computeDifference = new Thread(new Runnable() {
-                    public void run() {
-                        for (; differenceTime >= 1; differenceTime--) {
-                            //Do the same work as below, or in other words do the missing work
-                            computeMetabolization();
-                            Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
-                        }
-                    }
-                });
-                computeDifference.start();
+                for (; differenceTime >= 1; differenceTime--) {
+                    //Do the same work as below, or in other words do the missing work
+                    computeMetabolization();
+                    Log.i("Watchdog: ", "Can't keep up! " + "Behind: " + (differenceTime));
+                }
             }
             //Do some work
             checkForNewIntake();
@@ -107,7 +141,8 @@ public class caffeineMetabolizationService extends Service {
             notificationDelay -= 1;
             Log.i("Watchdog", "DATA SAVED!  ");
             Log.i("Service", " Caffeine Count: " + caffeineBloodValue);
-
+            totalCaffeine = caffeineToAbsorb + caffeineBloodValue;
+            totalCaffeine = Math.round(totalCaffeine * 100.0f) / 100.0f;
             // Repeat this every x ms
             calculationHandler.postDelayed(executeCalculationHandler, 1000);
         }
@@ -133,6 +168,10 @@ public class caffeineMetabolizationService extends Service {
             sendData();
             Log.i("COMPUTE ", "CAFFEINE METABOLIZED | " + "METABOLIZED VALUE: " + (caffeineBloodValue - caffeineIntakeBefore) + " CAFFEINE IN SYSTEM: | " + caffeineBloodValue);
         }
+        // Error correction
+        if(caffeineToAbsorb < 0) {
+            caffeineToAbsorb = 0;
+        }
         /* ***WIP***
         if(caffeineIntakeMetabolized > 0) {
             float caffeineIntakeMetabolizedBefore = caffeineIntakeMetabolized;
@@ -146,7 +185,7 @@ public class caffeineMetabolizationService extends Service {
     }
 
     private float calculateCaffeineAbsorptionCoefficient() {
-        float caffeineToBeAbsorbed = caffeineToCalculate; //Sounds stupid but it won't work otherwise
+        float caffeineToBeAbsorbed = caffeineToCalculate;
         float caffeineAbsorptionPerSecond = caffeineToBeAbsorbed / caffeineAbsorptionDuration;
         Log.i("COMPUTE", "CAFFEINE ABSORPTION COEFFICIENT FOUND: " + caffeineAbsorptionPerSecond);
         return caffeineAbsorptionPerSecond;
@@ -225,32 +264,34 @@ public class caffeineMetabolizationService extends Service {
 
     private void checkNotify() {
         // Random notification generator:
-        randomNotification = (int) (Math.random()*4);
+        Random rand = new Random();
+        int randomNotification = rand.nextInt(6);
+        //int randomNotification = (int) (Math.random()*4);
         // This displays the tooMuchCaffeine notification.
-        if (caffeineBloodValue >= 400 && tooMuchCaffeineBool == false) {
+        if (caffeineToAbsorb + caffeineBloodValue >= 400 && tooMuchCaffeineBool == false) {
             tooMuchCaffeine.notify(ctx, String.valueOf(caffeineBloodValue));
             tooMuchCaffeineBool = true;
-        } else if(caffeineBloodValue <= 399.9 && tooMuchCaffeineBool == true) {
+        } else if(caffeineToAbsorb + caffeineBloodValue <= 399.9 && tooMuchCaffeineBool == true) {
             tooMuchCaffeineBool = false;
         }
         //This displays the healthAdvice notifications.
-        if (notificationDelay == 0 && randomNotification == 0 && !appearedBefore1) {
+        if (notificationDelay < 0 && randomNotification == 0 && !appearedBefore1) {
             healthAdvice1.notify(ctx);
             appearedBefore1 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 1 && !appearedBefore2) {
+        } else if (notificationDelay < 0 && randomNotification == 1 && !appearedBefore2) {
             healthAdvice2.notify(ctx);
             appearedBefore2 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 2 && !appearedBefore3) {
+        } else if (notificationDelay < 0 && randomNotification == 2 && !appearedBefore3) {
             healthAdvice3.notify(ctx);
             appearedBefore3 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 3 && !appearedBefore4) {
+        } else if (notificationDelay < 0 && randomNotification == 3 && !appearedBefore4) {
             healthAdvice4.notify(ctx);
             appearedBefore4 = true;
             notificationDelay += 21600;
-        } else if (notificationDelay == 0 && randomNotification == 4 && !appearedBefore5) {
+        } else if (notificationDelay < 0 && randomNotification == 4 && !appearedBefore5) {
             healthAdvice5.notify(ctx);
             appearedBefore5 = true;
             notificationDelay += 21600;
